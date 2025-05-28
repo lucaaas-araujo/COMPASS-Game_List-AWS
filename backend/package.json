@@ -1,28 +1,33 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon src/server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "express": "^5.1.0",
-    "mongodb": "^6.16.0",
-    "mongoose": "^8.15.1"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.27.0",
-    "eslint": "^9.27.0",
-    "eslint-plugin-react": "^7.37.5",
-    "globals": "^16.2.0",
-    "nodemon": "^3.1.10",
-    "prettier": "3.5.3",
-    "sucrase": "^3.35.0",
-    "typescript-eslint": "^8.33.0"
-  }
+	"name": "backend",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "index.js",
+	"scripts": {
+		"dev": "tsx --env-file .env src/server.ts",
+		"dev:watch": "tsx watch --env-file .env src/server.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"express": "^5.1.0",
+		"mongodb": "^6.16.0",
+		"mongoose": "^8.15.1",
+		"npx": "^10.2.2",
+		"tsx": "^4.19.4"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.27.0",
+		"@types/express": "^5.0.2",
+		"@types/mongoose": "^5.11.96",
+		"@types/node": "^22.15.23",
+		"eslint": "^9.27.0",
+		"eslint-plugin-react": "^7.37.5",
+		"globals": "^16.2.0",
+		"prettier": "3.5.3",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.33.0"
+	}
 }
