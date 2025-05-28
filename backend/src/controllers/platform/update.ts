@@ -5,7 +5,7 @@ export const update: RequestHandler = async (req, res) => {
   const { id } = req.params;
   const { image_url, title, company, acquisition_year } = req.body;
 
-  const result = await platformServices.updatePlatform({
+  const result = await platformServices.update({
     id,
     data: { image_url, title, company, acquisition_year },
   });

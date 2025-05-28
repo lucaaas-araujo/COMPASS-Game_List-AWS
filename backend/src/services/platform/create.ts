@@ -8,7 +8,7 @@ type CreatePlatformProps = {
   user_id: string;
 };
 
-export const createPlatform = async ({
+export const create = async ({
   image_url,
   title,
   company,

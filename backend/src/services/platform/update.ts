@@ -11,7 +11,7 @@ type UpdatePlatformProps = {
   }>;
 };
 
-export const updatePlatform = async ({ id, data }: UpdatePlatformProps) => {
+export const update = async ({ id, data }: UpdatePlatformProps) => {
   try {
     const updated = await Platform.findByIdAndUpdate(id, data, { new: true });
 

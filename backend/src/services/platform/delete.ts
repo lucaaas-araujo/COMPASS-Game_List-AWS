@@ -4,7 +4,7 @@ type DeletePlatformProps = {
   id: string;
 };
 
-export const deletePlatform = async ({ id }: DeletePlatformProps) => {
+export const deleted = async ({ id }: DeletePlatformProps) => {
   try {
     const deleted = await Platform.findByIdAndUpdate(id, { is_deleted: true }, { new: true });
 

@@ -4,7 +4,7 @@ import { RequestHandler } from 'express';
 export const remove: RequestHandler = async (req, res) => {
   const { id } = req.params;
 
-  const result = await platformServices.deletePlatform({ id });
+  const result = await platformServices.deleted({ id });
 
   if (result instanceof Error) {
     res.status(501).json({ error: result.message });
