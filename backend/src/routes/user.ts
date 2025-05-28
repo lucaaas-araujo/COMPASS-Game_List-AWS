@@ -3,6 +3,10 @@ import { Router } from 'express';
 
 const routes = Router();
 
-routes.post('/register', userControllers.register);
+routes.post(
+  '/register',
+  userControllers.registerValidation,
+  userControllers.register,
+);
 
 export { routes };
