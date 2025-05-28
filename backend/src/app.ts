@@ -1,26 +1,23 @@
 import express, { Application } from "express";
-import mongoose from "mongoose";
 import routes from "./routes"; // depois converta routes.js para .ts
+import "./services/connectiondb";
 
 class App {
-  public server: Application;
+	public server: Application;
 
-  constructor() {
-    this.server = express();
+	constructor() {
+		this.server = express();
+		this.middlewares();
+		this.routes();
+	}
 
-    mongoose.connect(process.env.DATABASE_URL);
+	private middlewares(): void {
+		this.server.use(express.json());
+	}
 
-    this.middlewares();
-    this.routes();
-  }
-
-  private middlewares(): void {
-    this.server.use(express.json());
-  }
-
-  private routes(): void {
-    this.server.use(routes);
-  }
+	private routes(): void {
+		this.server.use(routes);
+	}
 }
 
 export default new App().server;
