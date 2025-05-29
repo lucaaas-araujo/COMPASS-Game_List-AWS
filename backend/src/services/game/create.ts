@@ -6,7 +6,7 @@ type CreateProps = {
   title: string;
   description: string;
   category: string;
-  plataform: string;
+  platform: string;
   status: string;
   favorite: boolean;
   acquisition_date: Date;
@@ -20,7 +20,7 @@ export const create = async ({
   title,
   description,
   category,
-  plataform,
+  platform,
   status,
   favorite,
   acquisition_date,
@@ -34,7 +34,7 @@ export const create = async ({
       title,
       description,
       category,
-      plataform,
+      platform,
       status,
       favorite,
       acquisition_date,

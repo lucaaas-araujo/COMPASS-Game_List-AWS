@@ -3,7 +3,8 @@ import { Router } from 'express';
 
 const routes = Router();
 
-routes.get('/game/getAll', gamesControllers.getAll);
-routes.post('/game/create', gamesControllers.create);
+routes.get('/game', gamesControllers.getAll);
+routes.post('/game', gamesControllers.create);
+routes.put('/game/:id', gamesControllers.update);
 
 export { routes };

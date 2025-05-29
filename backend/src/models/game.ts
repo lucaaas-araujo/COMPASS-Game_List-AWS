@@ -18,7 +18,7 @@ const gamesSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-    plataform: {
+    platform: {
       type: String,
       require: true,
     },
