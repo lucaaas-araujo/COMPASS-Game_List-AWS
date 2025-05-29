@@ -1,8 +1,10 @@
-import { create } from '@/controllers/games/create';
+import { create } from '@/controllers/game/create';
+import { getAll } from '@/controllers/game/getAll';
 import { Router } from 'express';
 
 const routes = Router();
 
-routes.post('/games', create);
+routes.get('/game', getAll);
+routes.post('/game', create);
 
 export { routes };

@@ -1,4 +1,4 @@
-import { create as createGame } from '@/services/games/create';
+import { create as createGame } from '@/services/game/create';
 import { RequestHandler } from 'express';
 
 export const create: RequestHandler = async (req, res) => {

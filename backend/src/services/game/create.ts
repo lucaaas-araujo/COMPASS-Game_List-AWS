@@ -1,7 +1,6 @@
 import Game from '@/models/user';
-import mongoose from 'mongoose';
 
-type RegisterProps = {
+type CreateProps = {
   image_url: string;
   title: string;
   description: string;
@@ -11,7 +10,7 @@ type RegisterProps = {
   favorite: boolean;
   acquisition_date: Date;
   finish_date: Date;
-  user_id: mongoose.Schema.Types.ObjectId; //ref: 'User',
+  user_id: string;
   is_deleted: boolean;
 };
 
@@ -27,7 +26,7 @@ export const create = async ({
   finish_date,
   user_id,
   is_deleted,
-}: RegisterProps) => {
+}: CreateProps) => {
   try {
     const game = new Game({
       image_url,
