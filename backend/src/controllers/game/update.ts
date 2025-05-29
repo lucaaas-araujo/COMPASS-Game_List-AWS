@@ -15,7 +15,7 @@ export const update: RequestHandler = async (req, res) => {
     finish_date,
     is_deleted,
   } = req.body;
-  const game = await gameServices.update({
+  const result = await gameServices.update({
     id,
     data: {
       image_url,
@@ -31,9 +31,9 @@ export const update: RequestHandler = async (req, res) => {
     },
   });
 
-  if (game instanceof Error) {
-    res.status(501).json({ error: game.message });
+  if (result instanceof Error) {
+    res.status(501).json({ error: result.message });
     return;
   }
-  res.status(200).json(game);
+  res.status(200).json(result);
 };
