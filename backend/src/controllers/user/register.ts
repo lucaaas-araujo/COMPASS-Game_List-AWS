@@ -1,8 +1,10 @@
-import { userServices } from '@/services';
+import bcrypt from 'bcrypt';
 import { RequestHandler } from 'express';
 
+import { userServices } from '@/services';
+
 export const registerValidation: RequestHandler = (req, res, next) => {
-  const { full_name, email, password } = req.body;
+  const { full_name, email, password, confirm_password } = req.body;
 
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
@@ -11,7 +13,14 @@ export const registerValidation: RequestHandler = (req, res, next) => {
   const emailIsValid = emailPattern.test(email);
   const passwordIsValid = passwordPattern.test(password);
 
-  if (nameIsValid && emailIsValid && passwordIsValid) return next();
+  if (
+    nameIsValid &&
+    emailIsValid &&
+    passwordIsValid &&
+    password === confirm_password
+  ) {
+    return next();
+  }
 
   if (!nameIsValid) {
     res.json({ Error: 'invalid name' });
@@ -27,6 +36,13 @@ export const registerValidation: RequestHandler = (req, res, next) => {
     res.json({ Error: 'invalid password' });
     return;
   }
+
+  if (password !== confirm_password) {
+    res.json({
+      Error: 'Password should be equal to confirm password',
+    });
+    return;
+  }
 };
 
 type RegisterBody = {
@@ -39,9 +55,15 @@ export const register: RequestHandler<unknown, unknown, RegisterBody> = async (
   req,
   res,
 ) => {
-  const { full_name, email, password } = req.body;
+  const { password } = req.body;
 
-  const user = await userServices.register({ full_name, email, password });
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const user = await userServices.register({
+    ...req.body,
+    password: hashedPassword,
+  });
 
   if (user instanceof Error) {
     res.status(501).json({ Error: user.message });
