@@ -1,14 +1,14 @@
 import User from '@/models/user';
 
 type RegisterProps = {
-  name: string;
+  full_name: string;
   email: string;
   password: string;
 };
 
-export const register = async ({ name, email, password }: RegisterProps) => {
+export const register = async ({ full_name, email, password }: RegisterProps) => {
   try {
-    const user = new User({ name, email, password });
+    const user = new User({ full_name, email, password });
 
     const { _id } = await user.save();
     return _id;
