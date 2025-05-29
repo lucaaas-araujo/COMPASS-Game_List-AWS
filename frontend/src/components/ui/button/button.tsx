@@ -5,14 +5,6 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'white' | 'turquoise' | 'gray';
 };
 
-export function Button({
-  children,
-  variant = 'turquoise',
-  ...props
-}: ButtonProps) {
-  return (
-    <button className={style[variant]} {...props}>
-      {children}
-    </button>
-  );
+export function Button({ variant = 'turquoise', ...props }: ButtonProps) {
+  return <button className={style[variant]} {...props} />;
 }
