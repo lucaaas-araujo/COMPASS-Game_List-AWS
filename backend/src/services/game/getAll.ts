@@ -1,12 +1,8 @@
 import Game from '@/models/game';
 
-type GetAllGamesProps = {
-  user_id: string;
-};
-
-export const getAll = async ({ user_id }: GetAllGamesProps) => {
+export const getAll = async () => {
   try {
-    const games = await Game.find({ user_id });
+    const games = await Game.find();
     return games;
   } catch (error) {
     console.log(`GET_ALL_GAMES: ${error}`);

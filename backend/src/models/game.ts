@@ -40,7 +40,8 @@ const gamesSchema = new mongoose.Schema(
       require: true,
     },
     user_id: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       require: true,
     },
     is_deleted: {

@@ -1,5 +1,5 @@
 import * as create from './create';
-import { getAll } from './getAll';
+import * as getAll from './getAll';
 
 export const gamesControllers = {
   ...create,

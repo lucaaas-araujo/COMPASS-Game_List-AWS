@@ -1,4 +1,5 @@
-import Game from '@/models/user';
+import Game from '@/models/game';
+import { Types } from 'mongoose';
 
 type CreateProps = {
   image_url: string;
@@ -6,11 +7,11 @@ type CreateProps = {
   description: string;
   category: string;
   plataform: string;
-  status: string; //enum: ['Playing', 'Done', 'Abandoned']
+  status: string;
   favorite: boolean;
   acquisition_date: Date;
   finish_date: Date;
-  user_id: string;
+  user_id: Types.ObjectId;
   is_deleted: boolean;
 };
 
