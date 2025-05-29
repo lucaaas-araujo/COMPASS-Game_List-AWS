@@ -1,7 +1,7 @@
-import { gameServices } from '@/services';
+import { create as createGame } from '@/services/games/create';
 import { RequestHandler } from 'express';
 
-export const register: RequestHandler = async (req, res) => {
+export const create: RequestHandler = async (req, res) => {
   const {
     image_url,
     title,
@@ -16,7 +16,7 @@ export const register: RequestHandler = async (req, res) => {
     is_deleted,
   } = req.body;
 
-  const game = await gameServices.register({
+  const game = await createGame({
     image_url,
     title,
     description,

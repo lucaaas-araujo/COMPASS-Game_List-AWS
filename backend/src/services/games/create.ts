@@ -15,7 +15,7 @@ type RegisterProps = {
   is_deleted: boolean;
 };
 
-export const register = async ({
+export const create = async ({
   image_url,
   title,
   description,

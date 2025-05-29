@@ -1,5 +1,5 @@
-import * as register from './register';
+import * as create from './create';
 
 export const gamesControllers = {
-  ...register,
+  ...create,
 };
