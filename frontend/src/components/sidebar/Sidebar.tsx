@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import {
+  arrow,
+  categoryHover,
+  category,
+  compactLogo,
+  fullLogo,
+  gameHover,
+  game,
+  homeHover,
+  home,
+  logoutHover,
+  logout,
+  platformHover,
+  platform,
+} from '../../utils/icons';
 import styles from './Sidebar.module.css';
-
-import fullLogo from '../../assets/logo.svg';
-import compactLogo from '../../assets/logo-compact.svg';
-import arrowIcon from '../../assets/arrow.svg';
-
-import homeIcon from '../../assets/home.svg';
-import homeHoverIcon from '../../assets/home-hover.svg';
-
-import gameIcon from '../../assets/controller.svg';
-import gameHoverIcon from '../../assets/controller-hover.svg';
-
-import categoryIcon from '../../assets/pricetag.svg';
-import categoryHoverIcon from '../../assets/pricetag-hover.svg';
-
-import platformIcon from '../../assets/chip.svg';
-import platformHoverIcon from '../../assets/chip-hover.svg';
-
-import logoutIcon from '../../assets/logout.svg';
-import logoutHoverIcon from '../../assets/logout-hover.svg';
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -51,7 +48,7 @@ const Sidebar: React.FC = () => {
         style={{ left: isOpen ? '300px' : '80px' }}
         aria-label='Toggle sidebar'>
         <img
-          src={arrowIcon}
+          src={arrow}
           alt='Toggle'
           className={`${styles.arrowIcon} ${!isOpen ? styles.rotated : ''}`}
         />
@@ -78,9 +75,9 @@ const Sidebar: React.FC = () => {
             to='/'
             className={`${styles.navItem} ${!isOpen ? styles.navItemClosed : ''}`}>
             <div className={styles.iconWrapper}>
-              <img src={homeIcon} alt='Home' className={styles.iconDefault} />
+              <img src={home} alt='Home' className={styles.iconDefault} />
               <img
-                src={homeHoverIcon}
+                src={homeHover}
                 alt='Home Hover'
                 className={styles.iconHover}
               />
@@ -92,9 +89,9 @@ const Sidebar: React.FC = () => {
             to='/games'
             className={`${styles.navItem} ${!isOpen ? styles.navItemClosed : ''}`}>
             <div className={styles.iconWrapper}>
-              <img src={gameIcon} alt='Games' className={styles.iconDefault} />
+              <img src={game} alt='Games' className={styles.iconDefault} />
               <img
-                src={gameHoverIcon}
+                src={gameHover}
                 alt='Games Hover'
                 className={styles.iconHover}
               />
@@ -107,12 +104,12 @@ const Sidebar: React.FC = () => {
             className={`${styles.navItem} ${!isOpen ? styles.navItemClosed : ''}`}>
             <div className={styles.iconWrapper}>
               <img
-                src={categoryIcon}
+                src={category}
                 alt='Categories'
                 className={styles.iconDefault}
               />
               <img
-                src={categoryHoverIcon}
+                src={categoryHover}
                 alt='Categories Hover'
                 className={styles.iconHover}
               />
@@ -125,12 +122,12 @@ const Sidebar: React.FC = () => {
             className={`${styles.navItem} ${!isOpen ? styles.navItemClosed : ''}`}>
             <div className={styles.iconWrapper}>
               <img
-                src={platformIcon}
+                src={platform}
                 alt='Platforms'
                 className={styles.iconDefault}
               />
               <img
-                src={platformHoverIcon}
+                src={platformHover}
                 alt='Platforms Hover'
                 className={styles.iconHover}
               />
@@ -145,12 +142,12 @@ const Sidebar: React.FC = () => {
             className={`${styles.navItem} ${!isOpen ? styles.logoutClosed : ''}`}>
             <div className={styles.iconWrapper}>
               <img
-                src={logoutIcon}
+                src={logout}
                 alt='Logout'
                 className={styles.logoutIconDefault}
               />
               <img
-                src={logoutHoverIcon}
+                src={logoutHover}
                 alt='Logout Hover'
                 className={styles.logoutIconHover}
               />

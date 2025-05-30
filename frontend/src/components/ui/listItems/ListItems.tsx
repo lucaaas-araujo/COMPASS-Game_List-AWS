@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
+
+import { eye, pen, star, starFilled, trash } from '../../../utils/icons';
 import styles from './ListItems.module.css';
-import eye from '../../../assets/eye.svg';
-import trash from '../../../assets/trash.svg';
-import pen from '../../../assets/pen.svg';
-import star from '../../../assets/star.svg';
-import starFilled from '../../../assets/star_filled.svg';
 
 interface ListItemsProps {
   imageUrl?: string;
