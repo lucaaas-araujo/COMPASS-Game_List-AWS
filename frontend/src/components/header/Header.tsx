@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'react';
 import { Button } from '../ui/button/button';
-import style from './header.module.css';
+import style from './Header.module.css';
 
 type HeaderProps = HTMLAttributes<HTMLElement> & {
   title: string;

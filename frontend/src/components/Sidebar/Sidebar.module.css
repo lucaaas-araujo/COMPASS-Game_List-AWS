@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-
 .sidebar {
-  background-color: #18181b;
+  background-color: var(--darkgray);
   height: 100vh;
   transition: width 0.3s ease;
   overflow: hidden;
@@ -9,7 +7,6 @@
   flex-direction: column;
   justify-content: space-between;
   border-right: 2px solid #f8fafc;
-  font-family: Montserrat;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -86,8 +83,8 @@
 }
 
 .navItem:hover {
-  background-color: #42d9c8;
-  color: #000;
+  background-color: var(--turquoise);
+  color: var(--black);
 }
 
 .navItemClosed {
@@ -110,8 +107,8 @@
 }
 
 .logout a:hover {
-  background-color: #fd4760;
-  color: #000;
+  background-color: var(--alert);
+  color: var(--black);
 }
 
 .iconWrapper {
