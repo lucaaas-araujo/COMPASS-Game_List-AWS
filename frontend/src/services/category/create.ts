@@ -6,7 +6,7 @@ interface CategoryData {
   description?: string;
 }
 
-export const createCategory = async (categoryData: CategoryData) => {
+export const create = async (categoryData: CategoryData) => {
   try {
     const response = await api.post('/categories', categoryData);
     return response.data;

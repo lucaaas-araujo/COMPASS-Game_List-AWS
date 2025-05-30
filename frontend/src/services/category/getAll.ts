@@ -7,7 +7,7 @@ interface Category {
   description?: string;
 }
 
-export const getAllCategories = async (): Promise<Category[]> => {
+export const getAll = async (): Promise<Category[]> => {
   try {
     const response = await api.get('/categories/683851eeebf3ec3283664b14');
     console.log('Fetched categories:', response);
@@ -17,6 +17,3 @@ export const getAllCategories = async (): Promise<Category[]> => {
     throw error;
   }
 };
-
-const getAll = await getAllCategories();
-console.log(getAll);

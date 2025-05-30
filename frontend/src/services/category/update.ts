@@ -6,7 +6,7 @@ interface CategoryData {
   description?: string;
 }
 
-export const updateCategory = async (categoryData: CategoryData): Promise<void> => {
+export const update = async (categoryData: CategoryData): Promise<void> => {
   try {
     await api.put(`/categories/${categoryData.id}`, {
       name: categoryData.name,
