@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+.sidebar {
+  background-color: #18181b;
+  height: 100vh;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 2px solid #f8fafc;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  align-items: center;
+}
+
+.open {
+  width: 270px;
+}
+
+.closed {
+  width: 60px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 118px;
+  height: 54px;
+  padding: 24px;
+}
+
+.logoCompact {
+  width: 30px;
+  height: auto;
+  cursor: pointer;
+  padding: 24px;
+}
+
+.toggleBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 21px;
+  left: 300px;
+  z-index: 10;
+  transition: left 0.3s ease;
+}
+
+.arrowIcon {
+  width: 18px;
+  transition: transform 0.3s ease;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #f8fafc;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  padding: 12px 74px 12px 41px;
+  border-radius: 4px;
+}
+
+.navItem:hover {
+  background-color: #42d9c8;
+  color: #000;
+}
+
+.navItemClosed {
+  padding: 12px;
+  justify-content: center;
+}
+
+.logoutClosed {
+  padding: 12px;
+  justify-content: center;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  text-align: center;
+  padding-bottom: 34px;
+}
+
+.logout a:hover {
+  background-color: #fd4760;
+  color: #000;
+}
+
+.iconWrapper {
+  position: relative;
+  width: 21px;
+  height: 21px;
+}
+
+.iconDefault,
+.iconHover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease;
+}
+
+.iconHover {
+  opacity: 0;
+}
+
+.navItem:hover .iconHover {
+  opacity: 1;
+}
+
+.navItem:hover .iconDefault {
+  opacity: 0;
+}
+
+.logoutIconDefault,
+.logoutIconHover {
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.2s ease;
+}
+
+.logoutIconHover {
+  opacity: 0;
+}
+
+.logout a:hover .logoutIconHover {
+  opacity: 1;
+}
+
+.logout a:hover .logoutIconDefault {
+  opacity: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    z-index: 100;
+  }
+
+  .toggleBtn {
+    top: 16px;
+    left: 60px !important;
+  }
+}
