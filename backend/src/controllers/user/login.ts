@@ -15,7 +15,7 @@ export const login = async (req: Request, res: Response) => {
 
   if (!user) {
     res.status(400).json({ error: 'Invalid email' });
-    return
+    return;
   }
 
   if (!user.password) return;
@@ -24,11 +24,10 @@ export const login = async (req: Request, res: Response) => {
 
   if (!passwordMatched) {
     res.status(400).json({ error: 'Invalid password' });
-    return
-    
+    return;
   }
 
-  const accessToken = jwt.sign(user.id, process.env.JWT_SECRET);
+  const accessToken = jwt.sign({ uid: user.id }, process.env.JWT_SECRET);
 
   res.status(200).json({ accessToken });
 };
