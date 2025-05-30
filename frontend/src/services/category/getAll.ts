@@ -9,10 +9,14 @@ interface Category {
 
 export const getAllCategories = async (): Promise<Category[]> => {
   try {
-    const response = await api.get('/categories');
+    const response = await api.get('/categories/683851eeebf3ec3283664b14');
+    console.log('Fetched categories:', response);
     return response.data;
   } catch (error) {
     console.error('Error fetching categories:', error);
     throw error;
   }
 };
+
+const getAll = await getAllCategories();
+console.log(getAll);
