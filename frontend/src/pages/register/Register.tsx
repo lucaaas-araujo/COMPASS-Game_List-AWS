@@ -11,16 +11,18 @@ import {
   CardFooter,
   CardDescription,
 } from '../../components/ui/card/card';
-import style from './login.module.css';
+import style from './Register.module.css';
 
-export const Login = () => {
+export const Register = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Clerk
-    console.log('Login:', { email, password });
+    console.log('Register:', { name, email, password, confirmPassword });
   };
 
   return (
@@ -30,14 +32,26 @@ export const Login = () => {
       </div>
       <CardHeader>
         <div className={style.cardheader}>
-          <CardTitle>Login</CardTitle>
+          <CardTitle>Sign Up</CardTitle>
           <CardDescription>
-            Enter your credentials to access your account.
+            Register yourself to access the system
           </CardDescription>
         </div>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className={style.form}>
+          <div className={style.content}>
+            <label htmlFor='name'>Full Name</label>
+            <Input
+              id='name'
+              variant='squared'
+              type='text'
+              placeholder='Enter your name'
+              value={name}
+              style={{ width: 'auto' }}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
           <div className={style.content}>
             <label htmlFor='email'>Email</label>
             <Input
@@ -62,14 +76,26 @@ export const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Button type='submit' variant='turquoise' className={style.btnlogin}>
-            LOGIN
+          <div className={style.content}>
+            <label htmlFor='password'>Confirm Password</label>
+            <Input
+              id='confirmPassword'
+              type='password'
+              variant='squared'
+              placeholder='Confirm your password'
+              value={confirmPassword}
+              style={{ width: 'auto' }}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <Button type='submit' variant='turquoise' className={style.btnsign}>
+            Sign Up
           </Button>
         </form>
       </CardContent>
       <CardFooter className={style.footer}>
         <span>
-          Don’t have an account? <Link to='/register'>Register now</Link>
+          Already have an account? <Link to='/login'>Login now</Link>
         </span>
       </CardFooter>
     </Card>
