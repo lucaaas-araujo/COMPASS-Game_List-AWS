@@ -9,4 +9,6 @@ routes.post(
   userControllers.register,
 );
 
+routes.post('/login', userControllers.login);
+
 export { routes };
