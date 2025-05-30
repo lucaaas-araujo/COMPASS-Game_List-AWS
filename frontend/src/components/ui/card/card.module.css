@@ -2,16 +2,16 @@
   max-width: 750px;
   padding: 2rem;
   border-radius: 8px;
-  background: #fff;
+  background: var(--white);
 }
 
 .auth {
   width: 475px;
   padding: 1rem;
   border-radius: 20px;
-  border: 2px solid #42d9c8;
+  border: 2px solid var(--turquoise);
   background: rgba(24, 24, 27, 0.89);
-  color: #fff;
+  color: var(--white);
   box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
@@ -27,7 +27,7 @@
 }
 
 .cardDescription {
-  color: #bcbcbc;
+  color: var(--lightgray);
   font-size: 14px;
   font-weight: 400;
 }

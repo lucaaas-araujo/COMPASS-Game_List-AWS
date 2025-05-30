@@ -4,12 +4,22 @@
   --white: #ffffff;
   --graydialogbox: #e5e5e5;
   --lightgray: #bcbcbc;
-  --gray: #6c6c6c;
+  --graybutton: #acacac;
   --grayform: #747474;
+  --gray: #6c6c6c;
   --darkgray: #18181b;
   --obsidian: #0c0a09;
   --black: #000000;
   --turquoise: #42d9c8;
   --alert: #fd4760;
   --font: 'Montserrat', 'sanserif';
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  list-style: none;
+  font-family: var(--font);
 }
