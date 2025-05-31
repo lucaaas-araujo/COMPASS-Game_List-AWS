@@ -4,8 +4,9 @@
   --white: #ffffff;
   --graydialogbox: #e5e5e5;
   --lightgray: #bcbcbc;
-  --gray: #6c6c6c;
+  --graybutton: #acacac;
   --grayform: #747474;
+  --gray: #6c6c6c;
   --darkgray: #18181b;
   --obsidian: #0c0a09;
   --black: #000000;
@@ -19,6 +20,7 @@
   padding: 0;
   border: 0;
   list-style: none;
+  font-family: var(--font);
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;

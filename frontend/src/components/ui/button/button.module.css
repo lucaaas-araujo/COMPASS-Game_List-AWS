@@ -4,8 +4,8 @@ button {
   padding-inline: 1rem;
   line-height: normal;
   border-radius: 4px;
-  color: #fff;
-  background: #42d9c8;
+  color: var(--white);
+  background: var(--turquoise);
 
   font-family: Montserrat;
   font-size: 12px;
@@ -15,14 +15,14 @@ button {
 
 .white {
   border-radius: 8px;
-  background: #fff;
-  color: #6c6c6c;
+  background: var(--white);
+  color: var(--gray);
 }
 
 .turquoise {
-  background: #42d9c8;
+  background: var(--turquoise);
 }
 
 .gray {
-  background: #acacac;
+  background: var(--graybutton);
 }
