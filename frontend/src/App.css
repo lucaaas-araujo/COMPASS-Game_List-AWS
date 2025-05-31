@@ -28,7 +28,7 @@ html,
 body {
   width: 100%;
   font-family: var(--font);
-  background-color: var(--obsidian);
-  color: var(--white);
+  /* background-color: var(--obsidian); */
+  /* color: var(--white); */
   scroll-behavior: smooth;
 }
