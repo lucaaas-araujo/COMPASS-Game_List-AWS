@@ -12,7 +12,7 @@ export function Card({ variant = 'modal', ...props }: CardProps) {
 type CardHeader = HTMLAttributes<HTMLDivElement>;
 
 export function CardHeader({ ...props }: CardHeader) {
-  return <div className={style.cardHeader} {...props} />;
+  return <div className={style.header} {...props} />;
 }
 
 type CardTitle = HTMLAttributes<HTMLHeadingElement> & {
@@ -22,23 +22,23 @@ type CardTitle = HTMLAttributes<HTMLHeadingElement> & {
 export function CardTitle({ tag = 'h3', ...props }: CardTitle) {
   const Tag = tag;
 
-  return <Tag className={style.cardTitle} {...props} />;
+  return <Tag className={style.title} {...props} />;
 }
 
 type CardDescription = HTMLAttributes<HTMLParagraphElement>;
 
 export function CardDescription({ ...props }: CardDescription) {
-  return <p className={style.cardDescription} {...props} />;
+  return <p className={style.description} {...props} />;
 }
 
 type CardContent = HTMLAttributes<HTMLDivElement>;
 
 export function CardContent({ ...props }: CardContent) {
-  return <div className={style.cardContent} {...props} />;
+  return <div className={style.content} {...props} />;
 }
 
 type CardFooter = HTMLAttributes<HTMLDivElement>;
 
 export function CardFooter({ ...props }: CardFooter) {
-  return <div className={style.cardFooter} {...props} />;
+  return <div className={style.footer} {...props} />;
 }
