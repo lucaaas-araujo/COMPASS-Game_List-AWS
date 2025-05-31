@@ -15,31 +15,31 @@
   box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
-.cardHeader {
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.cardTitle {
+.title {
   font-size: 32px;
   font-weight: 700;
 }
 
-.cardDescription {
+.description {
   color: #bcbcbc;
   font-size: 14px;
   font-weight: 400;
 }
 
-.cardContent {
+.content {
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 1rem;
 }
 
-.cardFooter {
+.footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
