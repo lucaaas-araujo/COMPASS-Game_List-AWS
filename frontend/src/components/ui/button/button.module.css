@@ -2,15 +2,13 @@ button {
   width: auto;
   padding-block: 0.5rem;
   padding-inline: 1rem;
-  line-height: normal;
   border-radius: 4px;
   color: var(--white);
   background: var(--turquoise);
 
-  font-family: Montserrat;
   font-size: 12px;
-  font-style: normal;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .white {
