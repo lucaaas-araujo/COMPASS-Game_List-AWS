@@ -25,7 +25,6 @@ const Sidebar: React.FC = () => {
     setIsOpen((prev) => !prev);
   };
 
-  // Fecha o menu automaticamente em telas pequenas
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
@@ -35,7 +34,7 @@ const Sidebar: React.FC = () => {
       }
     };
 
-    handleResize(); // chama uma vez ao montar
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -140,6 +139,7 @@ const Sidebar: React.FC = () => {
           <Link
             to='/logout'
             className={`${styles.navItem} ${!isOpen ? styles.logoutClosed : ''}`}>
+            {isOpen && <span>Logout</span>}
             <div className={styles.iconWrapper}>
               <img
                 src={logout}
@@ -152,7 +152,6 @@ const Sidebar: React.FC = () => {
                 className={styles.logoutIconHover}
               />
             </div>
-            {isOpen && <span>Logout</span>}
           </Link>
         </div>
       </aside>
