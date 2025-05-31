@@ -25,54 +25,59 @@ export const Login = () => {
   };
 
   return (
-    <Card variant='auth'>
-      <div className={style.logo}>
-        <img src={logo} alt='Game List' />
-      </div>
-      <CardHeader>
-        <div className={style.cardheader}>
-          <CardTitle>Login</CardTitle>
-          <CardDescription>
-            Enter your credentials to access your account.
-          </CardDescription>
+    <div className={style.login}>
+      <Card variant='auth'>
+        <div className={style.logo}>
+          <img src={logo} alt='Game List' />
         </div>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className={style.form}>
-          <div className={style.content}>
-            <label htmlFor='email'>Email</label>
-            <Input
-              id='email'
-              variant='squared'
-              type='email'
-              placeholder='Enter your email'
-              value={email}
-              style={{ width: 'auto' }}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+        <CardHeader>
+          <div className={style.cardheader}>
+            <CardTitle>Login</CardTitle>
+            <CardDescription>
+              Enter your credentials to access your account.
+            </CardDescription>
           </div>
-          <div className={style.content}>
-            <label htmlFor='password'>Password</label>
-            <Input
-              id='password'
-              type='password'
-              variant='squared'
-              placeholder='Enter your password'
-              value={password}
-              style={{ width: 'auto' }}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <Button type='submit' variant='turquoise' className={style.btnlogin}>
-            LOGIN
-          </Button>
-        </form>
-      </CardContent>
-      <CardFooter className={style.footer}>
-        <span>
-          Don’t have an account? <Link to='/register'>Register now</Link>
-        </span>
-      </CardFooter>
-    </Card>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className={style.form}>
+            <div className={style.content}>
+              <label htmlFor='email'>Email</label>
+              <Input
+                id='email'
+                variant='squared'
+                type='email'
+                placeholder='Enter your email'
+                value={email}
+                style={{ width: 'auto' }}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className={style.content}>
+              <label htmlFor='password'>Password</label>
+              <Input
+                id='password'
+                type='password'
+                variant='squared'
+                placeholder='Enter your password'
+                value={password}
+                style={{ width: 'auto' }}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <Button
+              type='submit'
+              variant='turquoise'
+              className={style.btnlogin}>
+              LOGIN
+            </Button>
+          </form>
+        </CardContent>
+        <CardFooter className={style.footer}>
+          <span>
+            Don’t have an account? <Link to='/register'>Register now</Link>
+          </span>
+        </CardFooter>
+      </Card>
+    </div>
   );
 };
