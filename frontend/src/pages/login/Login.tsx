@@ -1,17 +1,18 @@
-import { Button } from '../../components/ui/button/button';
 import { useState } from 'react';
-import { Input } from '../../components/ui/input/input';
 import { Link } from 'react-router-dom';
-import Logo from '../../assets/logo.svg';
+
+import { Button } from '../../components/ui/button/button';
 import {
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardContent,
-  CardFooter,
-  CardDescription,
 } from '../../components/ui/card/card';
-import style from './login.module.css';
+import { Input } from '../../components/ui/input/input';
+import { logo } from '../../utils/icons';
+import style from './Login.module.css';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ export const Login = () => {
   return (
     <Card variant='auth'>
       <div className={style.logo}>
-        <img src={Logo} alt='Game List' />
+        <img src={logo} alt='Game List' />
       </div>
       <CardHeader>
         <div className={style.cardheader}>
