@@ -4,12 +4,12 @@ import Sidebar from './sidebar/Sidebar';
 
 function Layout() {
   return (
-    <>
+    <div style={{ display: 'flex' }}>
       <Sidebar />
       <main>
         <Outlet />
       </main>
-    </>
+    </div>
   );
 }
 
