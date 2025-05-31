@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { Button } from '../../components/ui/button/button';
+import { ToastContainer, toast } from 'react-toastify';
+import { Button } from '../../../components/ui/button/button';
 import {
   Card,
   CardContent,
@@ -9,9 +9,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../../components/ui/card/card';
-import { Input } from '../../components/ui/input/input';
-import { logo } from '../../utils/icons';
+} from '../../../components/ui/card/card';
+import { Input } from '../../../components/ui/input/input';
+import { logo } from '../../../utils/icons';
 import style from './Login.module.css';
 
 export const Login = () => {
@@ -20,12 +20,18 @@ export const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || !password) {
+      toast.error('You must fill in all fields!');
+      return;
+    }
     // Clerk
     console.log('Login:', { email, password });
+    toast.success('Login successful!');
   };
 
   return (
     <div className={style.login}>
+      <ToastContainer position='top-right' autoClose={3000} />
       <Card variant='auth'>
         <div className={style.logo}>
           <img src={logo} alt='Game List' />
@@ -81,3 +87,7 @@ export const Login = () => {
     </div>
   );
 };
+
+/*  if(!email || password!){
+      const notify = () => { toast.error('You must fill in all the spaces!')}
+    } */
