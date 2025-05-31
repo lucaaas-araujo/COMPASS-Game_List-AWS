@@ -1,4 +1,4 @@
-import logo from '../../assets/logo.svg';
+import logo from '../assets/logo.svg';
 import arrow from '../assets/arrow.svg';
 import platformHover from '../assets/chip-hover.svg';
 import platform from '../assets/chip.svg';
