@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSidebar } from '../../context/SidebarContext';
 
 import {
   arrow,
@@ -19,25 +20,7 @@ import {
 import styles from './Sidebar.module.css';
 
 const Sidebar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setIsOpen(false);
-      } else {
-        setIsOpen(true);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const { isOpen, toggleSidebar } = useSidebar();
 
   return (
     <>
