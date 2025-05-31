@@ -11,8 +11,8 @@ export function Header({ title, buttonText, children, ...props }: HeaderProps) {
   return (
     <header className={style.header} {...props}>
       <h1 className={style.title}>{title}</h1>
-        <Button>{buttonText}</Button>
-        {children}
+      <Button>{buttonText}</Button>
+      {children}
       <div className={style.line}></div>
     </header>
   );
