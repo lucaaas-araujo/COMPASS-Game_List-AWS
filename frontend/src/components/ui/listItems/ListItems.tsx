@@ -45,19 +45,18 @@ const ListItems: React.FC<ListItemsProps> = ({
 
   return (
     <div className={styles.cardContainer}>
-      {imageUrl && (
-        <div className={styles.imageWrapper}>
+      <div className={styles.imageWrapper}>
+        {imageUrl && (
           <img src={imageUrl} alt='Card Icon' className={styles.cardImage} />
-        </div>
-      )}
-      <div className={styles.cardTexts}>
-        <span>{camp1 ?? ''}</span>
-        <span>{camp2 ?? ''}</span>
-        <span>{camp3 ?? ''}</span>
-        <span>{camp4 ?? ''}</span>
-        <span>{camp5 ?? ''}</span>
+        )}
       </div>
-      <div className={styles.cardIcons}>
+
+      <div className={styles.cardTexts}>
+        {camp1 && <span>{camp1}</span>}
+        {camp2 && <span>{camp2}</span>}
+        {camp3 && <span>{camp3}</span>}
+        {camp4 && <span>{camp4}</span>}
+        {camp5 && <span>{camp5}</span>}
         {iconStar && (
           <img
             src={starred ? starFilled : star}
@@ -66,6 +65,10 @@ const ListItems: React.FC<ListItemsProps> = ({
             onClick={handleStarClick}
           />
         )}
+      </div>
+
+      <div className={styles.cardIcons}>
+        
         {iconView && (
           <img
             src={eye}

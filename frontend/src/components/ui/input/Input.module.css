@@ -1,10 +1,10 @@
-input {
+.input {
   width: 100%;
   padding-block: 0.5rem;
   padding-inline: 1rem;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--graydialogbox);
   border-radius: 4px;
-  background: #fff;
+  background: var(--white);
 }
 
 .squared {
@@ -13,5 +13,5 @@ input {
 
 .rounded {
   border-radius: 8px;
-  border: 1px solid #747474;
+  border: 1px solid var(--grayform);
 }

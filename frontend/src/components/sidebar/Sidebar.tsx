@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSidebar } from '../../context/SidebarContext';
 
 import {
   arrow,
@@ -19,33 +20,14 @@ import {
 import styles from './Sidebar.module.css';
 
 const Sidebar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  // Fecha o menu automaticamente em telas pequenas
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setIsOpen(false);
-      } else {
-        setIsOpen(true);
-      }
-    };
-
-    handleResize(); // chama uma vez ao montar
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const { isOpen, toggleSidebar } = useSidebar();
 
   return (
     <>
       <button
         className={styles.toggleBtn}
         onClick={toggleSidebar}
-        style={{ left: isOpen ? '300px' : '80px' }}
+        style={{ left: isOpen ? '285px' : '75px' }}
         aria-label='Toggle sidebar'>
         <img
           src={arrow}
@@ -140,6 +122,7 @@ const Sidebar: React.FC = () => {
           <Link
             to='/logout'
             className={`${styles.navItem} ${!isOpen ? styles.logoutClosed : ''}`}>
+            {isOpen && <span>Logout</span>}
             <div className={styles.iconWrapper}>
               <img
                 src={logout}
@@ -152,7 +135,6 @@ const Sidebar: React.FC = () => {
                 className={styles.logoutIconHover}
               />
             </div>
-            {isOpen && <span>Logout</span>}
           </Link>
         </div>
       </aside>
