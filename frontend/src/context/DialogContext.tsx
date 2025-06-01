@@ -6,7 +6,7 @@ type DialogProviderProps = {
 };
 
 export const DialogProvider = ({ children }: DialogProviderProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const openDialog = () => setIsOpen(true);
   const closeDialog = () => setIsOpen(false);

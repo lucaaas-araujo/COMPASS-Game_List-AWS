@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, type ReactNode } from 'react';
 
 import { eye, pen, star, starFilled, trash } from '../../../utils/icons';
+import { Dialog, DialogTrigger } from '../dialog/Dialog';
+
 import styles from './ListItems.module.css';
 
 interface ListItemsProps {
@@ -10,13 +12,13 @@ interface ListItemsProps {
   camp3?: string;
   camp4?: string;
   camp5?: string;
-  iconView?: true;
+  iconDetails?: true;
   iconEdit?: true;
   iconDelete?: true;
   iconStar?: boolean;
-  onViewClick?: () => void;
-  onEditClick?: () => void;
-  onDeleteClick?: () => void;
+  detailsForm?: ReactNode;
+  editForm?: ReactNode;
+  deleteForm?: ReactNode;
   onStarClick?: () => void;
 }
 
@@ -27,13 +29,13 @@ const ListItems: React.FC<ListItemsProps> = ({
   camp3,
   camp4,
   camp5,
-  iconView,
+  iconDetails,
   iconEdit,
   iconDelete,
   iconStar,
-  onViewClick,
-  onEditClick,
-  onDeleteClick,
+  detailsForm,
+  editForm,
+  deleteForm,
   onStarClick,
 }) => {
   const [starred, setStarred] = useState(false);
@@ -68,30 +70,29 @@ const ListItems: React.FC<ListItemsProps> = ({
       </div>
 
       <div className={styles.cardIcons}>
-        
-        {iconView && (
-          <img
-            src={eye}
-            alt='View'
-            className={styles.icon}
-            onClick={() => onViewClick?.()}
-          />
+        {iconDetails && (
+          <Dialog>
+            <DialogTrigger>
+              <img src={eye} alt='View' className={styles.icon} />
+            </DialogTrigger>
+            {detailsForm}
+          </Dialog>
         )}
         {iconEdit && (
-          <img
-            src={pen}
-            alt='Edit'
-            className={styles.icon}
-            onClick={() => onEditClick?.()}
-          />
+          <Dialog>
+            <DialogTrigger>
+              <img src={pen} alt='Edit' className={styles.icon} />
+            </DialogTrigger>
+            {editForm}
+          </Dialog>
         )}
         {iconDelete && (
-          <img
-            src={trash}
-            alt='Delete'
-            className={styles.icon}
-            onClick={() => onDeleteClick?.()}
-          />
+          <Dialog>
+            <DialogTrigger>
+              <img src={trash} alt='Delete' className={styles.icon} />
+            </DialogTrigger>
+            {deleteForm}
+          </Dialog>
         )}
       </div>
     </div>
