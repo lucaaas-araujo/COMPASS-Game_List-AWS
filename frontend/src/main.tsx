@@ -7,6 +7,7 @@ import { CategoryProvider } from './context/CategoryContext.tsx';
 import { GameProvider } from './context/GameContext.tsx';
 import { PlatformProvider } from './context/PlatformContext.tsx';
 import { SidebarProvider } from './context/SidebarContext';
+import { DialogProvider } from './context/DialogContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -14,7 +15,9 @@ createRoot(document.getElementById('root')!).render(
       <GameProvider>
         <CategoryProvider>
           <PlatformProvider>
-            <App />
+            <DialogProvider>
+              <App />
+            </DialogProvider>
           </PlatformProvider>
         </CategoryProvider>
       </GameProvider>
