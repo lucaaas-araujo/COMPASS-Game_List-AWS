@@ -2,12 +2,14 @@ import { Header } from '../../components/header/Header';
 import { HomeCard } from '../../components/homeCard/HomeCard';
 import { useCategory } from '../../hooks/useCategory';
 import { useGame } from '../../hooks/useGame';
+import { usePlatform } from '../../hooks/usePlatform';
 import { category, game, platform, starHome } from '../../utils/icons';
 import styles from './Home.module.css';
 
 export function Home() {
   const { gameCount } = useGame();
   const { categoryCount } = useCategory();
+  const { platformCount } = usePlatform();
 
   return (
     <main className={styles.container}>
@@ -23,7 +25,12 @@ export function Home() {
           title='Categories'
           count={categoryCount}
         />
-        <HomeCard haveButton icon={platform} title='Platforms' count={4} />
+        <HomeCard
+          haveButton
+          icon={platform}
+          title='Platforms'
+          count={platformCount}
+        />
         <HomeCard icon={starHome} title='Favorites Games' count={3} />
       </div>
     </main>

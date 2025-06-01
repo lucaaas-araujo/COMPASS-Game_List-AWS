@@ -5,6 +5,7 @@ import App from './App.tsx';
 
 import { CategoryProvider } from './context/CategoryContext.tsx';
 import { GameProvider } from './context/GameContext.tsx';
+import { PlatformProvider } from './context/PlatformContext.tsx';
 import { SidebarProvider } from './context/SidebarContext';
 
 createRoot(document.getElementById('root')!).render(
@@ -12,7 +13,9 @@ createRoot(document.getElementById('root')!).render(
     <SidebarProvider>
       <GameProvider>
         <CategoryProvider>
-          <App />
+          <PlatformProvider>
+            <App />
+          </PlatformProvider>
         </CategoryProvider>
       </GameProvider>
     </SidebarProvider>

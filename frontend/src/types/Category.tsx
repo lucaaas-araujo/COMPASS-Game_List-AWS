@@ -3,8 +3,3 @@ export type CategoryProps = {
   name: string;
   description?: string;
 };
-
-export type EditCategoryProps = {
-  id: string;
-  data: Partial<CategoryProps>;
-};
