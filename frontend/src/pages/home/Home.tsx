@@ -3,6 +3,7 @@ import { HomeCard } from '../../components/homeCard/HomeCard';
 import { useCategory } from '../../hooks/useCategory';
 import { useGame } from '../../hooks/useGame';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useUser } from '../../hooks/useUser';
 import { category, game, platform, starHome } from '../../utils/icons';
 import styles from './Home.module.css';
 
@@ -10,11 +11,12 @@ export function Home() {
   const { gameCount } = useGame();
   const { categoryCount } = useCategory();
   const { platformCount } = usePlatform();
+  const { user } = useUser();
 
   return (
     <main className={styles.container}>
       <Header>
-        <h1>Hello, Juan!</h1>
+        <h1>Hello{user.full_name && `, ${user.full_name}`}!</h1>
         <p>Choose one of options below.</p>
       </Header>
       <div className={styles.cardGrid}>
