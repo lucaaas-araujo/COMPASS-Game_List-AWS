@@ -1,18 +1,18 @@
-import { Button } from '../../../components/ui/button/button';
 import { useState } from 'react';
-import { Input } from '../../../components/ui/input/input';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Logo from '../../../assets/logo.svg';
+import { Button } from '../../../components/ui/button/Button';
 import {
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardContent,
-  CardFooter,
-  CardDescription,
-} from '../../../components/ui/card/card';
+} from '../../../components/ui/card/Card';
+import { Input } from '../../../components/ui/input/Input';
 import style from './Register.module.css';
-import { ToastContainer, toast } from 'react-toastify';
 
 export const Register = () => {
   const [name, setName] = useState('');

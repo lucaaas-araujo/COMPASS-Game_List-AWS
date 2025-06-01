@@ -1,11 +1,13 @@
-button {
+.button {
   width: auto;
   padding-block: 0.5rem;
   padding-inline: 1rem;
   border-radius: 4px;
   color: var(--white);
   background: var(--turquoise);
-
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;

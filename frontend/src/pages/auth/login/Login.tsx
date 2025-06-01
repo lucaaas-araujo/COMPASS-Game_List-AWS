@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { Button } from '../../../components/ui/button/button';
+import { Button } from '../../../components/ui/button/Button';
 import {
   Card,
   CardContent,
@@ -9,8 +9,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../../../components/ui/card/card';
-import { Input } from '../../../components/ui/input/input';
+} from '../../../components/ui/card/Card';
+import { Input } from '../../../components/ui/input/Input';
 import { logo } from '../../../utils/icons';
 import style from './Login.module.css';
 
