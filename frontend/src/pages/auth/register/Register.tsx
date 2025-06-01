@@ -1,8 +1,8 @@
-import { Button } from '../../components/ui/button/button';
+import { Button } from '../../../components/ui/button/button';
 import { useState } from 'react';
-import { Input } from '../../components/ui/input/input';
+import { Input } from '../../../components/ui/input/input';
 import { Link } from 'react-router-dom';
-import Logo from '../../assets/logo.svg';
+import Logo from '../../../assets/logo.svg';
 import {
   Card,
   CardHeader,
@@ -10,8 +10,9 @@ import {
   CardContent,
   CardFooter,
   CardDescription,
-} from '../../components/ui/card/card';
+} from '../../../components/ui/card/card';
 import style from './Register.module.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const Register = () => {
   const [name, setName] = useState('');
@@ -21,13 +22,22 @@ export const Register = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!name || !email || !password || !confirmPassword) {
+      toast.error('You must fill in all fields!');
+      return;
+    } else if (password !== confirmPassword) {
+      toast.error('The password must be the same');
+      return;
+    }
     // Clerk
     console.log('Register:', { name, email, password, confirmPassword });
+    toast.success('Registration completed successfully');
   };
 
   return (
     <div className={style.register}>
       <Card variant='auth'>
+        <ToastContainer position='top-right' autoClose={3000} />
         <div className={style.logo}>
           <img src={Logo} alt='Game List' />
         </div>

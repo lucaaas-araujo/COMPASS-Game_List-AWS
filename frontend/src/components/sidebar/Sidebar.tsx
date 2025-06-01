@@ -27,7 +27,7 @@ const Sidebar: React.FC = () => {
       <button
         className={styles.toggleBtn}
         onClick={toggleSidebar}
-        style={{ left: isOpen ? '300px' : '80px' }}
+        style={{ left: isOpen ? '285px' : '75px' }}
         aria-label='Toggle sidebar'>
         <img
           src={arrow}

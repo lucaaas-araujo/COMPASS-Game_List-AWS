@@ -2,7 +2,7 @@
   margin: 0;
   height: 100vh;
   background-color: var(--grayform);
-  background-image: url('../../assets/wallpaper.svg');
+  background-image: url('../../../assets/wallpaper.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -44,12 +44,12 @@
 
 .btnlogin {
   border-style: none;
-  padding: 10px 0;
+  padding: 8px 0;
+  border: 2px solid var(--turquoise);
 }
 
 .btnlogin:hover {
-  background-color: var(--darkgray);
-  outline: 2px solid var(--turquoise);
+  background-color: #42d9c725;
 }
 
 .footer {

@@ -3,10 +3,10 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 
 import Layout from './components/Layout';
-import { Login } from './pages/login/Login';
-import { Register } from './pages/register/Register';
+import { Login } from './pages/auth/login/Login';
+import { Register } from './pages/auth/register/Register';
 import { Categories } from './pages/Categories';
-import { Games } from './pages/Games';
+import { Games } from './pages/games/Games';
 
 function App() {
   return (
