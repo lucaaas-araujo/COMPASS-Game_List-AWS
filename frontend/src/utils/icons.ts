@@ -16,6 +16,7 @@ import logoutHover from '../assets/logout-hover.svg';
 import logout from '../assets/logout.svg';
 import categoryHover from '../assets/pricetag-hover.svg';
 import category from '../assets/pricetag.svg';
+import starHome from "../assets/star_home.svg"
 
 export {
   arrow,
@@ -36,4 +37,5 @@ export {
   star,
   starFilled,
   trash,
+  starHome
 };
