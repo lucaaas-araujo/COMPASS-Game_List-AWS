@@ -23,6 +23,10 @@ const getDeleteMessage = (type: DeleteType): string => {
   }
 };
 
+const getDeleteButtonLabel = (type: DeleteType): string => {
+  return `Yes, delete this ${type}`;
+};
+
 const DeleteModal: React.FC<DeleteModalProps> = ({ type, onCancel, onDelete }) => {
   return (
     <div className={styles.overlay}>
@@ -40,7 +44,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ type, onCancel, onDelete }) =
             No, cancel action
           </button>
           <button className={styles.deleteBtn} onClick={onDelete}>
-            Yes, delete this
+            {getDeleteButtonLabel(type)}
           </button>
         </div>
       </div>
