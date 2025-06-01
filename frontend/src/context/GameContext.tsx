@@ -14,7 +14,7 @@ export function GameProvider({ children }: GameProviderProps) {
   const [gameCount, setGameCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const userId = '123456';
+  const userId = '683851eeebf3ec3283664b14';
 
   const getAll = async () => {
     try {
@@ -57,10 +57,13 @@ export function GameProvider({ children }: GameProviderProps) {
 
   const update = async (gameData: GameProps): Promise<void> => {
     try {
+      setLoading(true);
       await api.put(`/game/${userId}`, { gameData });
+      setLoading(false);
     } catch (error) {
       console.error('Error updating game:', error);
-      throw error;
+      setError(true);
+      setLoading(false);
     }
   };
 
