@@ -4,7 +4,7 @@ import './App.css';
 import Layout from './components/Layout';
 import { Login } from './pages/auth/login/Login';
 import { Register } from './pages/auth/register/Register';
-import { Categories } from './pages/Categories';
+import { Categories } from './pages/categories/Categories';
 import { Games } from './pages/Games';
 import { Home } from './pages/home/Home';
 
