@@ -1,5 +1,5 @@
-import styles from './homeCard.module.css';
-import { Button } from '../ui/button/button';
+import styles from './HomeCard.module.css';
+import { Button } from '../ui/button/Button';
 
 type HomeCardProps = {
   icon?: string;

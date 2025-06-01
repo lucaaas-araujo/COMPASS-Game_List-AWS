@@ -3,8 +3,8 @@ import { Button } from '../ui/button/Button';
 import style from './Header.module.css';
 
 type HeaderProps = HTMLAttributes<HTMLElement> & {
-  title: string;
-  buttonText: string;
+  title?: string;
+  buttonText?: string;
 };
 
 export function Header({ title, buttonText, children, ...props }: HeaderProps) {

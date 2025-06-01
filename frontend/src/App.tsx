@@ -6,7 +6,7 @@ import { Login } from './pages/auth/login/Login';
 import { Register } from './pages/auth/register/Register';
 import { Categories } from './pages/Categories';
 import { Games } from './pages/Games';
-import { Home } from './pages/Home';
+import { Home } from './pages/home/Home';
 
 function App() {
   return (

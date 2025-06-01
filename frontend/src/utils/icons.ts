@@ -39,6 +39,6 @@ export {
   star,
   starFilled,
   trash,
-  starHome
+  starHome,
   x,
 };
