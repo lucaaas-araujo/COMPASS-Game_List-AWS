@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react';
-import { Button } from '../ui/button/button';
+import { Button } from '../ui/button/Button';
 import style from './Header.module.css';
 
 type HeaderProps = HTMLAttributes<HTMLElement> & {

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Input } from '../ui/input/input';
-import { Button } from '../ui/button/button';
-import style from './Filterbar.module.css';
-import { Select, SelectItem } from '../ui/select/Select';
 import search from '../../assets/search.svg';
 import { categoryServices } from '../../services'; // ajuste o caminho
+import { Button } from '../ui/button/Button';
+import { Input } from '../ui/input/Input';
+import { Select, SelectItem } from '../ui/select/Select';
+import style from './Filterbar.module.css';
 
 type Props = {
   onSearch: (filters: FiltersState) => void;

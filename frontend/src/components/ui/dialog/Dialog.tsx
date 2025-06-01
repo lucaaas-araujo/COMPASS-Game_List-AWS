@@ -3,7 +3,7 @@ import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
 import { DialogProvider } from '../../../context/DialogContext';
 import { useDialog } from '../../../hooks/useDialog';
 import { x } from '../../../utils/icons';
-import style from './dialog.module.css';
+import style from './Dialog.module.css';
 
 type DialogProps = { children: ReactNode };
 type DialogHeader = HTMLAttributes<HTMLDivElement>;
