@@ -8,12 +8,14 @@ type UserProviderProps = {
 };
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState<UserProps>({
+  const initialData = {
     full_name: '',
     email: '',
     password: '',
     confirm_password: '',
-  });
+  };
+
+  const [user, setUser] = useState<UserProps>(initialData);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -51,8 +53,17 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
+  const logout = () => {
+    setUser(initialData);
+    setError(false);
+    setLoading(false);
+    localStorage.removeItem('loggedin');
+    location.href = '/login';
+  };
+
   return (
-    <UserContext.Provider value={{ user, login, register, error, loading }}>
+    <UserContext.Provider
+      value={{ user, login, register, logout, error, loading }}>
       {children}
     </UserContext.Provider>
   );
