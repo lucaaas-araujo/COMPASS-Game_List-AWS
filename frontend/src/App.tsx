@@ -12,7 +12,8 @@ import { Register } from './pages/auth/register/Register';
 import { Categories } from './pages/Categories/Categories';
 import { Games } from './pages/Games';
 import { Home } from './pages/home/Home';
-import { Platform } from './pages/platform/Platform';
+import { Plataforms } from './pages/platforms/Platforms';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(

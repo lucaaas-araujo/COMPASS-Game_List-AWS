@@ -34,9 +34,10 @@ export const Platform = () => {
   ];
 
   return (
-    <div>
+    <div >
       <div className={styles.platform}>
         <HeaderList fields={headers} onSortClick={handleSortClick} />
+        
         {platformList.map((platform) => (
           <ListItems
             key={platform.id}
