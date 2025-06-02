@@ -1,8 +1,8 @@
 import { useEffect, useState, type ChangeEvent } from 'react';
+import { Select, SelectItem, SelectGroup } from '../ui/select/Select';
 import search from '../../assets/search.svg';
 import { Button } from '../ui/button/Button';
 import { Input } from '../ui/input/Input';
-import { Select, SelectItem, SelectGroup } from '../ui/select/Select';
 import style from './Filterbar.module.css';
 import { useCategory } from '../../hooks/useCategory';
 

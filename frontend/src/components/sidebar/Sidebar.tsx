@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSidebar } from '../../context/SidebarContext';
 
 import {
   arrow,
@@ -18,6 +17,7 @@ import {
   platform,
 } from '../../utils/icons';
 import styles from './Sidebar.module.css';
+import { useSidebar } from '../../hooks/useSidebar';
 
 const Sidebar: React.FC = () => {
   const { isOpen, toggleSidebar } = useSidebar();

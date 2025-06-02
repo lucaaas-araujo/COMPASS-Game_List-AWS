@@ -18,6 +18,7 @@ import star from '../assets/star.svg';
 import starFilled from '../assets/star_filled.svg';
 import trash from '../assets/trash.svg';
 import x from '../assets/x.svg';
+import warning from '../assets/warning.svg'
 
 export {
   arrow,
@@ -41,4 +42,5 @@ export {
   trash,
   starHome,
   x,
+  warning,
 };
