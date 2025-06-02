@@ -9,10 +9,10 @@ import './App.css';
 import Layout from './components/Layout';
 import { Login } from './pages/auth/login/Login';
 import { Register } from './pages/auth/register/Register';
-import { Categories } from './pages/Categories/Categories';
+import { Category } from './pages/category/Category';
 import { Games } from './pages/Games';
 import { Home } from './pages/home/Home';
-import { Plataforms } from './pages/platforms/Platforms';
+import { Platform } from './pages/platform/Platform';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,7 +23,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         {/* <Route path='/games' element={<Games />} loader={requireAuth} /> */}
         <Route path='/games' element={<Games />} />
-        <Route path='/categories' element={<Categories />} />
+        <Route path='/categories' element={<Category />} />
         <Route path='/platforms' element={<Platform />} />
       </Route>
     </Route>,
