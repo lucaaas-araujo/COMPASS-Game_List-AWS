@@ -1,14 +1,23 @@
 .filtercontainer {
   display: flex;
-  align-items: 'center';
-  color: var(--white);
+  align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
   width: 100%;
+  gap: 12px;
 }
 
 .querys {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.querys > select,
+input {
+  flex: 1 1 155px;
+  max-width: 212px;
+  min-width: 155px;
 }
 
 .filtercontainer h3 {
@@ -20,6 +29,7 @@
   display: flex;
   gap: 12px;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .searchbtn {
@@ -28,4 +38,37 @@
 
 .buttons img {
   margin: auto 2px;
+}
+
+@media (max-width: 1080px) {
+  .filtercontainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .buttons {
+    align-self: flex-end;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 345px) {
+  .querys h3 {
+    width: 212px;
+  }
+  .querys {
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .querys > input,
+  select {
+    width: 212px;
+  }
+
+  .buttons {
+    width: 212px;
+    justify-content: space-between;
+  }
 }

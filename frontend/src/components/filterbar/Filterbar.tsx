@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Select, SelectItem, SelectGroup } from '../ui/select/Select';
 import search from '../../assets/search.svg';
 import { categoryServices } from '../../services'; // ajuste o caminho
 import { Button } from '../ui/button/Button';
 import { Input } from '../ui/input/Input';
-import { Select, SelectItem } from '../ui/select/Select';
 import style from './Filterbar.module.css';
 
 type Props = {
@@ -14,14 +14,14 @@ type Props = {
 export type FiltersState = {
   search: string;
   category: string;
-  favorite: boolean;
+  favorite: string;
 };
 
 export const GameFilters = ({ onSearch, onClear }: Props) => {
   const [filters, setFilters] = useState<FiltersState>({
     search: '',
     category: '',
-    favorite: false,
+    favorite: '',
   });
 
   const [categories, setCategories] = useState<string[]>([]);
@@ -54,7 +54,7 @@ export const GameFilters = ({ onSearch, onClear }: Props) => {
   };
 
   const handleClear = () => {
-    setFilters({ search: '', category: '', favorite: false });
+    setFilters({ search: '', category: '', favorite: '' });
     onClear();
   };
 
@@ -78,21 +78,23 @@ export const GameFilters = ({ onSearch, onClear }: Props) => {
           onChange={handleChange}>
           <SelectItem value=''>Select Category</SelectItem>
           {categories.map((cat) => (
-            <SelectItem key={cat} value={cat}>
-              {cat}
-            </SelectItem>
+            <SelectGroup>
+              <SelectItem key={cat} value={cat}>
+                {cat}
+              </SelectItem>
+            </SelectGroup>
           ))}
         </Select>
 
-        <label style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-          <input
-            type='checkbox'
-            name='favorite'
-            checked={filters.favorite}
-            onChange={handleChange}
-          />
-          Favorite
-        </label>
+        <Select
+          name='favorite'
+          variant='default'
+          value={filters.favorite}
+          onChange={handleChange}>
+          <SelectItem value=''>Favorite status</SelectItem>
+          <SelectItem value='true'>Yes</SelectItem>
+          <SelectItem value='false'>No</SelectItem>
+        </Select>
       </div>
 
       <div className={style.buttons}>
