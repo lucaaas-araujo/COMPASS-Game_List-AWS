@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ChangeEvent } from 'react';
 import { Select, SelectItem, SelectGroup } from '../ui/select/Select';
 import search from '../../assets/search.svg';
-import { categoryServices } from '../../services'; // ajuste o caminho
 import { Button } from '../ui/button/Button';
 import { Input } from '../ui/input/Input';
 import style from './Filterbar.module.css';
+import { useCategory } from '../../hooks/useCategory';
 
 type Props = {
   onSearch: (filters: FiltersState) => void;
@@ -24,28 +24,33 @@ export const GameFilters = ({ onSearch, onClear }: Props) => {
     favorite: '',
   });
 
+  const { getAll, allCategories } = useCategory();
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const result = await categoryServices.getAll();
-      const names = result.map((cat: { name: string }) => cat.name); // adaptável
-      setCategories(names);
+      try {
+        await getAll();
+        const names = allCategories.map((cat: { name: string }) => cat.name);
+        setCategories(names);
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+      }
     };
 
     fetchCategories();
-  }, []);
+  }, [getAll, allCategories]); // Adicionei as dependências
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value, type } = e.target;
-    const newValue =
-      type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    const checked =
+      type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
 
     setFilters((prev) => ({
       ...prev,
-      [name]: newValue,
+      [name]: checked !== undefined ? checked.toString() : value,
     }));
   };
 
@@ -77,13 +82,13 @@ export const GameFilters = ({ onSearch, onClear }: Props) => {
           variant='default'
           onChange={handleChange}>
           <SelectItem value=''>Select Category</SelectItem>
-          {categories.map((cat) => (
-            <SelectGroup>
+          <SelectGroup>
+            {categories.map((cat) => (
               <SelectItem key={cat} value={cat}>
                 {cat}
               </SelectItem>
-            </SelectGroup>
-          ))}
+            ))}
+          </SelectGroup>
         </Select>
 
         <Select

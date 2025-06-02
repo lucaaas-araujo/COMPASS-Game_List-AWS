@@ -29,7 +29,6 @@ export const Register = () => {
       toast.error('The password must be the same');
       return;
     }
-    // Clerk
     console.log('Register:', { name, email, password, confirmPassword });
     toast.success('Registration completed successfully');
   };

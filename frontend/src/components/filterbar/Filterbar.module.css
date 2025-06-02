@@ -8,16 +8,10 @@
 }
 
 .querys {
+  width: 65%;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 18px;
-}
-
-.querys > select,
-input {
-  flex: 1 1 155px;
-  max-width: 212px;
-  min-width: 155px;
 }
 
 .filtercontainer h3 {

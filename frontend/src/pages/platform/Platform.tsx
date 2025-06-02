@@ -3,9 +3,7 @@ import { Header } from '../../components/header/Header';
 import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
 import  DeleteModal  from '../components/DeleteModal'; 
-
 import { EditPlatform } from './forms/update/UpdatePlatform';
-
 import styles from './Platform.module.css';
 import epic from '../../images/epic.svg';
 import mario from '../../images/mario.svg';
@@ -88,7 +86,6 @@ export const Platform = () => {
     onDeleteClick={() => setPlatformToDelete(platform.id)}
   />
 ))}
-
       </div>
     </div>
   );
