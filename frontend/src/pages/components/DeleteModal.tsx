@@ -1,6 +1,9 @@
 import React from 'react';
 import styles from './DeleteModal.module.css';
 import { warning } from '../../utils/icons';
+import { Button } from '../../components/ui/button/Button';
+import { DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '../../components/ui/dialog/Dialog';
+
 
 type DeleteType = 'platform' | 'category' | 'game';
 
@@ -29,26 +32,30 @@ const getDeleteButtonLabel = (type: DeleteType): string => {
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ type, onCancel, onDelete }) => {
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <button className={styles.closeBtn} onClick={onCancel}>
-          ×
-        </button>
-        <div className={styles.iconWrapper}>
-          <img src={warning} alt="Warning" />
-        </div>
-        <h2 className={styles.title}>Are you sure?</h2>
-        <p className={styles.message}>{getDeleteMessage(type)}</p>
-        <div className={styles.actions}>
-          <button className={styles.cancelBtn} onClick={onCancel}>
-            No, cancel action
-          </button>
-          <button className={styles.deleteBtn} onClick={onDelete}>
-            {getDeleteButtonLabel(type)}
-          </button>
-        </div>
+    <DialogContent className={styles.modal}>
+       <div className={styles.iconWrapper}>
+        <img src={warning} alt="Warning" />
       </div>
-    </div>
+      <DialogHeader>
+        <DialogTitle className={styles.title}>Are you sure?</DialogTitle>
+        <DialogClose onClick={onCancel} className={styles.closeBtn}>
+          ×
+        </DialogClose>
+      </DialogHeader>
+      
+     
+      
+      <p className={styles.message}>{getDeleteMessage(type)}</p>
+      
+      <DialogFooter className={styles.actions}>
+        <Button className={styles.cancelBtn} onClick={onCancel}>
+          No, cancel action
+        </Button>
+        <Button className={styles.deleteBtn} onClick={onDelete}>
+          {getDeleteButtonLabel(type)}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
   );
 };
 
