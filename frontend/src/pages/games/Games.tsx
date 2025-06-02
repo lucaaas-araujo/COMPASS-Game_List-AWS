@@ -19,7 +19,7 @@ export function Games() {
   ];
 
   return (
-    <div className={style.game}>
+    <div className={style.gamepage}>
       <Header title='Games' buttonText='New Game'>
         <GameFilters onSearch={getAll} onClear={getAll} />
       </Header>

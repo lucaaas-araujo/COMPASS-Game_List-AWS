@@ -5,6 +5,7 @@ import {
   DialogClose,
   DialogFooter,
 } from '../../../../components/ui/dialog/Dialog';
+import { Label } from '../../../../components/ui/label/Label';
 import { Input } from '../../../../components/ui/input/Input';
 import { useState } from 'react';
 import { Button } from '../../../../components/ui/button/Button';
@@ -64,9 +65,9 @@ export const CreateGame = () => {
 
         <form className={style.form} onSubmit={handleSubmit}>
           <div className={style.formGroup}>
-            <label>
-              Title<span className={style.required}>*</span>
-            </label>
+            <Label asterisk htmlFor='title'>
+              Title
+            </Label>
             <div>
               <Input
                 placeholder='Mario Kart 8'
@@ -77,7 +78,9 @@ export const CreateGame = () => {
           </div>
 
           <div className={style.formGroup}>
-            <label>Description</label>
+            <Label asterisk htmlFor='description'>
+              Description
+            </Label>
             <div>
               <textarea
                 placeholder='Amazing game'
@@ -91,9 +94,9 @@ export const CreateGame = () => {
           <div className={style.containerData}>
             <div className={style.containerRow}>
               <div className={style.formGroup}>
-                <label htmlFor='category'>
-                  Category <span className={style.required}>*</span>
-                </label>
+                <Label asterisk htmlFor='category'>
+                  Category
+                </Label>
                 <Select
                   variant='modal'
                   value={category}
@@ -104,9 +107,9 @@ export const CreateGame = () => {
                 </Select>
               </div>
               <div className={style.formGroup}>
-                <label htmlFor='plataform'>
-                  Plataform <span className={style.required}>*</span>
-                </label>
+                <Label asterisk htmlFor='plataform'>
+                  Plataform
+                </Label>
                 <Select
                   variant='modal'
                   value={plataform}
@@ -120,9 +123,9 @@ export const CreateGame = () => {
 
             <div className={style.containerRow}>
               <div className={style.formGroup}>
-                <label htmlFor='acquisition_date'>
-                  Acquisition date <span className={style.required}>*</span>
-                </label>
+                <Label asterisk htmlFor='acquisition_date'>
+                  Acquisition date
+                </Label>
                 <div>
                   <Input
                     type='date'
@@ -133,9 +136,9 @@ export const CreateGame = () => {
                 </div>
               </div>
               <div className={style.formGroup}>
-                <label htmlFor='finish_date'>
-                  Finish Date <span className={style.required}>*</span>
-                </label>
+                <Label asterisk htmlFor='finish_date'>
+                  Finish Date
+                </Label>
                 <div>
                   <Input
                     type='date'
@@ -149,9 +152,9 @@ export const CreateGame = () => {
 
             <div className={style.containerRow}>
               <div className={style.formGroup}>
-                <label htmlFor='status'>
-                  Status <span className={style.required}>*</span>
-                </label>
+                <Label asterisk htmlFor='status'>
+                  Status
+                </Label>
                 <Select
                   variant='modal'
                   value={status}
@@ -172,14 +175,18 @@ export const CreateGame = () => {
                       onChange={(e) => setStatus(e.target.value)}
                     />
                   </div>
-                  <label htmlFor='favorite'>Favorite</label>
+                  <Label asterisk htmlFor='favorite'>
+                    Favorite
+                  </Label>
                 </div>
               </div>
             </div>
           </div>
 
           <div className={style.formGroup}>
-            <label htmlFor='image_url'>Imagem (URL)</label>
+            <Label htmlFor='image_url' asterisk>
+              Imagem (URL)
+            </Label>
             <div>
               <Input
                 type='text'
