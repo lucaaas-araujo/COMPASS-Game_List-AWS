@@ -29,10 +29,6 @@ export function EditCategory() {
             
             <Label asterisk>Title</Label>
 
-            <label>
-              Title<span className={style.required}>*</span>
-            </label>
-
             <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
 

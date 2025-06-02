@@ -49,11 +49,6 @@
   padding: 8px;
 }
 
-.required {
-  color: var(--alert);
-  margin-left: 4px;
-}
-
 label {
   font-size: 14px;
   font-weight: 400;
