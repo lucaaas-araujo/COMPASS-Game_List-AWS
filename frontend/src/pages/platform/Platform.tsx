@@ -1,6 +1,9 @@
 import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
-import styles from './Platform.module.css'
+// import { Delete } from './form/Delete';
+// import { Details } from './form/Details';
+// import { Edit } from './form/Edit';
+import styles from './Platform.module.css';
 
 export const Platform = () => {
   const headers = [
@@ -34,7 +37,7 @@ export const Platform = () => {
     <div >
       <div className={styles.platform}>
         <HeaderList fields={headers} onSortClick={handleSortClick} />
-
+        
         {platformList.map((platform) => (
           <ListItems
             key={platform.id}
@@ -42,13 +45,13 @@ export const Platform = () => {
             camp1={platform.name}
             camp2={platform.category}
             camp3={platform.createdAt}
-            iconView
+            iconDetails
             iconEdit
             iconDelete
             iconStar
-            onViewClick={() => console.log('View', platform.id)}
-            onEditClick={() => console.log('Edit', platform.id)}
-            onDeleteClick={() => console.log('Delete', platform.id)}
+            // detailsForm={<Details data={platform} />}
+            // editForm={<Edit data={platform} />}
+            // deleteForm={<Delete data={platform} />}
             onStarClick={() => console.log('Star', platform.id)}
           />
         ))}
