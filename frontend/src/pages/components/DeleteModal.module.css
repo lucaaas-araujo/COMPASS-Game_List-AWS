@@ -1,0 +1,84 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal {
+  background: white;
+  padding: 76px 117px;
+  width: 750px;
+  height: 516px;
+  position: relative;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.closeBtn {
+  color: var(--black);
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  background: transparent;
+  border: none;
+  font-size: 34px;
+  cursor: pointer;
+  font-weight: 300;
+}
+
+.iconWrapper {
+  width: 176px;
+  height: 176px;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 15px;
+  margin-bottom: 12px;
+  color: var(--black);
+}
+
+.message {
+  font-size: 20px;
+  color: var(--black);
+  font-weight: 400;
+  margin-bottom: 50px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 49px;
+}
+
+.cancelBtn {
+  font-size: 13px;
+  padding: 8px 12px;
+  border: 1px solid var(--black);
+  border-radius: 8px;
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+.deleteBtn {
+  font-size: 13px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--alert);
+  color: var(--white);
+  font-weight: 500;
+  cursor: pointer;
+}
