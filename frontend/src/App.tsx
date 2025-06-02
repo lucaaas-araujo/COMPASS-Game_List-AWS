@@ -14,7 +14,6 @@ import { Games } from './pages/Games';
 import { Home } from './pages/home/Home';
 import { Plataforms } from './pages/platforms/Platforms';
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
