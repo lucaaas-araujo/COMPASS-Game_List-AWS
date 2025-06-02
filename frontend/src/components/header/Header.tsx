@@ -1,18 +1,27 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { Button } from '../ui/button/Button';
 import style from './Header.module.css';
 import { arrow } from '../../utils/icons';
 import { useSidebar } from '../../hooks/useSidebar';
+import { Dialog, DialogTrigger } from '../ui/dialog/Dialog';
 
 type HeaderProps = HTMLAttributes<HTMLElement> & {
   title?: string;
   buttonText?: string;
   hiddenButton?: boolean;
   hiddenLine?: boolean;
+  createForm?: ReactNode;
 };
 
-export function Header({ title, buttonText, children, hiddenButton, hiddenLine, ...props }: HeaderProps) {
-  
+export function Header({
+  title,
+  buttonText,
+  children,
+  hiddenButton,
+  hiddenLine,
+  createForm,
+  ...props
+}: HeaderProps) {
   const { isOpen, toggleSidebar } = useSidebar();
 
   return (
@@ -32,9 +41,16 @@ export function Header({ title, buttonText, children, hiddenButton, hiddenLine, 
         <h1 className={style.title}>{title}</h1>
       </div>
 
-      { !hiddenButton && <Button>{buttonText}</Button>}
+      {!hiddenButton && (
+        <Dialog>
+          <DialogTrigger>
+            <Button>{buttonText}</Button>
+          </DialogTrigger>
+          {createForm}
+        </Dialog>
+      )}
       {children}
-      { !hiddenLine && <div className={style.line}></div>}
+      {!hiddenLine && <div className={style.line}></div>}
     </header>
   );
 }
