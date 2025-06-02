@@ -4,7 +4,20 @@ import jwt from 'jsonwebtoken';
 import { userServices } from '@/services';
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { authorization } = req.headers;
+
+  if (!authorization || !authorization.startsWith('Basic ')) {
+    res.status(401).json({ message: 'Token não fornecido.' });
+    return;
+  }
+
+  const [_type, base64Credentials] = authorization.split(' ');
+
+  const credentials = Buffer.from(base64Credentials, 'base64').toString(
+    'utf-8',
+  );
+
+  const [email, password] = credentials.split(':');
 
   const user = await userServices.login(email);
 
