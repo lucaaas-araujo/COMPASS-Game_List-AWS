@@ -1,8 +1,8 @@
 import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
-import { Delete } from './form/Delete';
-import { Details } from './form/Details';
-import { Edit } from './form/Edit';
+// import { Delete } from './form/Delete';
+// import { Details } from './form/Details';
+// import { Edit } from './form/Edit';
 import styles from './Platform.module.css';
 
 export const Platform = () => {
@@ -48,9 +48,9 @@ export const Platform = () => {
             iconEdit
             iconDelete
             iconStar
-            detailsForm={<Details data={platform} />}
-            editForm={<Edit data={platform} />}
-            deleteForm={<Delete data={platform} />}
+            // detailsForm={<Details data={platform} />}
+            // editForm={<Edit data={platform} />}
+            // deleteForm={<Delete data={platform} />}
             onStarClick={() => console.log('Star', platform.id)}
           />
         ))}
