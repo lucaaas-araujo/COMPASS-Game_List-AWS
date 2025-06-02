@@ -8,7 +8,7 @@ import type {
 import style from './Select.module.css';
 
 type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
-  variant?: 'modal' | 'default';
+  variant?: 'modal' | 'default' | 'disable';
 };
 type SelectItemProps = OptionHTMLAttributes<HTMLOptionElement>;
 type SelectGroupProps = OptgroupHTMLAttributes<HTMLOptGroupElement>;
