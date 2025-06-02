@@ -9,6 +9,7 @@ import {
 import { Input } from '../../../../components/ui/input/Input';
 
 import { useState } from 'react';
+import { Label } from '../../../../components/ui/label/Label';
 import style from './UpdateCategories.module.css';
 
 export function EditCategory() {
@@ -25,9 +26,13 @@ export function EditCategory() {
 
         <form className={style.form}>
           <div className={style.formGroup}>
+            
+            <Label asterisk>Title</Label>
+
             <label>
               Title<span className={style.required}>*</span>
             </label>
+
             <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
 
