@@ -1,30 +1,14 @@
-import { useEffect } from 'react';
-import { gameServices } from '../../services';
 import { Header } from '../../components/header/Header';
-import {
-  GameFilters,
-  type FiltersState,
-} from '../../components/filterbar/Filterbar';
+import { GameFilters } from '../../components/filterbar/Filterbar';
 import style from './Games.module.css';
 import HeaderList from '../../components/ui/headerList/HeaderList';
-
+import { useGame } from '../../hooks/useGame';
+import { Dialog, DialogTrigger } from '../../components/ui/dialog/Dialog';
+import { CreateGame } from './forms/create/Create';
+import { UpdateGame } from './forms/update/Update';
+import { DetailsGame } from './forms/details/Details';
 export function Games() {
-  const result = async () => {
-    const getAll = await gameServices.getAll();
-    console.log(getAll);
-  };
-
-  useEffect(() => {
-    result();
-  }, []);
-
-  const handleSearch = (newFilters: FiltersState) => {
-    return;
-  };
-
-  const handleClear = () => {
-    return;
-  };
+  const { getAll } = useGame();
 
   const headerFields = [
     { key: 'title', label: 'Title' },
@@ -37,9 +21,22 @@ export function Games() {
   return (
     <div className={style.game}>
       <Header title='Games' buttonText='New Game'>
-        <GameFilters onSearch={handleSearch} onClear={handleClear} />
+        <GameFilters onSearch={getAll} onClear={getAll} />
       </Header>
-      <HeaderList fields={headerFields}></HeaderList>
+      <Dialog>
+        <DialogTrigger>New Game</DialogTrigger>
+        <CreateGame />
+      </Dialog>
+      <Dialog>
+        <DialogTrigger>Update Game</DialogTrigger>
+        <UpdateGame />
+      </Dialog>
+      <Dialog>
+        <DialogTrigger>Details Game</DialogTrigger>
+        <DetailsGame />
+      </Dialog>
+      <HeaderList fields={headerFields} />
+      {/* Games Here */}
     </div>
   );
 }

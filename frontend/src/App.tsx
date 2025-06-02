@@ -5,7 +5,7 @@ import Layout from './components/Layout';
 import { Login } from './pages/auth/login/Login';
 import { Register } from './pages/auth/register/Register';
 import { Categories } from './pages/Categories';
-import { Games } from './pages/Games';
+import { Games } from './pages/games/Games';
 import { Home } from './pages/home/Home';
 import { Platform } from './pages/platform/Platform';
 
