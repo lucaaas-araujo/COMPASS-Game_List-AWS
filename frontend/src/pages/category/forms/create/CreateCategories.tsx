@@ -10,6 +10,7 @@ import { Input } from '../../../../components/ui/input/Input';
 import { useState } from 'react';
 import style from './CreateCategories.module.css';
 import { Textarea } from '../../../../components/ui/textarea/Textarea';
+import { Label } from "../../../../components/ui/label/Label"
 
 export function NewCategory() {
   const [title, setTitle] = useState('');
@@ -25,9 +26,7 @@ export function NewCategory() {
 
         <form className={style.form}>
           <div className={style.formGroup}>
-            <label>
-              Title<span className={style.required}>*</span>
-            </label>
+            <Label asterisk>Title</Label>
             <Input
               placeholder='Mario Kart 8'
               value={title}
