@@ -2,7 +2,7 @@ import { Header } from '../../components/header/Header';
 import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
 
-import styles from './Categories.module.css';
+import styles from './Category.module.css';
 import { EditCategory } from './forms/update/UpdateCategories';
 
 export function Category() {
