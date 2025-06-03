@@ -12,24 +12,29 @@ import {
   CardTitle,
 } from '../../../components/ui/card/Card';
 import { Input } from '../../../components/ui/input/Input';
+import { Label } from '../../../components/ui/label/Label';
 import style from './Register.module.css';
+import { useUser } from '../../../hooks/useUser';
 
 export const Register = () => {
-  const [name, setName] = useState('');
+  const [full_name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirm_password, setConfirmPassword] = useState('');
+  const { register } = useUser();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !password || !confirmPassword) {
+    if (!full_name || !email || !password || !confirm_password) {
       toast.error('You must fill in all fields!');
       return;
-    } else if (password !== confirmPassword) {
+    } else if (password !== confirm_password) {
       toast.error('The password must be the same');
       return;
     }
-    console.log('Register:', { name, email, password, confirmPassword });
+
+    register({ full_name, email, password, confirm_password });
+
     toast.success('Registration completed successfully');
   };
 
@@ -51,19 +56,19 @@ export const Register = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className={style.form}>
             <div className={style.content}>
-              <label htmlFor='name'>Full Name</label>
+              <Label htmlFor='full_name'>Full Name</Label>
               <Input
-                id='name'
+                id='full_name'
                 variant='squared'
                 type='text'
                 placeholder='Enter your name'
-                value={name}
+                value={full_name}
                 style={{ width: 'auto' }}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className={style.content}>
-              <label htmlFor='email'>Email</label>
+              <Label htmlFor='email'>Email</Label>
               <Input
                 id='email'
                 variant='squared'
@@ -75,7 +80,7 @@ export const Register = () => {
               />
             </div>
             <div className={style.content}>
-              <label htmlFor='password'>Password</label>
+              <Label htmlFor='password'>Password</Label>
               <Input
                 id='password'
                 type='password'
@@ -87,13 +92,13 @@ export const Register = () => {
               />
             </div>
             <div className={style.content}>
-              <label htmlFor='password'>Confirm Password</label>
+              <Label htmlFor='password'>Confirm Password</Label>
               <Input
-                id='confirmPassword'
+                id='confirm_password'
                 type='password'
                 variant='squared'
                 placeholder='Confirm your password'
-                value={confirmPassword}
+                value={confirm_password}
                 style={{ width: 'auto' }}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

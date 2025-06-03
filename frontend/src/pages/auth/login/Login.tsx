@@ -12,23 +12,24 @@ import {
 } from '../../../components/ui/card/Card';
 import { Input } from '../../../components/ui/input/Input';
 import { logo } from '../../../utils/icons';
+import { Label } from '../../../components/ui/label/Label';
+import { useUser } from '../../../hooks/useUser';
 import style from './Login.module.css';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useUser();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
       toast.error('You must fill in all fields!');
       return;
     }
-    // Clerk
-    console.log('Login:', { email, password });
-    toast.success('Login successful!');
+    const result = await login({ email, password });
+    console.log(result);
   };
-
   return (
     <div className={style.login}>
       <ToastContainer position='top-right' autoClose={3000} />
@@ -47,7 +48,7 @@ export const Login = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className={style.form}>
             <div className={style.content}>
-              <label htmlFor='email'>Email</label>
+              <Label htmlFor='email'>Email</Label>
               <Input
                 id='email'
                 variant='squared'
@@ -59,7 +60,7 @@ export const Login = () => {
               />
             </div>
             <div className={style.content}>
-              <label htmlFor='password'>Password</label>
+              <Label htmlFor='password'>Password</Label>
               <Input
                 id='password'
                 type='password'
@@ -87,7 +88,3 @@ export const Login = () => {
     </div>
   );
 };
-
-/*  if(!email || password!){
-      const notify = () => { toast.error('You must fill in all the spaces!')}
-    } */
