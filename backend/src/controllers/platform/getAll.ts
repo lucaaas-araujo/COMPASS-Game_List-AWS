@@ -1,15 +1,12 @@
 import { RequestHandler } from 'express';
 
-import { gameServices } from '@/services/game';
+import { platformServices } from '@/services';
 
 type Query = {
-  per_page?: string;
-  page?: string;
-  title?: string;
-  category?: string;
-  favorite?: string;
-  sort?: string;
-  dir?: 'asc' | 'desc';
+  per_page: number;
+  page: number;
+  sort: string;
+  dir: 'asc' | 'desc';
 };
 
 type Locals = {
@@ -18,11 +15,6 @@ type Locals = {
     page: number;
     sort: string;
     dir: 'asc' | 'desc';
-  };
-  filters: {
-    title?: string;
-    category?: string;
-    favorite?: boolean;
   };
   user: {
     user_id: string;
@@ -40,19 +32,13 @@ type GetAllValidatorProps = RequestHandler<
 >;
 
 export const getAllValidator: GetAllValidatorProps = (req, res, next) => {
-  const { per_page, page, sort, dir, title, category, favorite } = req.query;
+  const { per_page, page, sort, dir } = req.query;
 
   const _per_page = typeof per_page === 'string' ? Number(per_page) : 10;
   const _page = typeof page === 'string' ? Number(page) : 1;
   const _sort = typeof sort === 'string' ? sort : 'title';
   const _dir = typeof dir === 'string' ? dir : 'asc';
   const _dirBoolean = _dir === 'asc' || _dir === 'desc' ? _dir : 'asc';
-
-  const _title = typeof title === 'string' ? title : undefined;
-  const _category = typeof category === 'string' ? category : undefined;
-  const _favorite = typeof favorite === 'string' ? favorite : undefined;
-  const _favoriteBoolean =
-    _favorite === 'true' ? true : _favorite === 'false' ? false : undefined;
 
   res.locals.pagination = {
     per_page: _per_page,
@@ -61,35 +47,25 @@ export const getAllValidator: GetAllValidatorProps = (req, res, next) => {
     dir: _dirBoolean,
   };
 
-  res.locals.filters = {
-    title: _title,
-    category: _category,
-    favorite: _favoriteBoolean,
-  };
-
   next();
 };
 
 export const getAll: GetAllProps = async (req, res) => {
   const { user_id } = res.locals.user;
   const { per_page, page, sort, dir } = res.locals.pagination;
-  const { title, category, favorite } = res.locals.filters;
 
-  const games = await gameServices.getAll({
+  const platform = await platformServices.getAll({
     user_id,
     per_page,
     page,
-    title,
-    category,
-    favorite,
     sort,
     dir,
   });
 
-  if (games instanceof Error) {
-    res.status(400).json({ Error: games.message });
+  if (platform instanceof Error) {
+    res.status(400).json({ Error: platform.message });
     return;
   }
 
-  res.status(200).json({ games });
+  res.status(200).json(platform);
 };

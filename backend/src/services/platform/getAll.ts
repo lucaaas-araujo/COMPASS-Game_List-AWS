@@ -1,6 +1,6 @@
-import Category from '@/models/category';
+import Platform from '@/models/platform';
 
-type GetAllCategoryProps = {
+type GetAllPlatformProps = {
   user_id: string;
   per_page: number;
   page: number;
@@ -14,7 +14,7 @@ export const getAll = async ({
   page,
   sort,
   dir,
-}: GetAllCategoryProps) => {
+}: GetAllPlatformProps) => {
   const skip = (page - 1) * per_page;
 
   const filters = {
@@ -23,14 +23,14 @@ export const getAll = async ({
   };
 
   try {
-    const categories = await Category.find(filters)
+    const platform = await Platform.find(filters)
       .limit(per_page)
       .skip(skip)
       .sort({ [sort]: dir });
 
-    return categories;
+    return platform;
   } catch (error) {
-    console.log(`GET_ALL_CATEGORIES: ${error}`);
-    return new Error('Error returning categories');
+    console.log(`GET_ALL_PLATFORM: ${error}`);
+    return new Error('Error returning platforms');
   }
 };
