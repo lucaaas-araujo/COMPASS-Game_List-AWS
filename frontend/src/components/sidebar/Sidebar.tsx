@@ -11,16 +11,18 @@ import {
   homeHover,
   home,
   logoutHover,
-  logout,
+  logout as logoutIcon,
   platformHover,
   platform,
 } from '../../utils/icons';
 import styles from './Sidebar.module.css';
 import { useSidebar } from '../../hooks/useSidebar';
+import { Button } from '../ui/button/Button';
+import { useUser } from '../../hooks/useUser';
 
 const Sidebar: React.FC = () => {
   const { isOpen } = useSidebar();
-
+  const { logout } = useUser();
   return (
     <aside
       className={`${styles.sidebar} ${isOpen ? styles.open : styles.closed}`}>
@@ -105,13 +107,13 @@ const Sidebar: React.FC = () => {
       </nav>
 
       <div className={styles.logout}>
-        <Link
-          to='/logout'
+        <Button
+          onClick={logout}
           className={`${styles.navItem} ${!isOpen ? styles.logoutClosed : ''}`}>
           {isOpen && <span>Logout</span>}
           <div className={styles.iconWrapper}>
             <img
-              src={logout}
+              src={logoutIcon}
               alt='Logout'
               className={styles.logoutIconDefault}
             />
@@ -121,7 +123,7 @@ const Sidebar: React.FC = () => {
               className={styles.logoutIconHover}
             />
           </div>
-        </Link>
+        </Button>
       </div>
     </aside>
   );
