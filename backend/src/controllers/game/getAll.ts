@@ -2,10 +2,6 @@ import { RequestHandler } from 'express';
 
 import { gameServices } from '@/services/game';
 
-type Params = {
-  user_id: string;
-};
-
 type Query = {
   per_page?: string;
   page?: string;
@@ -28,9 +24,12 @@ type Locals = {
     category?: string;
     favorite?: boolean;
   };
+  user: {
+    user_id: string;
+  };
 };
 
-type GetAllProps = RequestHandler<Params, unknown, unknown, Query, Locals>;
+type GetAllProps = RequestHandler<unknown, unknown, unknown, Query, Locals>;
 
 type GetAllValidatorProps = RequestHandler<
   unknown,
@@ -72,7 +71,7 @@ export const getAllValidator: GetAllValidatorProps = (req, res, next) => {
 };
 
 export const getAll: GetAllProps = async (req, res) => {
-  const { user_id } = req.params;
+  const { user_id } = res.locals.user;
   const { per_page, page, sort, dir } = res.locals.pagination;
   const { title, category, favorite } = res.locals.filters;
 
