@@ -11,7 +11,8 @@ export function GameProvider({ children }: GameProviderProps) {
   const [allGames, setAllGames] = useState([]);
   const [duplicateGames, setDuplicateGames] = useState([]);
   const [error, setError] = useState(false);
-  const [gameCount, setGameCount] = useState(0);
+  const [gamesCount, setGamesCount] = useState(0);
+  const [favoritesGamesCount, setFavoritesGamesCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const userId = '683851eeebf3ec3283664b14';
@@ -20,10 +21,16 @@ export function GameProvider({ children }: GameProviderProps) {
     try {
       setLoading(true);
       const response = await api.get('/game');
-      setGameCount(response.data.length);
+      const games = response.data;
+
+      for (const game of games) {
+        if (game.favorite) setFavoritesGamesCount((prev) => prev + 1);
+      }
+
+      setGamesCount(games.length);
       setLoading(false);
-      setAllGames(response.data);
-      setDuplicateGames(response.data);
+      setAllGames(games);
+      setDuplicateGames(games);
     } catch (error) {
       console.error('Error fetching game:', error);
       setError(true);
@@ -76,7 +83,8 @@ export function GameProvider({ children }: GameProviderProps) {
         create,
         remove,
         update,
-        gameCount,
+        gamesCount,
+        favoritesGamesCount,
         error,
         loading,
       }}>

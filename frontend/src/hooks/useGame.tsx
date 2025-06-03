@@ -9,7 +9,8 @@ type GameContextProps = {
   remove: () => Promise<void>;
   create: (gameData: GameProps) => Promise<void>;
   update: (gameData: GameProps) => Promise<void>;
-  gameCount: number;
+  gamesCount: number;
+  favoritesGamesCount: number;
   error: boolean;
   loading: boolean;
 };
