@@ -11,8 +11,19 @@ routes.get(
   platformControllers.getAllValidator,
   platformControllers.getAll,
 );
-routes.post('/platform', platformControllers.create);
-routes.put('/platform/update/:id', platformControllers.update);
-routes.delete('/platform/delete/:id', platformControllers.remove);
+
+routes.post('/platform', ensureAuthentication, platformControllers.create);
+
+routes.put(
+  '/platform/update/:id',
+  ensureAuthentication,
+  platformControllers.update,
+);
+
+routes.delete(
+  '/platform/delete/:id',
+  ensureAuthentication,
+  platformControllers.remove,
+);
 
 export { routes };

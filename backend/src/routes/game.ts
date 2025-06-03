@@ -10,8 +10,11 @@ routes.get(
   gamesControllers.getAllValidator,
   gamesControllers.getAll,
 );
-routes.post('/game', gamesControllers.create);
-routes.put('/game/:id', gamesControllers.update);
-routes.delete('/game/:id', gamesControllers.deletegame);
+
+routes.post('/game', ensureAuthentication, gamesControllers.create);
+
+routes.put('/game/:id', ensureAuthentication, gamesControllers.update);
+
+routes.delete('/game/:id', ensureAuthentication, gamesControllers.deletegame);
 
 export { routes };

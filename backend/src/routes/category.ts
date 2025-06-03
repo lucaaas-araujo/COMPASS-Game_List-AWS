@@ -10,8 +10,15 @@ routes.get(
   categoryController.getAllValidator,
   categoryController.getAll,
 );
-routes.post('/categories', categoryController.create);
-routes.put('/categories/:id', categoryController.update);
-routes.delete('/categories/:id', categoryController.deleteCategory);
+
+routes.post('/categories', ensureAuthentication, categoryController.create);
+
+routes.put('/categories/:id', ensureAuthentication, categoryController.update);
+
+routes.delete(
+  '/categories/:id',
+  ensureAuthentication,
+  categoryController.deleteCategory,
+);
 
 export { routes };
