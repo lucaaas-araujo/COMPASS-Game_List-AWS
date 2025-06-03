@@ -1,5 +1,6 @@
 export type CategoryProps = {
-  user_id: string;
-  name: string;
-  description?: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
 };

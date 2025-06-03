@@ -8,22 +8,24 @@ type CategoryProviderProps = {
 };
 
 export function CategoryProvider({ children }: CategoryProviderProps) {
-  const [allCategories, setAllCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState<CategoryProps[]>([]);
   const [duplicateCategories, setDuplicateCategories] = useState([]);
   const [error, setError] = useState(false);
   const [categoryCount, setCategoryCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const userId = '683851eeebf3ec3283664b14';
+  const userId = '';
 
   const getAll = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/category/${userId}`);
-      setCategoryCount(response.data.length);
+      const response = await api.get(`/categories`);
+      const categories = response.data;
+
+      setCategoryCount(categories.length);
       setLoading(false);
-      setAllCategories(response.data);
-      setDuplicateCategories(response.data);
+      setAllCategories(categories);
+      setDuplicateCategories(categories);
     } catch (error) {
       console.error('Error fetching category:', error);
       setError(true);
@@ -31,10 +33,12 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
     }
   };
 
-  const create = async (categoryData: CategoryProps) => {
+  const create = async (
+    categoryData: Pick<CategoryProps, 'title' | 'description'>,
+  ) => {
     try {
       setLoading(true);
-      await api.post('/category', categoryData);
+      await api.post('/categories', categoryData);
       setLoading(false);
     } catch (error) {
       console.error('Error creating category:', error);
@@ -46,7 +50,7 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
   const remove = async (): Promise<void> => {
     try {
       setLoading(true);
-      await api.delete(`/category/${userId}`);
+      await api.delete(`/categories/${userId}`);
       setLoading(false);
     } catch (error) {
       console.error('Error deleting category:', error);
@@ -55,13 +59,12 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
     }
   };
 
-  const update = async (categoryData: CategoryProps): Promise<void> => {
+  const update = async (
+    categoryData: Pick<CategoryProps, 'title' | 'description'>,
+  ): Promise<void> => {
     try {
       setLoading(true);
-      await api.put(`/category/${userId}`, {
-        name: categoryData.name,
-        description: categoryData.description,
-      });
+      await api.put(`/categories/${userId}`, categoryData);
       setLoading(false);
     } catch (error) {
       console.error('Error updating category:', error);
