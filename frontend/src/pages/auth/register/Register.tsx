@@ -34,8 +34,6 @@ export const Register = () => {
     }
 
     register({ full_name, email, password, confirm_password });
-
-    toast.success('Registration completed successfully');
   };
 
   return (
