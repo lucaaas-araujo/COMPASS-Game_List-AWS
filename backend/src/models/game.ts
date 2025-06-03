@@ -30,6 +30,7 @@ const gamesSchema = new mongoose.Schema(
     favorite: {
       type: Boolean,
       require: true,
+      default: false,
     },
     acquisition_date: {
       type: Date,
