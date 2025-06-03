@@ -1,5 +1,6 @@
-import { gameServices } from '../../services';
 import { RequestHandler } from 'express';
+
+import { gameServices } from '@/services/game';
 
 type Params = {
   user_id: string;
@@ -11,6 +12,7 @@ type Query = {
   title?: string;
   category?: string;
   favorite?: string;
+  is_deleted?: boolean;
   sort?: string;
   dir?: 'asc' | 'desc';
 };
@@ -26,6 +28,7 @@ type Locals = {
     title?: string;
     category?: string;
     favorite?: boolean;
+    is_deleted?: boolean;
   };
 };
 
@@ -40,30 +43,36 @@ type GetAllValidatorProps = RequestHandler<
 >;
 
 export const getAllValidator: GetAllValidatorProps = (req, res, next) => {
-  const { per_page, page, sort, dir, title, category, favorite } = req.query;
+  const { per_page, page, sort, dir, title, category, favorite, is_deleted } =
+    req.query;
 
-  const PP = typeof per_page === 'string' ? Number(per_page) : 10;
-  const P = typeof page === 'string' ? Number(page) : 1;
-  const S = typeof sort === 'string' ? sort : 'title';
-  const D = typeof dir === 'string' ? dir : 'asc';
-  const D_2 = D === 'asc' || D === 'desc' ? D : 'asc';
+  const _per_page = typeof per_page === 'string' ? Number(per_page) : 10;
+  const _page = typeof page === 'string' ? Number(page) : 1;
+  const _sort = typeof sort === 'string' ? sort : 'title';
+  const _dir = typeof dir === 'string' ? dir : 'asc';
+  const _dirBoolean = _dir === 'asc' || _dir === 'desc' ? _dir : 'asc';
 
-  const T = typeof title === 'string' ? title : undefined;
-  const C = typeof category === 'string' ? category : undefined;
-  const F = typeof favorite === 'string' ? favorite : undefined;
-  const F_2 = F === 'true' ? true : F === 'false' ? false : undefined;
+  const _title = typeof title === 'string' ? title : undefined;
+  const _categoty = typeof category === 'string' ? category : undefined;
+  const _favorite = typeof favorite === 'string' ? favorite : undefined;
+  const _favoriteBoolean =
+    _favorite === 'true' ? true : _favorite === 'false' ? false : undefined;
+  const _is_deleted = typeof is_deleted === 'string' ? is_deleted : undefined;
+  const _is_deletedBoolean =
+    _is_deleted === 'true' ? true : _is_deleted === 'false' ? false : undefined;
 
   res.locals.pagination = {
-    per_page: PP,
-    page: P,
-    sort: S,
-    dir: D_2,
+    per_page: _per_page,
+    page: _page,
+    sort: _sort,
+    dir: _dirBoolean,
   };
 
   res.locals.filters = {
-    title: T,
-    category: C,
-    favorite: F_2,
+    title: _title,
+    category: _categoty,
+    favorite: _favoriteBoolean,
+    is_deleted: _is_deletedBoolean,
   };
 
   next();
@@ -72,7 +81,7 @@ export const getAllValidator: GetAllValidatorProps = (req, res, next) => {
 export const getAll: GetAllProps = async (req, res) => {
   const { user_id } = req.params;
   const { per_page, page, sort, dir } = res.locals.pagination;
-  const { title, category, favorite } = res.locals.filters;
+  const { title, category, favorite, is_deleted } = res.locals.filters;
 
   const games = await gameServices.getAll({
     user_id,
@@ -81,6 +90,7 @@ export const getAll: GetAllProps = async (req, res) => {
     title,
     category,
     favorite,
+    is_deleted,
     sort,
     dir,
   });
