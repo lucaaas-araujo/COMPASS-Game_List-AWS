@@ -3,8 +3,8 @@ import { createContext, useContext } from 'react';
 import type { PlatformProps } from '../types/Platform';
 
 type PlatformContextProps = {
-  allCategories: PlatformProps[];
-  duplicateCategories: PlatformProps[];
+  allPlatforms: PlatformProps[];
+  duplicatePlatforms: PlatformProps[];
   getAll: () => Promise<void>;
   remove: () => Promise<void>;
   create: (platformData: PlatformProps) => Promise<void>;

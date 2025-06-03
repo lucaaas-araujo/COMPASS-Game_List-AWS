@@ -3,4 +3,5 @@ export type CategoryProps = {
   description: string;
   createdAt: string;
   updatedAt: string;
+  is_deleted: boolean;
 };
