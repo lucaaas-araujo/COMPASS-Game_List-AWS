@@ -20,6 +20,7 @@ interface ListItemsProps {
   editForm?: ReactNode;
   deleteForm?: ReactNode;
   onStarClick?: () => void;
+  onDeleteClick?: () => void;
 }
 
 const ListItems: React.FC<ListItemsProps> = ({
@@ -37,6 +38,7 @@ const ListItems: React.FC<ListItemsProps> = ({
   editForm,
   deleteForm,
   onStarClick,
+  onDeleteClick,
 }) => {
   const [starred, setStarred] = useState(false);
 
@@ -87,13 +89,15 @@ const ListItems: React.FC<ListItemsProps> = ({
           </Dialog>
         )}
         {iconDelete && (
-          <Dialog>
-            <DialogTrigger>
-              <img src={trash} alt='Delete' className={styles.icon} />
-            </DialogTrigger>
-            {deleteForm}
-          </Dialog>
-        )}
+            <Dialog>
+              <DialogTrigger>
+                <button className={styles.icon} onClick={onDeleteClick}>
+                  <img src={trash} alt='Delete' />
+                </button>
+              </DialogTrigger>
+              {deleteForm}
+            </Dialog>
+          )}
       </div>
     </div>
   );

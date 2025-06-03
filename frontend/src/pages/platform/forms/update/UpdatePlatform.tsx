@@ -2,6 +2,8 @@ import { Button } from "../../../../components/ui/button/Button";
 import {  DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../../../../components/ui/dialog/Dialog";
 import { Input } from "../../../../components/ui/input/Input";
 
+import { Label } from "../../../../components/ui/label/Label";
+
 import { useState } from "react";
 import style from "./UpdatePlatform.module.css"; 
 
@@ -24,9 +26,9 @@ export function EditPlatform() {
 
           <form className={style.form}>
             <div className={style.formGroup}>
-              <label>
+              <Label>
                 Title<span className={style.required}>*</span>
-              </label>
+              </Label>
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -34,7 +36,7 @@ export function EditPlatform() {
             </div>
 
             <div className={style.formGroup}>
-              <label>Company</label>
+              <Label>Company</Label>
               <Input
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
@@ -42,7 +44,7 @@ export function EditPlatform() {
             </div>
 
             <div className={style.formGroup}>
-              <label>Acquisition year</label>
+              <Label>Acquisition year</Label>
               <Input
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
@@ -50,7 +52,7 @@ export function EditPlatform() {
             </div>
 
             <div className={style.formGroup}>
-              <label>Plataform image (url)</label>
+              <Label>Platform image (url)</Label>
               <Input
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
@@ -60,7 +62,7 @@ export function EditPlatform() {
 
           <DialogFooter>
             <Button>
-              <p>Edit plataform</p>
+              <p>Edit platform</p>
               <p>+</p>
             </Button>
           </DialogFooter>

@@ -2,6 +2,8 @@ import { Button } from "../../../../components/ui/button/Button";
 import { DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../../../../components/ui/dialog/Dialog";
 import { Input } from "../../../../components/ui/input/Input";
 
+import { Label } from "../../../../components/ui/label/Label";
+
 import { useState } from "react";
 import style from "./CreatePlatform.module.css"; 
 
@@ -22,9 +24,9 @@ export function NewPlatform() {
 
         <form className={style.form}>
           <div className={style.formGroup}>
-            <label>
+            <Label>
               Title<span className={style.required}>*</span>
-            </label>
+            </Label>
             <Input
               placeholder="Epic Games"
               value={title}
@@ -33,7 +35,7 @@ export function NewPlatform() {
           </div>
 
           <div className={style.formGroup}>
-            <label>Company</label>
+            <Label>Company</Label>
             <Input
               placeholder="Epic"
               value={company}
@@ -42,7 +44,7 @@ export function NewPlatform() {
           </div>
 
           <div className={style.formGroup}>
-            <label>Acquisition year</label>
+            <Label>Acquisition year</Label>
             <Input
               placeholder="17/05/2019"
               value={year}
@@ -51,7 +53,7 @@ export function NewPlatform() {
           </div>
 
           <div className={style.formGroup}>
-            <label>Plataform image (url)</label>
+            <Label>Plataform image (url)</Label>
             <Input
               placeholder="http://cdn...."
               value={imageUrl}
