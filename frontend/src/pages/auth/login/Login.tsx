@@ -19,7 +19,7 @@ import style from './Login.module.css';
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useUser();
+  const { login, error } = useUser();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,8 +27,7 @@ export const Login = () => {
       toast.error('You must fill in all fields!');
       return;
     }
-    const result = await login({ email, password });
-    console.log(result);
+    await login({ email, password });
   };
   return (
     <div className={style.login}>
@@ -70,6 +69,9 @@ export const Login = () => {
                 style={{ width: 'auto' }}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {error && (
+                <span style={{ color: '#fd4760' }}>Check your credentials</span>
+              )}
             </div>
             <Button
               type='submit'
