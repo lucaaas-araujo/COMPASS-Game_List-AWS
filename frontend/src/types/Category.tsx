@@ -5,3 +5,8 @@ export type CategoryProps = {
   updatedAt: string;
   is_deleted: boolean;
 };
+
+export type EditCategoryProps = {
+  itemId: string;
+  categoryData: Pick<CategoryProps, 'title' | 'description'>;
+};

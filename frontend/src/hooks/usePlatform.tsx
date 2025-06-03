@@ -1,14 +1,14 @@
 import { createContext, useContext } from 'react';
 
-import type { PlatformProps } from '../types/Platform';
+import type { EditPlatformProps, PlatformProps } from '../types/Platform';
 
 type PlatformContextProps = {
   allPlatforms: PlatformProps[];
   duplicatePlatforms: PlatformProps[];
   getAll: () => Promise<void>;
-  remove: () => Promise<void>;
+  remove: (itemId: string) => Promise<void>;
   create: (platformData: PlatformProps) => Promise<void>;
-  update: (platformData: PlatformProps) => Promise<void>;
+  update: (platformData: EditPlatformProps) => Promise<void>;
   platformCount: number;
   error: boolean;
   loading: boolean;

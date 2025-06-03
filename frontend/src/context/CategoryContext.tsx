@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { CategoryContext } from '../hooks/useCategory';
 import { api } from '../services/api';
-import type { CategoryProps } from '../types/Category';
+import type { CategoryProps, EditCategoryProps } from '../types/Category';
 
 type CategoryProviderProps = {
   children: ReactNode;
@@ -13,8 +13,6 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
   const [error, setError] = useState(false);
   const [categoryCount, setCategoryCount] = useState(0);
   const [loading, setLoading] = useState(false);
-
-  const userId = '';
 
   const getAll = async () => {
     try {
@@ -47,10 +45,10 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
     }
   };
 
-  const remove = async (): Promise<void> => {
+  const remove = async (itemId: string): Promise<void> => {
     try {
       setLoading(true);
-      await api.delete(`/categories/${userId}`);
+      await api.delete(`/categories/${itemId}`);
       setLoading(false);
     } catch (error) {
       console.error('Error deleting category:', error);
@@ -59,12 +57,13 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
     }
   };
 
-  const update = async (
-    categoryData: Pick<CategoryProps, 'title' | 'description'>,
-  ): Promise<void> => {
+  const update = async ({
+    categoryData,
+    itemId,
+  }: EditCategoryProps): Promise<void> => {
     try {
       setLoading(true);
-      await api.put(`/categories/${userId}`, categoryData);
+      await api.put(`/categories/${itemId}`, categoryData);
       setLoading(false);
     } catch (error) {
       console.error('Error updating category:', error);
