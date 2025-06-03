@@ -3,6 +3,7 @@ import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
 import { DialogProvider } from '../../../context/DialogContext';
 import { useDialog } from '../../../hooks/useDialog';
 import { x } from '../../../utils/icons';
+import { Slot } from '../slot/Slot';
 import style from './Dialog.module.css';
 
 type DialogProps = { children: ReactNode };
@@ -21,7 +22,7 @@ export function Dialog({ children }: DialogProps) {
 export function DialogTrigger({ ...props }: DialogTrigger) {
   const { openDialog } = useDialog();
 
-  return <button onClick={openDialog} className={style.trigger} {...props} />;
+  return <Slot onClick={openDialog} {...props} />;
 }
 
 export function DialogClose({ ...props }: DialogClose) {
