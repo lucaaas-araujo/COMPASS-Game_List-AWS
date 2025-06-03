@@ -1,4 +1,6 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+
+import { jwtDecode } from 'jwt-decode';
 import { UserContext } from '../hooks/useUser';
 import { api } from '../services/api';
 import type { UserProps } from '../types/User';
@@ -7,32 +9,54 @@ type UserProviderProps = {
   children: ReactNode;
 };
 
-export const UserProvider = ({ children }: UserProviderProps) => {
-  const initialData = {
-    full_name: '',
-    email: '',
-    password: '',
-    confirm_password: '',
-  };
+type JwtPayload = {
+  id: string;
+  full_name?: string;
+};
 
-  const [user, setUser] = useState<UserProps>(initialData);
+export const UserProvider = ({ children }: UserProviderProps) => {
+  const [user, setUser] = useState<JwtPayload>();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const login = async (data: UserProps) => {
+  useEffect(() => {
+    const token = localStorage.getItem('loggedin');
+
+    if (token) {
+      const { id, full_name } = jwtDecode<JwtPayload>(token);
+      setUser({ id, full_name });
+    }
+  }, []);
+
+  console.log('user', user);
+
+  const login = async (data: Pick<UserProps, 'email' | 'password'>) => {
     try {
       setLoading(true);
-      const response = await api.post('/login', data);
 
-      if (response.data) {
-        setLoading(false);
-        setUser(response.data);
-        location.href = '/';
-        localStorage.setItem('loggedin', JSON.stringify(response.data));
-      }
+      const credentials = `${data.email}:${data.password}`;
+      const base64Credentials = btoa(credentials);
+      const authorizationHeader = `Basic ${base64Credentials}`;
+
+      const response = await api.post(
+        '/login',
+        {},
+        {
+          headers: {
+            Authorization: authorizationHeader,
+          },
+        },
+      );
+
+      location.href = '/';
+      localStorage.setItem(
+        'loggedin',
+        JSON.stringify(response.data.accessToken),
+      );
     } catch (error) {
-      console.error(`LOGIN_USER: ${error}`);
+      console.log(error);
       setError(true);
+    } finally {
       setLoading(false);
     }
   };
@@ -49,12 +73,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (error) {
       console.error(`REGISTER_USER: ${error}`);
       setError(true);
+    } finally {
       setLoading(false);
     }
   };
 
   const logout = () => {
-    setUser(initialData);
     setError(false);
     setLoading(false);
     localStorage.removeItem('loggedin');

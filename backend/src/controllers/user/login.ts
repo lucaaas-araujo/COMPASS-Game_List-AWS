@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
-import { compare } from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { userServices } from '@/services';
+import { compare } from 'bcrypt';
+import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 export const login = async (req: Request, res: Response) => {
   const { authorization } = req.headers;
@@ -11,6 +11,7 @@ export const login = async (req: Request, res: Response) => {
     return;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_type, base64Credentials] = authorization.split(' ');
 
   const credentials = Buffer.from(base64Credentials, 'base64').toString(
@@ -40,7 +41,10 @@ export const login = async (req: Request, res: Response) => {
     return;
   }
 
-  const accessToken = jwt.sign({ uid: user.id }, process.env.JWT_SECRET);
+  const accessToken = jwt.sign(
+    { id: user.id, full_name: user.full_name },
+    process.env.JWT_SECRET,
+  );
 
   res.status(200).json({ accessToken });
 };
