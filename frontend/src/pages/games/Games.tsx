@@ -1,15 +1,17 @@
 import { Header } from '../../components/header/Header';
-import { GameFilters } from '../../components/filterbar/Filterbar';
-import style from './Games.module.css';
+/* import { useGame } from '../../hooks/useGame'; */
 import HeaderList from '../../components/ui/headerList/HeaderList';
-import { useGame } from '../../hooks/useGame';
-import { Dialog, DialogTrigger } from '../../components/ui/dialog/Dialog';
-import { CreateGame } from './forms/create/Create';
-import { UpdateGame } from './forms/update/Update';
+import ListItems from '../../components/ui/listItems/ListItems';
+/* import DeleteModal from '../components/DeleteModal'; */
 import { DetailsGame } from './forms/details/Details';
-export function Games() {
-  const { getAll } = useGame();
+import { GameFilters } from '../../components/filterbar/Filterbar';
+import { UpdateGame } from './forms/update/Update';
+import style from './Games.module.css';
+import { CreateGame } from './forms/create/Create';
+import DeleteModal from '../components/DeleteModal';
 
+export function Games() {
+  /* const { getAll } = useGame(); */
   const headerFields = [
     { key: 'title', label: 'Title' },
     { key: 'category', label: 'Category' },
@@ -18,25 +20,72 @@ export function Games() {
     { key: 'favorite', label: 'Favorite' },
   ];
 
+  const handleSortClick = (key: string) => {
+    console.log('Sort by:', key);
+  };
+
+  const gameList = [
+    {
+      id: 1,
+      imageUrl: 'https://via.placeholder.com/40',
+      title: 'Steam',
+      category: 'Games',
+      createdAt: '2022-01-01',
+      status: 'Done',
+    },
+    {
+      id: 2,
+      imageUrl: 'https://via.placeholder.com/40',
+      title: 'Epic Games',
+      category: 'Games',
+      createdAt: '2023-05-10',
+      status: 'Playing',
+    },
+  ];
+
   return (
-    <div className={style.gamepage}>
-      <Header title='Games' buttonText='New Game'>
-        <GameFilters onSearch={getAll} onClear={getAll} />
-      </Header>
-      <Dialog>
-        <DialogTrigger>New Game</DialogTrigger>
-        <CreateGame />
-      </Dialog>
-      <Dialog>
-        <DialogTrigger>Update Game</DialogTrigger>
-        <UpdateGame />
-      </Dialog>
-      <Dialog>
-        <DialogTrigger>Details Game</DialogTrigger>
-        <DetailsGame />
-      </Dialog>
-      <HeaderList fields={headerFields} />
-      {/* Games Here */}
+    <div>
+      <div className={style.gamepage}>
+        <Header title='Games' buttonText='New Game' createForm={<CreateGame />}>
+          <GameFilters onSearch={() => {}} onClear={() => {}} />
+        </Header>
+        <HeaderList fields={headerFields} onSortClick={handleSortClick} />
+
+        {gameList.map((game) => (
+          <ListItems
+            key={game.id}
+            imageUrl={game.imageUrl}
+            camp1={game.title}
+            camp2={game.category}
+            camp3={game.createdAt}
+            iconDetails
+            iconEdit
+            iconDelete
+            iconStar
+            detailsForm={
+              <DetailsGame
+                deleteForm={
+                  <DeleteModal
+                    type='game'
+                    onCancel={() => {}}
+                    onDelete={() => {}}
+                  />
+                }
+                updateForm={<UpdateGame />}
+              />
+            }
+            editForm={<UpdateGame />}
+            /* deleteForm={
+              <DeleteModal
+                type='game'
+                onCancel={() => {}}
+                onDelete={() => {}}
+              />
+            } */
+            onStarClick={() => console.log('Star', game.id)}
+          />
+        ))}
+      </div>
     </div>
   );
 }

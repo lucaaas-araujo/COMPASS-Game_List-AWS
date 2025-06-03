@@ -4,9 +4,11 @@ import {
   DialogTitle,
   DialogClose,
   DialogFooter,
+  Dialog,
+  DialogTrigger,
 } from '../../../../components/ui/dialog/Dialog';
 import { Input } from '../../../../components/ui/input/Input';
-import { useState } from 'react';
+import { useState, type HTMLAttributes, type ReactNode } from 'react';
 import { Button } from '../../../../components/ui/button/Button';
 import {
   Select,
@@ -15,7 +17,12 @@ import {
 } from '../../../../components/ui/select/Select';
 import style from './Details.module.css';
 
-export const DetailsGame = () => {
+type UpdateModalProps = HTMLAttributes<HTMLElement> & {
+  updateForm?: ReactNode;
+  deleteForm?: ReactNode;
+};
+
+export function DetailsGame({ updateForm, deleteForm }: UpdateModalProps) {
   const [new_title] = useState('');
   const [new_description] = useState('');
   const [category] = useState('');
@@ -107,14 +114,24 @@ export const DetailsGame = () => {
         </form>
 
         <DialogFooter>
-          <Button>
-            <p className={style.button}>DELETE</p>
-          </Button>
-          <Button>
-            <p className={style.button}>EDIT</p>
-          </Button>
+          <Dialog>
+            <DialogTrigger>
+              <Button>
+                <p className={style.button}>DELETE</p>
+              </Button>
+            </DialogTrigger>
+            {deleteForm}
+          </Dialog>
+          <Dialog>
+            <DialogTrigger>
+              <Button>
+                <p className={style.button}>EDIT</p>
+              </Button>
+            </DialogTrigger>
+            {updateForm}
+          </Dialog>
         </DialogFooter>
       </DialogContent>
     </div>
   );
-};
+}

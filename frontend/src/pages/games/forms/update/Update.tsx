@@ -23,6 +23,12 @@ export const UpdateGame = () => {
   const [plataform, setPlatform] = useState('');
   const [url_image, setUrlImage] = useState('');
 
+  const status = [
+    { key: 'Playing', value: 'Playing' },
+    { key: 'Done', value: 'Done' },
+    { key: 'Abandoned', value: 'Abandoned' },
+  ];
+
   return (
     <div className={style.newGame}>
       <DialogContent className={style.dialogContent}>
@@ -99,7 +105,11 @@ export const UpdateGame = () => {
                   value={new_status}
                   onChange={(e) => setNewStatus(e.target.value)}>
                   <SelectGroup>
-                    <SelectItem value={''}>Select Status</SelectItem>
+                    {status.map(({ key, value }) => (
+                      <SelectItem key={key} value={value}>
+                        {value}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </Select>
               </div>
