@@ -38,7 +38,6 @@ const ListItems: React.FC<ListItemsProps> = ({
   editForm,
   deleteForm,
   onStarClick,
-  onDeleteClick,
 }) => {
   const [starred, setStarred] = useState(false);
 
@@ -91,7 +90,7 @@ const ListItems: React.FC<ListItemsProps> = ({
         {iconDelete && (
             <Dialog>
               <DialogTrigger>
-                <button className={styles.icon} onClick={onDeleteClick}>
+                <button className={styles.icon} >
                   <img src={trash} alt='Delete' />
                 </button>
               </DialogTrigger>
