@@ -1,11 +1,14 @@
-import styles from './HomeCard.module.css';
+import type { ReactNode } from 'react';
 import { Button } from '../ui/button/Button';
+import { Dialog, DialogTrigger } from '../ui/dialog/Dialog';
+import styles from './HomeCard.module.css';
 
 type HomeCardProps = {
   icon?: string;
   title?: string;
   count?: number;
   haveButton?: boolean;
+  createForm?: ReactNode;
 };
 
 export function HomeCard({
@@ -13,10 +16,10 @@ export function HomeCard({
   title,
   count,
   haveButton,
-  ...props
+  createForm,
 }: HomeCardProps) {
   return (
-    <div className={styles.card} {...props}>
+    <div className={styles.card}>
       <div className={styles.top}>
         <div className={styles.icon}>
           <img src={icon} />
@@ -26,7 +29,16 @@ export function HomeCard({
       </div>
 
       <div className={styles.bottom}>
-        {haveButton && <Button variant='white'>+ Add new</Button>}
+        {haveButton && (
+          <Dialog>
+            <DialogTrigger>
+              <Button variant='white' style={{ color: '#6C6C6C' }}>
+                + Add new
+              </Button>
+            </DialogTrigger>
+            {createForm}
+          </Dialog>
+        )}
       </div>
     </div>
   );
