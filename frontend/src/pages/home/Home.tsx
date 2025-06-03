@@ -16,7 +16,7 @@ export function Home() {
   return (
     <main className={styles.container}>
       <Header hiddenButton hiddenLine >
-        <h1>Hello{user.full_name && `, ${user.full_name}`}!</h1>
+        <h1>Hello{user?.full_name && `, ${user?.full_name}`}!</h1>
         <p>Choose one of options below.</p>
       </Header>
       <div className={styles.cardGrid}>

@@ -2,8 +2,8 @@ import { createContext, useContext } from 'react';
 import type { UserProps } from '../types/User';
 
 type UserContextProps = {
-  user: UserProps;
-  login: (data: UserProps) => Promise<void>;
+  user: any;
+  login: (data: Pick<UserProps, 'email' | 'password'>) => Promise<void>;
   register: (data: UserProps) => Promise<void>;
   logout: () => void;
   error: boolean;
