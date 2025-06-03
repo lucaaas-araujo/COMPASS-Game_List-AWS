@@ -13,12 +13,16 @@ routes.get(
 
 routes.post('/categories', ensureAuthentication, categoryController.create);
 
-routes.put('/categories/:id', ensureAuthentication, categoryController.update);
+routes.put(
+  '/categories/:id',
+  ensureAuthentication,
+  categoryController.updateById,
+);
 
 routes.delete(
   '/categories/:id',
   ensureAuthentication,
-  categoryController.deleteCategory,
+  categoryController.deleteById,
 );
 
 export { routes };

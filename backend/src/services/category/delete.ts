@@ -1,23 +1,14 @@
-// delete category service
 import Category from '@/models/category';
 
-type DeleteCategoryProps = {
-  id: string;
-  is_deleted?: boolean;
-};
-
-export const deleteCategory = async ({
-  id,
-  is_deleted,
-}: DeleteCategoryProps) => {
+export const deleteById = async (id: string) => {
   try {
-    const category = await Category.findById(id);
-    if (!category) throw new Error('Category not found');
+    const category = await Category.findByIdAndUpdate(id, { is_deleted: true });
 
-    category.is_deleted = is_deleted ?? true;
-    await category.save();
-    return { id: category._id, is_deleted: category.is_deleted };
+    if (!category) return new Error('Category not found');
+
+    return category._id;
   } catch (error) {
+    console.log(error);
     return new Error('Error deleting category');
   }
 };

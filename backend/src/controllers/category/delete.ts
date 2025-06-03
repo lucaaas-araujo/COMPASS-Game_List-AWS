@@ -1,15 +1,16 @@
-import { Request, Response } from 'express';
 import { categoryService } from '@/services';
+import { RequestHandler } from 'express';
 
-export const deleteCategory = async (req: Request, res: Response) => {
+type Params = {
+  id: string;
+};
+
+type DeleteProps = RequestHandler<Params>;
+
+export const deleteById: DeleteProps = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
-    res.status(400).json({ error: 'ID da categoria é obrigatório.' });
-    return;
-  }
-
-  const result = await categoryService.deleteCategory({ id, is_deleted: true });
+  const result = await categoryService.deleteById(id);
 
   if (result instanceof Error) {
     res.status(500).json({ error: result.message });

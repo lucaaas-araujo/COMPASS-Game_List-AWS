@@ -1,8 +1,21 @@
-import { Request, Response } from 'express';
 import { categoryService } from '@/services';
+import { RequestHandler } from 'express';
+import { LocalsUser } from '../types/locals';
 
-export const create = async (req: Request, res: Response) => {
-  const { user_id, name, description } = req.body;
+type Locals = {
+  user: LocalsUser;
+};
+
+type Body = {
+  name: string;
+  description: string;
+};
+
+type CreateProps = RequestHandler<unknown, unknown, Body, unknown, Locals>;
+
+export const create: CreateProps = async (req, res) => {
+  const { user_id } = res.locals.user;
+  const { name, description } = req.body;
 
   if (!name || name.trim().length < 3) {
     res.status(400).json({ error: 'O nome deve ter pelo menos 3 caracteres.' });
@@ -15,5 +28,6 @@ export const create = async (req: Request, res: Response) => {
     res.status(500).json({ error: category.message });
     return;
   }
+  
   res.status(201).json({ id: category });
 };
