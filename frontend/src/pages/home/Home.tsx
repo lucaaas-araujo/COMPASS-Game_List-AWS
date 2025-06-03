@@ -5,6 +5,9 @@ import { useGame } from '../../hooks/useGame';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useUser } from '../../hooks/useUser';
 import { category, game, platform, starHome } from '../../utils/icons';
+import { NewCategory } from '../category/forms/create/CreateCategories';
+import { CreateGame } from '../games/forms/create/Create';
+import { NewPlatform } from '../platform/forms/create/CreatePlatform';
 import styles from './Home.module.css';
 
 export function Home() {
@@ -15,23 +18,32 @@ export function Home() {
 
   return (
     <main className={styles.container}>
-      <Header hiddenButton hiddenLine >
+      <Header hiddenButton hiddenLine>
         <h1>Hello{user?.full_name && `, ${user?.full_name}`}!</h1>
         <p>Choose one of options below.</p>
       </Header>
+
       <div className={styles.cardGrid}>
-        <HomeCard haveButton icon={game} title='Games' count={gameCount} />
+        <HomeCard
+          haveButton
+          icon={game}
+          title='Games'
+          count={gameCount}
+          createForm={<CreateGame />}
+        />
         <HomeCard
           haveButton
           icon={category}
           title='Categories'
           count={categoryCount}
+          createForm={<NewCategory />}
         />
         <HomeCard
           haveButton
           icon={platform}
           title='Platforms'
           count={platformCount}
+          createForm={<NewPlatform />}
         />
         <HomeCard icon={starHome} title='Favorites Games' count={3} />
       </div>
