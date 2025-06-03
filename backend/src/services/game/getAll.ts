@@ -7,7 +7,6 @@ type getAllProps = {
   title?: string;
   category?: string;
   favorite?: boolean;
-  is_deleted?: boolean;
   sort: string;
   dir: 'asc' | 'desc';
 };
@@ -19,7 +18,6 @@ export const getAll = async ({
   title,
   category,
   favorite,
-  is_deleted,
   sort,
   dir,
 }: getAllProps) => {
@@ -27,10 +25,10 @@ export const getAll = async ({
 
   const filters = {
     user_id,
+    is_deleted: false,
     ...(title && { title: { $regex: title, $options: 'i' } }),
     ...(category && { category }),
     ...(favorite && { favorite }),
-    ...(is_deleted && { is_deleted }),
   };
 
   try {
@@ -38,10 +36,6 @@ export const getAll = async ({
       .limit(per_page)
       .skip(skip)
       .sort({ [sort]: dir });
-
-    if (!games || games.length === 0) {
-      return new Error();
-    }
 
     return games;
   } catch (error) {
