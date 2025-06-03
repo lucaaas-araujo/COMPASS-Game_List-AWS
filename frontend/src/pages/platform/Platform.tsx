@@ -7,9 +7,10 @@ import { EditPlatform } from './forms/update/UpdatePlatform';
 import styles from './Platform.module.css';
 import epic from '../../images/epic.svg';
 import mario from '../../images/mario.svg';
+import { NewPlatform } from './forms/create/CreatePlatform';
 
 export const Platform = () => {
-  const [platformToDelete, setPlatformToDelete] = useState<number | null>(null);
+  const [, setPlatformToDelete] = useState<number | null>(null);
 
   const headers = [
     { key: 'title', label: 'Title' },
@@ -44,18 +45,9 @@ export const Platform = () => {
     },
   ];
 
-  const handleCancel = () => {
-    setPlatformToDelete(null);
-  };
-
-  const handleDelete = () => {
-    console.log('Deletando plataforma ID:', platformToDelete);
-    setPlatformToDelete(null);
-  };
-
   return (
     <div className={styles.pageWrapper}>
-      <Header title="Platforms" buttonText="NEW PLATFORM" />
+      <Header title="Platforms" buttonText="NEW PLATFORM" createForm={<NewPlatform/>}/>
 
       <div className={styles.platformContainer}>
         <HeaderList fields={headers} onSortClick={handleSortClick} />
@@ -73,15 +65,7 @@ export const Platform = () => {
     iconEdit
     iconDelete
     editForm={<EditPlatform />}
-    deleteForm={
-      platformToDelete === platform.id ? (
-        <DeleteModal
-          type="platform"
-          onCancel={handleCancel}
-          onDelete={handleDelete}
-        />
-      ) : null
-    }
+    deleteForm={<DeleteModal type='platform' onDelete={() => false } /> }
     onStarClick={() => console.log('Star', platform.id)}
     onDeleteClick={() => setPlatformToDelete(platform.id)}
   />
