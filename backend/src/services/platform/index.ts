@@ -1,11 +1,11 @@
 import * as create from './create';
-import * as deleteFn from './delete';
+import * as deleteById from './delete';
 import * as getAll from './getAll';
-import * as update from './update';
+import * as updateById from './update';
 
 export const platformServices = {
   ...create,
-  ...update,
-  ...deleteFn,
   ...getAll,
+  ...updateById,
+  ...deleteById,
 };

@@ -2,14 +2,18 @@ import mongoose from 'mongoose';
 
 const platformSchema = new mongoose.Schema(
   {
-    image_url: { type: String },
     title: {
       type: String,
       required: true,
     },
-    company: { type: String },
-    acquisition_year: {
-      type: Date,
+    image_url: { 
+      type: String 
+    },
+    company: { 
+      type: String 
+    },
+    acquisition_year: { 
+      type: Date 
     },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
