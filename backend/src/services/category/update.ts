@@ -1,24 +1,27 @@
 import Category from '@/models/category';
 
-type UpdateCategoryProps = {
+type UpdateByIdProps = {
   id: string;
-  name?: string;
+  name: string;
   description?: string;
 };
 
-export const update = async ({ id, name, description }: UpdateCategoryProps) => {
-
-
+export const updateById = async ({
+  id,
+  name,
+  description,
+}: UpdateByIdProps) => {
   try {
-    const category = await Category.findById(id);
-    if (!category) throw new Error('Category not found');
-    category.name = name ?? category.name;
-    category.description = description ?? category.description;
-    await category.save();
-    return { id: category._id, name: category.name, description: category.description };
+    const category = await Category.findByIdAndUpdate(id, {
+      name,
+      description,
+    });
 
+    if (!category) return new Error('Category not found');
+
+    return category._id;
   } catch (error) {
+    console.log(error);
     return new Error('Error updating category');
   }
-
 };

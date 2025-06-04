@@ -18,9 +18,11 @@ export const create = async ({
       name,
       description,
     });
+
     const { _id } = await category.save();
-    return { _id };
+    return _id;
   } catch (error) {
+    console.log(error);
     return new Error('Error creating category');
   }
 };
