@@ -1,5 +1,5 @@
 import { Header } from '../../components/header/Header';
-/* import { useGame } from '../../hooks/useGame'; */
+import { useGame } from '../../hooks/useGame';
 import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
 /* import DeleteModal from '../components/DeleteModal'; */
@@ -9,9 +9,11 @@ import { UpdateGame } from './forms/update/Update';
 import style from './Games.module.css';
 import { CreateGame } from './forms/create/Create';
 import DeleteModal from '../components/DeleteModal';
+import { useEffect, useState } from 'react';
+import type { GameProps } from '../../types/Game';
 
 export function Games() {
-  /* const { getAll } = useGame(); */
+  const { getAll } = useGame();
   const headerFields = [
     { key: 'title', label: 'Title' },
     { key: 'category', label: 'Category' },
@@ -23,6 +25,17 @@ export function Games() {
   const handleSortClick = (key: string) => {
     console.log('Sort by:', key);
   };
+
+  const [games, setGames] = useState<GameProps[]>([]);
+
+  useEffect(() => {
+    const fetchGames = async () => {
+      const data = await getAll();
+      setGames(data);
+    };
+    fetchGames();
+  }, [getAll]);
+  console.log(games);
 
   const gameList = [
     {
