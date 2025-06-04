@@ -8,10 +8,7 @@ type CategoryProviderProps = {
 };
 
 export function CategoryProvider({ children }: CategoryProviderProps) {
-  const [allCategories, setAllCategories] = useState<CategoryProps[]>([]);
-  const [duplicateCategories, setDuplicateCategories] = useState([]);
   const [error, setError] = useState(false);
-  const [categoryCount, setCategoryCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const getAll = async () => {
@@ -19,11 +16,11 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
       setLoading(true);
       const response = await api.get(`/categories`);
       const categories = response.data;
+      console.log(response);
 
-      setCategoryCount(categories.length);
       setLoading(false);
-      setAllCategories(categories);
-      setDuplicateCategories(categories);
+
+      return categories;
     } catch (error) {
       console.error('Error fetching category:', error);
       setError(true);
@@ -75,13 +72,10 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
   return (
     <CategoryContext.Provider
       value={{
-        allCategories,
-        duplicateCategories,
         getAll,
         create,
         remove,
         update,
-        categoryCount,
         error,
         loading,
       }}>

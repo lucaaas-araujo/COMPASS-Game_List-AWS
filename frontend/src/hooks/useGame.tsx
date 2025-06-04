@@ -3,14 +3,10 @@ import { createContext, useContext } from 'react';
 import type { EditGameProps, GameProps } from '../types/Game';
 
 type GameContextProps = {
-  allGames: GameProps[];
-  duplicateGames: GameProps[];
-  getAll: () => Promise<void>;
+  getAll: () => Promise<GameProps[]>;
   remove: (itemId: string) => Promise<void>;
   create: (gameData: GameProps) => Promise<void>;
   update: (gameData: EditGameProps) => Promise<void>;
-  gamesCount: number;
-  favoritesGamesCount: number;
   error: boolean;
   loading: boolean;
 };

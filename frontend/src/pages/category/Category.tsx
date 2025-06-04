@@ -32,7 +32,7 @@ export function Category() {
         iconEdit
         iconDelete
         editForm={<EditCategory />}
-        deleteForm={<DeleteModal type='category' onCancel={() => {} } onDelete={() => {} } />}
+        deleteForm={<DeleteModal type='category' onDelete={() => false } />}
       />
     </div>
   );
