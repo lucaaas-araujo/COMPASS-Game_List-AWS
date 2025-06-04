@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+
 import { Button } from '../../../../components/ui/button/Button';
 import {
   DialogClose,
@@ -7,15 +10,14 @@ import {
   DialogTitle,
 } from '../../../../components/ui/dialog/Dialog';
 import { Input } from '../../../../components/ui/input/Input';
-import { useState } from 'react';
-import style from './CreateCategories.module.css';
+import { Label } from '../../../../components/ui/label/Label';
 import { Textarea } from '../../../../components/ui/textarea/Textarea';
-import { Label } from "../../../../components/ui/label/Label"
 import { useCategory } from '../../../../hooks/useCategory';
 import { useDialog } from '../../../../hooks/useDialog';
-import { toast, ToastContainer } from 'react-toastify';
 
-export function NewCategory({ onCreated }: { onCreated: () => void }) {
+import style from './CreateCategories.module.css';
+
+export function NewCategory({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const { create } = useCategory();
@@ -36,8 +38,9 @@ export function NewCategory({ onCreated }: { onCreated: () => void }) {
       setDescription('');
       closeDialog();
       toast.success('Categoria criada com sucesso!');
-      onCreated(); // Só chama aqui, após sucesso
+      onCreated?.();
     } catch (error) {
+      console.log(error);
       toast.error('Erro ao criar categoria.');
     }
   };
