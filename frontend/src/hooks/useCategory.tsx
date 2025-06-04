@@ -3,13 +3,12 @@ import { createContext, useContext } from 'react';
 import type { CategoryProps, EditCategoryProps } from '../types/Category';
 
 type CategoryContextProps = {
-  allCategories: CategoryProps[];
-  duplicateCategories: CategoryProps[];
-  getAll: () => Promise<void>;
+  getAll: () => Promise<CategoryProps[]>;
   remove: (itemId: string) => Promise<void>;
-  create: (categoryData: CategoryProps) => Promise<void>;
+  create: (
+    categoryData: Pick<CategoryProps, 'title' | 'description'>,
+  ) => Promise<void>;
   update: (categoryData: EditCategoryProps) => Promise<void>;
-  categoryCount: number;
   error: boolean;
   loading: boolean;
 };

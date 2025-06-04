@@ -8,11 +8,7 @@ type GameProviderProps = {
 };
 
 export function GameProvider({ children }: GameProviderProps) {
-  const [allGames, setAllGames] = useState<GameProps[]>([]);
-  const [duplicateGames, setDuplicateGames] = useState([]);
   const [error, setError] = useState(false);
-  const [gamesCount, setGamesCount] = useState(0);
-  const [favoritesGamesCount, setFavoritesGamesCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const getAll = async () => {
@@ -20,15 +16,11 @@ export function GameProvider({ children }: GameProviderProps) {
       setLoading(true);
       const response = await api.get('/game');
       const games = response.data;
+      console.log(response);
 
-      for (const game of games) {
-        if (game.favorite) setFavoritesGamesCount((prev) => prev + 1);
-      }
-
-      setGamesCount(games.length);
       setLoading(false);
-      setAllGames(games);
-      setDuplicateGames(games);
+
+      return games;
     } catch (error) {
       console.error('Error fetching game:', error);
       setError(true);
@@ -75,14 +67,10 @@ export function GameProvider({ children }: GameProviderProps) {
   return (
     <GameContext.Provider
       value={{
-        allGames,
-        duplicateGames,
         getAll,
         create,
         remove,
         update,
-        gamesCount,
-        favoritesGamesCount,
         error,
         loading,
       }}>

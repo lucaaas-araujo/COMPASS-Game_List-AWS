@@ -9,10 +9,7 @@ type PlatformProviderProps = {
 };
 
 export function PlatformProvider({ children }: PlatformProviderProps) {
-  const [allPlatforms, setAllPlatforms] = useState<PlatformProps[]>([]);
-  const [duplicatePlatforms, setDuplicatePlatforms] = useState([]);
   const [error, setError] = useState(false);
-  const [platformCount, setPlatformCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const getAll = async () => {
@@ -20,11 +17,11 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
       setLoading(true);
       const response = await api.get(`/platform`);
       const platforms = response.data;
+      console.log(response);
 
-      setPlatformCount(platforms.length);
       setLoading(false);
-      setAllPlatforms(platforms);
-      setDuplicatePlatforms(platforms);
+
+      return platforms;
     } catch (error) {
       console.error('Error fetching platform:', error);
       setError(true);
@@ -74,13 +71,10 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
   return (
     <PlatformContext.Provider
       value={{
-        allPlatforms,
-        duplicatePlatforms,
         getAll,
         create,
         remove,
         update,
-        platformCount,
         error,
         loading,
       }}>
