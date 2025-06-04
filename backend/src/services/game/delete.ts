@@ -4,7 +4,7 @@ type DeleteGameProps = {
   id: string;
 };
 
-export const deletegame = async ({ id }: DeleteGameProps) => {
+export const deleteById = async ({ id }: DeleteGameProps) => {
   try {
     const deleted = await Game.findByIdAndUpdate(id, { is_deleted: true });
 

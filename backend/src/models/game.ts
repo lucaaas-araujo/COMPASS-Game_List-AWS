@@ -4,7 +4,6 @@ const gamesSchema = new mongoose.Schema(
   {
     image_url: {
       type: String,
-      require: true,
     },
     title: {
       type: String,
@@ -12,7 +11,6 @@ const gamesSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      require: true,
     },
     category: {
       type: String,
@@ -20,7 +18,6 @@ const gamesSchema = new mongoose.Schema(
     },
     platform: {
       type: String,
-      require: true,
     },
     status: {
       type: String,
@@ -29,7 +26,6 @@ const gamesSchema = new mongoose.Schema(
     },
     favorite: {
       type: Boolean,
-      require: true,
       default: false,
     },
     acquisition_date: {
@@ -47,7 +43,7 @@ const gamesSchema = new mongoose.Schema(
     },
     is_deleted: {
       type: Boolean,
-      require: true,
+      default: false,
     },
   },
   {
