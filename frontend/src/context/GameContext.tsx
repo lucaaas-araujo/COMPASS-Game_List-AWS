@@ -63,6 +63,23 @@ export function GameProvider({ children }: GameProviderProps) {
     }
   };
 
+  const toggleIsFavorite = async (
+    itemId: string,
+    isFavorite: boolean,
+  ): Promise<void> => {
+    try {
+      setLoading(true);
+
+      await api.patch(`/game/${itemId}`, { favorite: isFavorite });
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error setting game favorite:', error);
+      setError(true);
+      setLoading(false);
+    }
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -70,6 +87,7 @@ export function GameProvider({ children }: GameProviderProps) {
         create,
         remove,
         update,
+        toggleIsFavorite,
         error,
         loading,
       }}>
