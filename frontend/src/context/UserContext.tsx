@@ -9,7 +9,13 @@ type UserProviderProps = {
   children: ReactNode;
 };
 
-type JwtPayload = {
+export type UserCountsProps = {
+  games: number;
+  categories: number;
+  platforms: number;
+};
+
+export type JwtPayload = {
   id: string;
   full_name?: string;
 };
@@ -18,17 +24,19 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<JwtPayload>();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [counts, setCounts] = useState<UserCountsProps | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('loggedin');
+    const counts = localStorage.getItem('counts');
 
     if (token) {
       const { id, full_name } = jwtDecode<JwtPayload>(token);
       setUser({ id, full_name });
     }
-  }, []);
 
-  console.log('user', user);
+    if (counts) setCounts(JSON.parse(counts));
+  }, []);
 
   const login = async (data: Pick<UserProps, 'email' | 'password'>) => {
     try {
@@ -48,11 +56,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         },
       );
 
+      const { accessToken, counts } = response.data;
+
+      localStorage.setItem('loggedin', JSON.stringify(accessToken));
+      localStorage.setItem('counts', JSON.stringify(counts));
+
+      setCounts(counts);
       location.href = '/';
-      localStorage.setItem(
-        'loggedin',
-        JSON.stringify(response.data.accessToken),
-      );
     } catch (error) {
       console.log(error);
       setError(true);
@@ -87,7 +97,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   return (
     <UserContext.Provider
-      value={{ user, login, register, logout, error, loading }}>
+      value={{ user, counts, login, register, logout, error, loading }}>
       {children}
     </UserContext.Provider>
   );
