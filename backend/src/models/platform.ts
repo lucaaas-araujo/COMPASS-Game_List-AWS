@@ -4,7 +4,6 @@ const platformSchema = new mongoose.Schema(
   {
     image_url: { 
       type: String, 
-      required: true 
     },
     title: { 
       type: String, 
@@ -12,11 +11,9 @@ const platformSchema = new mongoose.Schema(
     },
     company: 
     { type: String, 
-      required: true 
     },
     acquisition_year: { 
       type: Date, 
-      required: true
     },
     user_id: { 
       type: String, 

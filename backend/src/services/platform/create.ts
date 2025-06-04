@@ -1,10 +1,10 @@
 import Platform from '@/models/platform';
 
 type CreatePlatformProps = {
-  image_url: string;
+  image_url?: string;
   title: string;
-  company: string;
-  acquisition_year: Date;
+  company?: string;
+  acquisition_year?: Date;
   user_id: string;
 };
 
