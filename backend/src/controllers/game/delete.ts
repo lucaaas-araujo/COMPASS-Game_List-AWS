@@ -1,9 +1,9 @@
 import { gameServices } from '@/services';
 import { RequestHandler } from 'express';
 
-export const deletegame: RequestHandler = async (req, res) => {
+export const deleteById: RequestHandler = async (req, res) => {
   const { id } = req.params;
-  const result = await gameServices.deletegame({ id });
+  const result = await gameServices.deleteById({ id });
 
   if (result instanceof Error) {
     res.status(501).json({ error: result.message });

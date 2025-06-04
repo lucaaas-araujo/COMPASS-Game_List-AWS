@@ -1,7 +1,25 @@
 import { gameServices } from '@/services';
 import { RequestHandler } from 'express';
 
-export const update: RequestHandler = async (req, res) => {
+type Params = {
+  id: string;
+};
+
+type Body = {
+  title: string;
+  image_url: string;
+  description: string;
+  category: string;
+  platform: string;
+  status: string;
+  favorite: boolean;
+  acquisition_date: Date;
+  finish_date: Date;
+};
+
+type UpdateProps = RequestHandler<Params, unknown, Body>;
+
+export const updateById: UpdateProps = async (req, res) => {
   const { id } = req.params;
   const {
     image_url,
@@ -13,9 +31,9 @@ export const update: RequestHandler = async (req, res) => {
     favorite,
     acquisition_date,
     finish_date,
-    is_deleted,
   } = req.body;
-  const result = await gameServices.update({
+
+  const result = await gameServices.updateById({
     id,
     data: {
       image_url,
@@ -27,7 +45,6 @@ export const update: RequestHandler = async (req, res) => {
       favorite,
       acquisition_date,
       finish_date,
-      is_deleted,
     },
   });
 
@@ -35,5 +52,6 @@ export const update: RequestHandler = async (req, res) => {
     res.status(501).json({ error: result.message });
     return;
   }
+
   res.status(200).json(result);
 };
