@@ -1,6 +1,13 @@
 import React, { useState, type ReactNode } from 'react';
 
-import { eye, pen, star, starFilled, trash } from '../../../utils/icons';
+import {
+  eye,
+  imageController,
+  pen,
+  star,
+  starFilled,
+  trash,
+} from '../../../utils/icons';
 import { Dialog, DialogTrigger } from '../dialog/Dialog';
 
 import styles from './ListItems.module.css';
@@ -48,9 +55,11 @@ const ListItems: React.FC<ListItemsProps> = ({
   return (
     <div className={styles.cardContainer}>
       <div className={styles.imageWrapper}>
-        {imageUrl && (
-          <img src={imageUrl} alt='Card Icon' className={styles.cardImage} />
-        )}
+        <img
+          src={imageUrl ? imageUrl : imageController}
+          alt='Card Icon'
+          className={styles.cardImage}
+        />
       </div>
 
       <div className={styles.cardTexts}>
@@ -84,7 +93,7 @@ const ListItems: React.FC<ListItemsProps> = ({
           <Dialog>
             <DialogTrigger>
               <button className={styles.icon}>
-                <img src={pen} alt='Edit'/>
+                <img src={pen} alt='Edit' />
               </button>
             </DialogTrigger>
             {editForm}
