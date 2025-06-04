@@ -17,7 +17,6 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
       setLoading(true);
       const response = await api.get(`/platform`);
       const platforms = response.data;
-      console.log(response);
 
       setLoading(false);
 

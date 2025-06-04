@@ -16,7 +16,6 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
       setLoading(true);
       const response = await api.get(`/categories`);
       const categories = response.data;
-      console.log(response);
 
       setLoading(false);
 

@@ -16,7 +16,6 @@ export function GameProvider({ children }: GameProviderProps) {
       setLoading(true);
       const response = await api.get('/game');
       const games = response.data;
-      console.log(response);
 
       setLoading(false);
 
