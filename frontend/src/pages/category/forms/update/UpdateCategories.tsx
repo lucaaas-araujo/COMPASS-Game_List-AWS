@@ -11,36 +11,62 @@ import { Input } from '../../../../components/ui/input/Input';
 import { useState } from 'react';
 import { Label } from '../../../../components/ui/label/Label';
 import style from './UpdateCategories.module.css';
+import { useCategory } from '../../../../hooks/useCategory';
+import type { EditCategoryWithOnCreatedProps } from '../../../../types/Category';
+import { toast, ToastContainer } from 'react-toastify';
+import { useDialog } from '../../../../hooks/useDialog';
 
-export function EditCategory({category}: EditCategoryProps) {
-  const [title, setTitle] = useState(category.name);
+
+
+
+export function EditCategory({
+  category,
+  onCreated,
+}: EditCategoryWithOnCreatedProps) {
+  const [title, setTitle] = useState(category.title);
   const [description, setDescription] = useState(category.description || '');
   const { update } = useCategory();
+  const { closeDialog } = useDialog();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await update({
-      _id: category._id,
-      name: title,
-      description: description,
-      user_id: category.user_id,
-    });
-    // Aqui você pode fechar o modal ou dar feedback ao usuário
+
+    // Validação
+    if (title.trim().length < 3) {
+      toast.error('O título deve ter pelo menos 3 caracteres.');
+      return;
+    }
+
+    try {
+      await update({
+        category: category,
+        categoryData: {
+          title: title,
+          description: description,
+        },
+        itemId: category._id,
+      });
+      toast.success('Categoria atualizada com sucesso!');
+      closeDialog();
+      onCreated();
+    } catch (error) {
+      toast.error('Erro ao atualizar categoria.');
+    }
   };
+
 
   return (
     <div className={style.editCategory}>
+      {/* <ToastContainer position='top-right' autoClose={2000} /> */}
       <DialogContent className={style.dialogContent}>
         <DialogHeader>
           <DialogTitle className={style.dialogTitle}>Edit category</DialogTitle>
           <DialogClose />
         </DialogHeader>
 
-        <form className={style.form} >
+        <form className={style.form}>
           <div className={style.formGroup}>
-            
             <Label asterisk>Title</Label>
-
             <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
 
