@@ -4,15 +4,14 @@ export type GameProps = {
   description: string;
   category: string;
   platform: string;
-  status: string;
+  status: 'Playing' | 'Done' | ' Abandoned';
   favorite: boolean;
-  acquisition_date: Date;
-  finish_date: Date;
-  user_id: string;
+  acquisition_date: string;
+  finish_date: string;
   is_deleted: boolean;
 };
 
 export type EditGameProps = {
-  id: string;
-  data: Partial<GameProps>;
+  itemId: string;
+  gameData: GameProps;
 };

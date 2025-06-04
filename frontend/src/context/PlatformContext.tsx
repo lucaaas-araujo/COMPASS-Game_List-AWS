@@ -2,29 +2,29 @@ import { useState, type ReactNode } from 'react';
 
 import { PlatformContext } from '../hooks/usePlatform';
 import { api } from '../services/api';
-import type { PlatformProps } from '../types/Platform';
+import type { EditPlatformProps, PlatformProps } from '../types/Platform';
 
 type PlatformProviderProps = {
   children: ReactNode;
 };
 
 export function PlatformProvider({ children }: PlatformProviderProps) {
-  const [allCategories, setAllCategories] = useState([]);
-  const [duplicateCategories, setDuplicateCategories] = useState([]);
+  const [allPlatforms, setAllPlatforms] = useState<PlatformProps[]>([]);
+  const [duplicatePlatforms, setDuplicatePlatforms] = useState([]);
   const [error, setError] = useState(false);
   const [platformCount, setPlatformCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const userId = '683851eeebf3ec3283664b14';
-
   const getAll = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/platform/${userId}`);
-      setPlatformCount(response.data.length);
+      const response = await api.get(`/platform`);
+      const platforms = response.data;
+
+      setPlatformCount(platforms.length);
       setLoading(false);
-      setAllCategories(response.data);
-      setDuplicateCategories(response.data);
+      setAllPlatforms(platforms);
+      setDuplicatePlatforms(platforms);
     } catch (error) {
       console.error('Error fetching platform:', error);
       setError(true);
@@ -32,7 +32,7 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
     }
   };
 
-  const create = async (platformData: PlatformProps) => {
+  const create = async (platformData: Omit<PlatformProps, 'is_deleted'>) => {
     try {
       setLoading(true);
       await api.post('/platform', platformData);
@@ -44,10 +44,10 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
     }
   };
 
-  const remove = async (): Promise<void> => {
+  const remove = async (itemId: string): Promise<void> => {
     try {
       setLoading(true);
-      await api.delete(`/platform/${userId}`);
+      await api.delete(`/platform/${itemId}`);
       setLoading(false);
     } catch (error) {
       console.error('Error deleting platform:', error);
@@ -56,10 +56,13 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
     }
   };
 
-  const update = async (platformData: PlatformProps): Promise<void> => {
+  const update = async ({
+    platformData,
+    itemId,
+  }: EditPlatformProps): Promise<void> => {
     try {
       setLoading(true);
-      await api.put(`/platform/${userId}`, { platformData });
+      await api.put(`/platform/${itemId}`, { platformData });
       setLoading(false);
     } catch (error) {
       console.error('Error updating platform:', error);
@@ -71,8 +74,8 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
   return (
     <PlatformContext.Provider
       value={{
-        allCategories,
-        duplicateCategories,
+        allPlatforms,
+        duplicatePlatforms,
         getAll,
         create,
         remove,

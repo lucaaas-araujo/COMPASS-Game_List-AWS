@@ -1,21 +1,19 @@
 import { useState, type ReactNode } from 'react';
 import { GameContext } from '../hooks/useGame';
 import { api } from '../services/api';
-import type { GameProps } from '../types/Game';
+import type { EditGameProps, GameProps } from '../types/Game';
 
 type GameProviderProps = {
   children: ReactNode;
 };
 
 export function GameProvider({ children }: GameProviderProps) {
-  const [allGames, setAllGames] = useState([]);
+  const [allGames, setAllGames] = useState<GameProps[]>([]);
   const [duplicateGames, setDuplicateGames] = useState([]);
   const [error, setError] = useState(false);
   const [gamesCount, setGamesCount] = useState(0);
   const [favoritesGamesCount, setFavoritesGamesCount] = useState(0);
   const [loading, setLoading] = useState(false);
-
-  const userId = '683851eeebf3ec3283664b14';
 
   const getAll = async () => {
     try {
@@ -50,10 +48,10 @@ export function GameProvider({ children }: GameProviderProps) {
     }
   };
 
-  const remove = async (): Promise<void> => {
+  const remove = async (itemId: string): Promise<void> => {
     try {
       setLoading(true);
-      await api.delete(`/game/${userId}`);
+      await api.delete(`/game/${itemId}`);
       setLoading(false);
     } catch (error) {
       console.error('Error deleting game:', error);
@@ -62,10 +60,10 @@ export function GameProvider({ children }: GameProviderProps) {
     }
   };
 
-  const update = async (gameData: GameProps): Promise<void> => {
+  const update = async ({ gameData, itemId }: EditGameProps): Promise<void> => {
     try {
       setLoading(true);
-      await api.put(`/game/${userId}`, { gameData });
+      await api.put(`/game/${itemId}`, { gameData });
       setLoading(false);
     } catch (error) {
       console.error('Error updating game:', error);
