@@ -11,8 +11,11 @@ import { useState } from 'react';
 import style from './CreateCategories.module.css';
 import { Textarea } from '../../../../components/ui/textarea/Textarea';
 import { Label } from "../../../../components/ui/label/Label"
+import { useCategory } from '../../../../hooks/useCategory';
+import { useDialog } from '../../../../hooks/useDialog';
+import { toast, ToastContainer } from 'react-toastify';
 
-export function NewCategory() {
+export function NewCategory({ onCreated }: { onCreated: () => void }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const { create } = useCategory();
@@ -20,26 +23,20 @@ export function NewCategory() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Validação simples
     if (title.trim().length < 3) {
       toast.error('O título deve ter pelo menos 3 caracteres.');
       return;
     }
-
     try {
       await create({
-        _id: '',
-        name: title,
+        title: title,
         description: description,
-        user_id: '683851eeebf3ec3283664b14',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
       });
       setTitle('');
       setDescription('');
       closeDialog();
       toast.success('Categoria criada com sucesso!');
+      onCreated(); // Só chama aqui, após sucesso
     } catch (error) {
       toast.error('Erro ao criar categoria.');
     }
@@ -47,7 +44,6 @@ export function NewCategory() {
 
   return (
     <div className={style.newCategory}>
-
       <ToastContainer position='top-right' autoClose={3000} />
       <DialogContent className={style.dialogContent}>
         <DialogHeader>
