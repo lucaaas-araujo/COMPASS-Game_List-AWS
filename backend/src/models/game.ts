@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 
 const gamesSchema = new mongoose.Schema(
   {
-    image_url: {
-      type: String,
-    },
     title: {
       type: String,
       require: true,
+    },
+    image_url: {
+      type: String,
     },
     description: {
       type: String,
