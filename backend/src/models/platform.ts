@@ -2,26 +2,23 @@ import mongoose from 'mongoose';
 
 const platformSchema = new mongoose.Schema(
   {
-    image_url: { 
-      type: String, 
+    image_url: { type: String },
+    title: {
+      type: String,
+      required: true,
     },
-    title: { 
-      type: String, 
-      required: true 
+    company: { type: String },
+    acquisition_year: {
+      type: Date,
     },
-    company: 
-    { type: String, 
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'users',
+      required: true,
     },
-    acquisition_year: { 
-      type: Date, 
-    },
-    user_id: { 
-      type: String, 
-      required: true 
-    },
-    is_deleted: { 
-      type: Boolean, 
-      default: false 
+    is_deleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {
