@@ -1,12 +1,19 @@
 export type CategoryProps = {
+  _id: string;
   title: string;
-  description: string;
+  description?: string;
   createdAt: string;
   updatedAt: string;
   is_deleted: boolean;
 };
 
 export type EditCategoryProps = {
-  itemId: string;
+  category: CategoryProps;
   categoryData: Pick<CategoryProps, 'title' | 'description'>;
+  itemId: string;
 };
+
+export type EditCategoryWithOnCreatedProps = {
+  onCreated: () => void;
+  category: CategoryProps;
+}
