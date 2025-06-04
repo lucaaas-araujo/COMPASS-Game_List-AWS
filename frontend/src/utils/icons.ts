@@ -13,12 +13,13 @@ import logout from '../assets/logout.svg';
 import pen from '../assets/pen.svg';
 import categoryHover from '../assets/pricetag-hover.svg';
 import category from '../assets/pricetag.svg';
-import starHome from "../assets/star_home.svg"
+import starHome from '../assets/star_home.svg';
 import star from '../assets/star.svg';
 import starFilled from '../assets/star_filled.svg';
 import trash from '../assets/trash.svg';
 import x from '../assets/x.svg';
-import warning from '../assets/warning.svg'
+import warning from '../assets/warning.svg';
+import imageController from '../../public/controller-game-list.png';
 
 export {
   arrow,
@@ -43,4 +44,5 @@ export {
   starHome,
   x,
   warning,
+  imageController,
 };

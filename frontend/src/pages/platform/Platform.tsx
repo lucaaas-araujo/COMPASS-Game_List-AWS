@@ -1,16 +1,19 @@
-import { useState } from 'react';
 import { Header } from '../../components/header/Header';
 import HeaderList from '../../components/ui/headerList/HeaderList';
-import ListItems from '../../components/ui/listItems/ListItems';
-import  DeleteModal  from '../components/DeleteModal'; 
-import { EditPlatform } from './forms/update/UpdatePlatform';
 import styles from './Platform.module.css';
-import epic from '../../images/epic.svg';
-import mario from '../../images/mario.svg';
+
 import { NewPlatform } from './forms/create/CreatePlatform';
+import { useEffect, useState } from 'react';
+import { usePlatform } from '../../hooks/usePlatform';
+import type { PlatformProps } from '../../types/Platform';
+import { EditPlatform } from './forms/update/UpdatePlatform';
+import ListItems from '../../components/ui/listItems/ListItems';
+import DeleteModal from '../components/DeleteModal';
+import { formatDate } from '../../utils/formatDate';
 
 export const Platform = () => {
-  const [, setPlatformToDelete] = useState<number | null>(null);
+  const [platforms, setPlatforms] = useState<PlatformProps[]>();
+  const { getAll } = usePlatform();
 
   const headers = [
     { key: 'title', label: 'Title' },
@@ -20,56 +23,56 @@ export const Platform = () => {
     { key: 'updatedAt', label: 'Updated at' },
   ];
 
+  useEffect(() => {
+    const fetchPlatforms = async () => {
+      const platforms = await getAll();
+      setPlatforms(platforms);
+    };
+    fetchPlatforms();
+  }, []);
+  console.log(platforms);
+  platforms?.map((platform) => {
+    console.log(platform.acquisition_year);
+  });
+
   const handleSortClick = (key: string) => {
     console.log('Sort by:', key);
   };
 
-  const platformList = [
-    {
-      id: 1,
-      imageUrl: mario,
-      title: 'Nintendo Switch',
-      company: 'Nintendo',
-      acquisitionYear: '08/12/2021',
-      createdAt: '08/12/2021',
-      updatedAt: '',
-    },
-    {
-      id: 2,
-      imageUrl: epic,
-      title: 'Epic Games',
-      company: 'Epic',
-      acquisitionYear: '08/12/2021',
-      createdAt: '08/12/2021',
-      updatedAt: '',
-    },
-  ];
-
   return (
     <div className={styles.pageWrapper}>
-      <Header title="Platforms" buttonText="NEW PLATFORM" createForm={<NewPlatform/>}/>
+      <Header
+        title='Platforms'
+        buttonText='NEW PLATFORM'
+        createForm={<NewPlatform />}
+      />
 
       <div className={styles.platformContainer}>
         <HeaderList fields={headers} onSortClick={handleSortClick} />
 
-       {platformList.map((platform) => (
-  <ListItems
-    key={platform.id}
-    imageUrl={platform.imageUrl}
-    camp1={platform.title}
-    camp2={platform.company}
-    camp3={platform.acquisitionYear}
-    camp4={platform.createdAt}
-    camp5={platform.updatedAt}
-    iconDetails
-    iconEdit
-    iconDelete
-    editForm={<EditPlatform />}
-    deleteForm={<DeleteModal type='platform' onDelete={() => false } /> }
-    onStarClick={() => console.log('Star', platform.id)}
-    onDeleteClick={() => setPlatformToDelete(platform.id)}
-  />
-))}
+        {platforms &&
+          platforms.map((platform, index) => (
+            <ListItems
+              key={index}
+              imageUrl={platform.image_url}
+              camp1={platform.title}
+              camp2={platform.company}
+              camp3={
+                platform.acquisition_year &&
+                formatDate(platform.acquisition_year)
+              }
+              /* camp4={platform.createdAt}
+              camp5={platform.updatedAt} */
+              iconDetails
+              iconEdit
+              iconDelete
+              editForm={<EditPlatform />}
+              deleteForm={
+                <DeleteModal type='platform' onDelete={() => false} />
+              }
+              onStarClick={() => console.log('Star', platform)}
+            />
+          ))}
       </div>
     </div>
   );
