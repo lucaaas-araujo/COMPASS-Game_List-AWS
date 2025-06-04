@@ -55,11 +55,10 @@ const ListItems: React.FC<ListItemsProps> = ({
       </div>
 
       <div className={styles.cardTexts}>
-        {camp1 && <span>{camp1}</span>}
-        {camp2 && <span>{camp2}</span>}
-        {camp3 && <span>{camp3}</span>}
-        {camp4 && <span>{camp4}</span>}
-        {camp5 && <span>{camp5}</span>}
+        <span>{camp1 || ''}</span>
+        <span>{camp2 || ''}</span>
+        <span>{camp3 || ''}</span>
+        <span>{camp4 || ''}</span>
         {iconStar && (
           <img
             src={starred ? starFilled : star}
@@ -88,15 +87,15 @@ const ListItems: React.FC<ListItemsProps> = ({
           </Dialog>
         )}
         {iconDelete && (
-            <Dialog>
-              <DialogTrigger>
-                <button className={styles.icon} >
-                  <img src={trash} alt='Delete' />
-                </button>
-              </DialogTrigger>
-              {deleteForm}
-            </Dialog>
-          )}
+          <Dialog>
+            <DialogTrigger>
+              <button className={styles.icon}>
+                <img src={trash} alt='Delete' />
+              </button>
+            </DialogTrigger>
+            {deleteForm}
+          </Dialog>
+        )}
       </div>
     </div>
   );

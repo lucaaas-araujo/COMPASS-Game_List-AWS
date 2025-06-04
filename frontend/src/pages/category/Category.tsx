@@ -1,25 +1,27 @@
+import { useEffect } from 'react';
 import { Header } from '../../components/header/Header';
-import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
 import DeleteModal from '../components/DeleteModal';
 
 import styles from './Category.module.css';
 import { NewCategory } from './forms/create/CreateCategories';
 import { EditCategory } from './forms/update/UpdateCategories';
+import { DeleteCategoryConfirm } from './forms/delete/DeleteCategory';
+import { DialogContent } from '../../components/ui/dialog/Dialog';
+import DeleteModal from '../components/DeleteModal';
 
 export function Category() {
-  const headerFields = [
-    { key: 'name', label: 'Name' },
-    { key: 'description', label: 'Description' },
-    { key: 'createdAt', label: 'Created at' },
-    { key: 'updatedAt', label: 'Updated at' },
-  ];
+  const { getAll, allCategories, remove } = useCategory();
+
+  useEffect(() => {
+    getAll();
+  }, []);
 
   return (
     <div className={styles.container}>
       <Header title='Categories' buttonText='NEW CATEGORY' createForm={<NewCategory />} />
 
-      <HeaderList
+      {/* <HeaderList
         fields={headerFields}
         onSortClick={(key) => console.log(`Ordenar por ${key}`)}
       />

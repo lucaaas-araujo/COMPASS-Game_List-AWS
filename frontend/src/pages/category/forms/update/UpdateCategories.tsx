@@ -12,9 +12,21 @@ import { useState } from 'react';
 import { Label } from '../../../../components/ui/label/Label';
 import style from './UpdateCategories.module.css';
 
-export function EditCategory() {
-  const [title, setTitle] = useState('Mario Kart 8');
-  const [description, setDescription] = useState('Amazing racing game');
+export function EditCategory({category}: EditCategoryProps) {
+  const [title, setTitle] = useState(category.name);
+  const [description, setDescription] = useState(category.description || '');
+  const { update } = useCategory();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await update({
+      _id: category._id,
+      name: title,
+      description: description,
+      user_id: category.user_id,
+    });
+    // Aqui você pode fechar o modal ou dar feedback ao usuário
+  };
 
   return (
     <div className={style.editCategory}>
@@ -24,7 +36,7 @@ export function EditCategory() {
           <DialogClose />
         </DialogHeader>
 
-        <form className={style.form}>
+        <form className={style.form} >
           <div className={style.formGroup}>
             
             <Label asterisk>Title</Label>
@@ -35,6 +47,7 @@ export function EditCategory() {
           <div className={style.formGroup}>
             <label>Description</label>
             <textarea
+              placeholder='Enter category description'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className={style.textarea}
@@ -43,7 +56,7 @@ export function EditCategory() {
         </form>
 
         <DialogFooter>
-          <Button>
+          <Button onClick={handleSubmit}>
             <p>Edit category</p>
             <p>+</p>
           </Button>
