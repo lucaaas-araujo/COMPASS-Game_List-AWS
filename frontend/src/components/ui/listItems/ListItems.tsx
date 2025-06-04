@@ -1,4 +1,4 @@
-import React, { useState, type ReactNode } from 'react';
+import{ useState, type ReactNode } from 'react';
 
 import {
   eye,
@@ -29,7 +29,7 @@ interface ListItemsProps {
   onStarClick?: () => void;
 }
 
-const ListItems: React.FC<ListItemsProps> = ({
+const ListItems = ({
   imageUrl,
   camp1,
   camp2,
@@ -44,7 +44,7 @@ const ListItems: React.FC<ListItemsProps> = ({
   editForm,
   deleteForm,
   onStarClick,
-}) => {
+}: ListItemsProps) => {
   const [starred, setStarred] = useState(false);
 
   const handleStarClick = () => {
@@ -63,10 +63,12 @@ const ListItems: React.FC<ListItemsProps> = ({
       </div>
 
       <div className={styles.cardTexts}>
-        <span>{camp1 || ''}</span>
-        <span>{camp2 || ''}</span>
-        <span>{camp3 || ''}</span>
-        <span>{camp4 || ''}</span>
+        {camp1 && <span>{camp1}</span>}
+        {camp2 && <span>{camp2}</span>}
+        {camp3 && <span>{camp3}</span>}
+        {camp4 && <span>{camp4}</span>}
+        {camp5 && <span>{camp5}</span>}
+
         {iconStar && (
           <img
             src={starred ? starFilled : star}

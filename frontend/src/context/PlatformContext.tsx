@@ -28,12 +28,13 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
     }
   };
 
-  const create = async (platformData: Omit<PlatformProps, 'is_deleted'>) => {
+  const create = async (
+    platformData: Omit<PlatformProps, 'is_deleted' | 'createdAt' | 'updatedAt'>,
+  ) => {
     try {
       setLoading(true);
-      const teste = await api.post('/platform', platformData);
+      await api.post('/platform', platformData);
       setLoading(false);
-      console.log(teste)
     } catch (error) {
       console.error('Error creating platform:', error);
       setError(true);
