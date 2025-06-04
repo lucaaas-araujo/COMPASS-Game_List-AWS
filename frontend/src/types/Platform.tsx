@@ -3,6 +3,8 @@ export type PlatformProps = {
   title: string;
   company?: string;
   acquisition_year?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   is_deleted?: boolean;
 };
 

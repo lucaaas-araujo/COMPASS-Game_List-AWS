@@ -1,15 +1,15 @@
+import { useEffect, useState } from 'react';
+
 import { Header } from '../../components/header/Header';
 import HeaderList from '../../components/ui/headerList/HeaderList';
-import styles from './Platform.module.css';
-
-import { NewPlatform } from './forms/create/CreatePlatform';
-import { useEffect, useState } from 'react';
+import ListItems from '../../components/ui/listItems/ListItems';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { PlatformProps } from '../../types/Platform';
-import { EditPlatform } from './forms/update/UpdatePlatform';
-import ListItems from '../../components/ui/listItems/ListItems';
-import DeleteModal from '../components/DeleteModal';
 import { formatDate } from '../../utils/formatDate';
+import { NewPlatform } from './forms/create/CreatePlatform';
+import { EditPlatform } from './forms/update/UpdatePlatform';
+
+import styles from './Platform.module.css';
 
 export const Platform = () => {
   const [platforms, setPlatforms] = useState<PlatformProps[]>();
@@ -30,10 +30,6 @@ export const Platform = () => {
     };
     fetchPlatforms();
   }, []);
-  console.log(platforms);
-  platforms?.map((platform) => {
-    console.log(platform.acquisition_year);
-  });
 
   const handleSortClick = (key: string) => {
     console.log('Sort by:', key);
@@ -57,19 +53,16 @@ export const Platform = () => {
               imageUrl={platform.image_url}
               camp1={platform.title}
               camp2={platform.company}
-              camp3={
-                platform.acquisition_year &&
-                formatDate(platform.acquisition_year)
-              }
-              /* camp4={platform.createdAt}
-              camp5={platform.updatedAt} */
+              camp3={formatDate(String(platform.acquisition_year))}
+              camp4={formatDate(String(platform.createdAt))}
+              camp5={formatDate(String(platform.updatedAt))}
               iconDetails
               iconEdit
               iconDelete
               editForm={<EditPlatform />}
-              deleteForm={
-                <DeleteModal type='platform' onDelete={() => false} />
-              }
+              // deleteForm={
+              //   <DeleteModal type='platform' onDelete={() => false} />
+              // }
               onStarClick={() => console.log('Star', platform)}
             />
           ))}
