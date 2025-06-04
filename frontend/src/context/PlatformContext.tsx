@@ -31,8 +31,9 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
   const create = async (platformData: Omit<PlatformProps, 'is_deleted'>) => {
     try {
       setLoading(true);
-      await api.post('/platform', platformData);
+      const teste = await api.post('/platform', platformData);
       setLoading(false);
+      console.log(teste)
     } catch (error) {
       console.error('Error creating platform:', error);
       setError(true);
