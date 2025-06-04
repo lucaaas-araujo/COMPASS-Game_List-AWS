@@ -10,8 +10,9 @@ type DeleteType = 'platform' | 'category' | 'game';
 
 interface DeleteModalProps {
   type: DeleteType;
-  onDelete: () => boolean;
+  onDelete: () => Promise<boolean>;
 }
+
 
 
 const getDeleteMessage = (type: DeleteType): string => {
@@ -31,8 +32,8 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ type, onDelete }) => {
 
 const { closeDialog } = useDialog();
 
-  const handleDelete = () => {
-    const isDeleted = onDelete();
+  const handleDelete = async () => {
+    const isDeleted = await onDelete();
     if (isDeleted) closeDialog();
   };
 
