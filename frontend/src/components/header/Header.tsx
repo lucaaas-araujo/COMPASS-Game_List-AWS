@@ -39,7 +39,7 @@ export function Header({
           />
         </button>
         <h1 className={style.title}>{title}</h1>
-
+      </div>
       <div className={style.texts}>
         {!hiddenButton && (
           <Dialog>
