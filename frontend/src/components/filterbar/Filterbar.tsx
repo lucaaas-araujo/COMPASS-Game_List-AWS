@@ -5,6 +5,7 @@ import { Button } from '../ui/button/Button';
 import { Input } from '../ui/input/Input';
 import style from './Filterbar.module.css';
 import { useCategory } from '../../hooks/useCategory';
+import type { CategoryProps } from '../../types/Category';
 
 type Props = {
   onSearch: (filters: FiltersState) => void;
@@ -24,22 +25,15 @@ export const GameFilters = ({ onSearch, onClear }: Props) => {
     favorite: '',
   });
 
-  const { getAll, allCategories } = useCategory();
-  const [categories, setCategories] = useState<string[]>([]);
-
+  const { getAll } = useCategory();
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
   useEffect(() => {
     const fetchCategories = async () => {
-      try {
-        await getAll();
-        const names = allCategories.map((cat: { name: string }) => cat.name);
-        setCategories(names);
-      } catch (error) {
-        console.error('Failed to fetch categories:', error);
-      }
+      const data = await getAll();
+      setCategories(data);
     };
-
     fetchCategories();
-  }, [getAll, allCategories]); // Adicionei as dependências
+  }, [getAll]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -84,8 +78,8 @@ export const GameFilters = ({ onSearch, onClear }: Props) => {
           <SelectItem value=''>Select Category</SelectItem>
           <SelectGroup>
             {categories.map((cat) => (
-              <SelectItem key={cat} value={cat}>
-                {cat}
+              <SelectItem key={cat.title} value={cat.title}>
+                {cat.title}
               </SelectItem>
             ))}
           </SelectGroup>

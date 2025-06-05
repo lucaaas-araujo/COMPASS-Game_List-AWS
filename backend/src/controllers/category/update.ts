@@ -17,12 +17,12 @@ export const updateById: UpdateByIdProps = async (req, res) => {
   const { title, description } = req.body;
 
   if (!id) {
-    res.status(400).json({ error: 'ID é obrigatório.' });
+    res.status(400).json({ error: 'ID is required.' });
     return;
   }
 
   if (title && title.trim().length < 3) {
-    res.status(400).json({ error: 'O título deve ter pelo menos 3 caracteres.' });
+    res.status(400).json({ error: 'Title must be at least 3 characters long.' });
     return;
   }
 

@@ -43,7 +43,6 @@ export function Category() {
   const handleDelete = async (id: string): Promise<boolean> => {
     try {
       await remove(id);
-      toast.success('Category deleted!');
       fetchCategories();
       return true;
     } catch (error) {

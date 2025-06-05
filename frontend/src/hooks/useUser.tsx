@@ -1,12 +1,11 @@
 
 import { createContext, useContext } from 'react';
 
-import type { JwtPayload, UserCountsProps } from '../context/UserContext';
+import type { JwtPayload } from '../context/UserContext';
 import type { UserProps } from '../types/User';
 
 type UserContextProps = {
   user: JwtPayload | undefined;
-  counts: UserCountsProps | null;
   login: (data: Pick<UserProps, 'email' | 'password'>) => Promise<void>;
   register: (data: UserProps) => Promise<void>;
   logout: () => void;
