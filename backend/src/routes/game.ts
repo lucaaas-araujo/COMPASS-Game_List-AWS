@@ -19,6 +19,4 @@ routes.put('/game/:id', ensureAuthentication, gamesControllers.updateById);
 
 routes.delete('/game/:id', ensureAuthentication, gamesControllers.deleteById);
 
-routes.patch('/game/:id', ensureAuthentication, gamesControllers.favorite);
-
 export { routes };

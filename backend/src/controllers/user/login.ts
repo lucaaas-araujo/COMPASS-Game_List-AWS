@@ -1,9 +1,4 @@
-import {
-  categoryService,
-  gameServices,
-  platformServices,
-  userServices,
-} from '@/services';
+import { userServices } from '@/services';
 import { compare } from 'bcrypt';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
@@ -50,16 +45,6 @@ export const login = async (req: Request, res: Response) => {
     { id: user.id, full_name: user.full_name },
     process.env.JWT_SECRET,
   );
-  const gamesCount = await gameServices.countByUser(user.id);
-  const categoriesCount = await categoryService.countByUser(user.id);
-  const platformsCount = await platformServices.countByUser(user.id);
 
-  res.status(200).json({
-    accessToken,
-    counts: {
-      games: gamesCount,
-      categories: categoriesCount,
-      platforms: platformsCount,
-    },
-  });
+  res.status(200).json(accessToken);
 };
