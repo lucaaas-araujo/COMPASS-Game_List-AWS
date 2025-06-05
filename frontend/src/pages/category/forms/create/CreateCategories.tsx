@@ -47,7 +47,6 @@ export function NewCategory({ onCreated }: { onCreated?: () => void }) {
 
   return (
     <div className={style.newCategory}>
-      <ToastContainer position='top-right' autoClose={3000} />
       <DialogContent className={style.dialogContent}>
         <DialogHeader>
           <DialogTitle className={style.dialogTitle}>New category</DialogTitle>

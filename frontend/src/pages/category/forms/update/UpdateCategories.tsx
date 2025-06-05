@@ -13,7 +13,7 @@ import { Label } from '../../../../components/ui/label/Label';
 import style from './UpdateCategories.module.css';
 import { useCategory } from '../../../../hooks/useCategory';
 import type { EditCategoryWithOnCreatedProps } from '../../../../types/Category';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useDialog } from '../../../../hooks/useDialog';
 
 
@@ -57,7 +57,6 @@ export function EditCategory({
 
   return (
     <div className={style.editCategory}>
-      {/* <ToastContainer position='top-right' autoClose={2000} /> */}
       <DialogContent className={style.dialogContent}>
         <DialogHeader>
           <DialogTitle className={style.dialogTitle}>Edit category</DialogTitle>
