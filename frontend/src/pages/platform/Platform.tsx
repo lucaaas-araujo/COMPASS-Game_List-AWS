@@ -10,6 +10,8 @@ import { NewPlatform } from './forms/create/CreatePlatform';
 import { EditPlatform } from './forms/update/UpdatePlatform';
 
 import styles from './Platform.module.css';
+import { ToastContainer } from 'react-toastify';
+import { formatDateYear } from '../../utils/formatDateYear';
 
 export type SortHeaders = {
   sort: string;
@@ -48,6 +50,7 @@ export const Platform = () => {
 
   return (
     <div className={styles.pageWrapper}>
+      <ToastContainer position='top-right' autoClose={2000} />
       <Header
         title='Platforms'
         buttonText='NEW PLATFORM'
@@ -64,17 +67,19 @@ export const Platform = () => {
               imageUrl={platform.image_url}
               camp1={platform.title}
               camp2={platform.company}
-              camp3={formatDate(String(platform.acquisition_year))}
-              camp4={formatDate(String(platform.createdAt))}
-              camp5={formatDate(String(platform.updatedAt))}
+              camp3={formatDateYear(String(platform.acquisition_year))}
+              camp4={formatDateYear(String(platform.createdAt))}
+              camp5={formatDateYear(String(platform.updatedAt))}
               iconDetails
               iconEdit
               iconDelete
-              editForm={<EditPlatform />}
+              editForm={
+                <EditPlatform platform={platform} onCreated={fetchPlatforms} />
+              }
               // deleteForm={
               //   <DeleteModal type='platform' onDelete={() => false} />
               // }
-              onStarClick={() => console.log('Star', platform)}
+              
             />
           ))}
       </div>

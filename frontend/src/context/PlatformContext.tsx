@@ -62,12 +62,12 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
   };
 
   const update = async ({
-    platformData,
     itemId,
+    platformData,
   }: EditPlatformProps): Promise<void> => {
     try {
       setLoading(true);
-      await api.put(`/platform/${itemId}`, { platformData });
+      await api.put(`/platform/${itemId}`, platformData); // <-- ajuste aqui
       setLoading(false);
     } catch (error) {
       console.error('Error updating platform:', error);
