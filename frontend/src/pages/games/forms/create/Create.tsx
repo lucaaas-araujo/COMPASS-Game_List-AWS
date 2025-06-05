@@ -7,51 +7,76 @@ import {
 } from '../../../../components/ui/dialog/Dialog';
 import { Label } from '../../../../components/ui/label/Label';
 import { Input } from '../../../../components/ui/input/Input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../../../../components/ui/button/Button';
 import {
   Select,
   SelectGroup,
   SelectItem,
 } from '../../../../components/ui/select/Select';
+import { useGame } from '../../../../hooks/useGame';
 import style from './Create.module.css';
+import { useCategory } from '../../../../hooks/useCategory';
+import { usePlatform } from '../../../../hooks/usePlatform';
+import { useDialog } from '../../../../hooks/useDialog';
+import { type CategoryProps } from '../../../../types/Category';
+import { type PlatformProps } from '../../../../types/Platform';
+import { toast } from 'react-toastify';
 
-export const CreateGame = () => {
+export function CreateGame({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [acquisition_date, setAcquisitionDate] = useState('');
-  const [status, setStatus] = useState('');
-  const [plataform, setPlatform] = useState('');
-  const [finish_date, setFinishDate] = useState('');
-  const [url_image, setUrlImage] = useState('');
+  const [platform, setPlatform] = useState('');
+  const { closeDialog } = useDialog();
+  const [categoryList, setCategoryList] = useState<CategoryProps[]>([]);
+  const [platformList, setPlatformList] = useState<PlatformProps[]>([]);
+  const [status, setStatus] = useState<'Playing' | 'Done' | 'Abandoned'>(
+    'Playing',
+  );
+  const [acquisition_date, setAcquisitionDate] = useState(Date);
+  const [finish_date, setFinishDate] = useState(Date);
+  const [favorite, setFavorite] = useState(false);
+  const [image_url, setUrlImage] = useState('');
+  const { getAll: getAllCategories } = useCategory();
+  const { getAll: getAllPlatforms } = usePlatform();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const categoryList = await getAllCategories();
+      const platformList = await getAllPlatforms({});
+      setPlatformList(platformList);
+      setCategoryList(categoryList);
+    };
+    fetchData();
+  }, []);
+
+  const { create, error } = useGame();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const gameData = {
-      title,
-      description,
-      category,
-      acquisition_date,
-      status,
-      plataform,
-      finish_date,
-      url_image,
-    };
-
+    if (title.trim().length < 3) {
+      toast.error('Game title needs at least 3 characters required');
+      return;
+    }
     try {
-      const response = await fetch('#', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(gameData),
+      await create({
+        title,
+        description,
+        category,
+        acquisition_date: new Date(acquisition_date),
+        status,
+        platform,
+        finish_date: new Date(finish_date),
+        image_url,
+        favorite,
       });
-
-      if (!response.ok) throw new Error('Error creating game');
-    } catch (error) {
-      console.error('Erro:', error);
+      toast.success('Game registred success!');
+      closeDialog();
+      onCreated?.();
+    } catch {
+      console.log(error);
+      toast.error('Error to create game');
     }
   };
 
@@ -71,6 +96,7 @@ export const CreateGame = () => {
             <div>
               <Input
                 placeholder='Mario Kart 8'
+                id='title'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -83,6 +109,7 @@ export const CreateGame = () => {
             </Label>
             <div>
               <textarea
+                id='description'
                 placeholder='Amazing game'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -98,24 +125,36 @@ export const CreateGame = () => {
                   Category
                 </Label>
                 <Select
+                  id='category'
                   variant='modal'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}>
                   <SelectGroup>
-                    <SelectItem>Select Category</SelectItem>
+                    <SelectItem value=''>Select Category</SelectItem>
+                    {categoryList.map((cat) => (
+                      <SelectItem key={cat.title} value={cat.title}>
+                        {cat.title}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </Select>
               </div>
               <div className={style.formGroup}>
-                <Label asterisk htmlFor='plataform'>
-                  Plataform
+                <Label asterisk htmlFor='platform'>
+                  Platform
                 </Label>
                 <Select
+                  id='platform'
                   variant='modal'
-                  value={plataform}
+                  value={platform}
                   onChange={(e) => setPlatform(e.target.value)}>
                   <SelectGroup>
-                    <SelectItem>Select Plataform</SelectItem>
+                    <SelectItem value=''>Select Platform</SelectItem>
+                    {platformList.map((plat) => (
+                      <SelectItem key={plat.title} value={plat.title}>
+                        {plat.title}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </Select>
               </div>
@@ -128,6 +167,7 @@ export const CreateGame = () => {
                 </Label>
                 <div>
                   <Input
+                    id='acquisition_date'
                     type='date'
                     variant='squared'
                     value={acquisition_date}
@@ -141,6 +181,7 @@ export const CreateGame = () => {
                 </Label>
                 <div>
                   <Input
+                    id='finish_date'
                     type='date'
                     variant='squared'
                     value={finish_date}
@@ -156,11 +197,18 @@ export const CreateGame = () => {
                   Status
                 </Label>
                 <Select
+                  id='status'
                   variant='modal'
                   value={status}
-                  onChange={(e) => setStatus(e.target.value)}>
+                  onChange={(e) =>
+                    setStatus(
+                      e.target.value as 'Playing' | 'Done' | 'Abandoned',
+                    )
+                  }>
                   <SelectGroup>
-                    <SelectItem value={''}>Select Status</SelectItem>
+                    <SelectItem value={'Playing'}>Playing</SelectItem>
+                    <SelectItem value={'Done'}>Done</SelectItem>
+                    <SelectItem value={'Abandoned'}>Abandoned</SelectItem>
                   </SelectGroup>
                 </Select>
               </div>
@@ -172,7 +220,7 @@ export const CreateGame = () => {
                       name='favorite'
                       id='favorite'
                       value={status}
-                      onChange={(e) => setStatus(e.target.value)}
+                      onChange={(e) => setFavorite(e.target.checked)}
                     />
                   </div>
                   <Label asterisk htmlFor='favorite'>
@@ -189,21 +237,21 @@ export const CreateGame = () => {
             </Label>
             <div>
               <Input
+                id='image_url'
                 type='text'
                 placeholder='http://cdn...'
-                value={url_image}
+                value={image_url}
                 onChange={(e) => setUrlImage(e.target.value)}
               />
             </div>
           </div>
+          <DialogFooter>
+            <Button type='submit'>
+              <p className={style.button}>CREATE</p>
+            </Button>
+          </DialogFooter>
         </form>
-
-        <DialogFooter>
-          <Button type='submit'>
-            <p className={style.button}>CREATE</p>
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </div>
   );
-};
+}

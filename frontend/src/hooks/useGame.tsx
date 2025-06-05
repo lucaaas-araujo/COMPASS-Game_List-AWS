@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
-
+import { type GetAllProps } from '../context/GameContext';
 import type { EditGameProps, GameProps } from '../types/Game';
 
 type GameContextProps = {
-  getAll: () => Promise<GameProps[]>;
+  getAll: ({ sort, dir }: GetAllProps) => Promise<GameProps[]>;
   getById: (itemId: string) => Promise<GameProps[]>;
   remove: (itemId: string) => Promise<void>;
   toggleIsFavorite: (itemId: string, isFavorite: boolean) => Promise<void>;
