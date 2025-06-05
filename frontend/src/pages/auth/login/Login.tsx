@@ -38,8 +38,8 @@ export const Login = () => {
         </div>
         <CardHeader>
           <div className={style.cardheader}>
-            <CardTitle>Login</CardTitle>
-            <CardDescription>
+            <CardTitle className={style.title}>Login</CardTitle>
+            <CardDescription className={style.subtitle}>
               Enter your credentials to access your account.
             </CardDescription>
           </div>
@@ -47,26 +47,30 @@ export const Login = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className={style.form}>
             <div className={style.content}>
-              <Label htmlFor='email'>Email</Label>
+              <Label className={style.inputLabel} htmlFor='email'>
+                Email
+              </Label>
               <Input
                 id='email'
                 variant='squared'
                 type='email'
                 placeholder='Enter your email'
                 value={email}
-                style={{ width: 'auto' }}
+                style={{ width: 'auto', height: '44px' }}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className={style.content}>
-              <Label htmlFor='password'>Password</Label>
+              <Label className={style.inputLabel} htmlFor='password'>
+                Password
+              </Label>
               <Input
                 id='password'
                 type='password'
                 variant='squared'
                 placeholder='Enter your password'
                 value={password}
-                style={{ width: 'auto' }}
+                style={{ width: 'auto', height: '44px' }}
                 onChange={(e) => setPassword(e.target.value)}
               />
               {error && (
