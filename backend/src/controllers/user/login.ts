@@ -7,7 +7,7 @@ export const login = async (req: Request, res: Response) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Basic ')) {
-    res.status(401).json({ message: 'Token não fornecido.' });
+    res.status(401).json({ message: 'Token not provided.' });
     return;
   }
 

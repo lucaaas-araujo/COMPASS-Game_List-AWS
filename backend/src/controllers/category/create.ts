@@ -18,7 +18,7 @@ export const create: CreateProps = async (req, res) => {
   const { title, description } = req.body;
 
   if (!title || title.trim().length < 3) {
-    res.status(400).json({ error: 'O nome deve ter pelo menos 3 caracteres.' });
+    res.status(400).json({ error: 'Name must contain at least 3 characters.' });
     return;
   }
 
