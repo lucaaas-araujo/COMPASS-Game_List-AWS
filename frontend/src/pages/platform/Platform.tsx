@@ -11,29 +11,40 @@ import { EditPlatform } from './forms/update/UpdatePlatform';
 
 import styles from './Platform.module.css';
 
+export type SortHeaders = {
+  sort: string;
+  label: string;
+};
+
+const headers: SortHeaders[] = [
+  { sort: 'title', label: 'Title' },
+  { sort: 'company', label: 'Company' },
+  { sort: 'acquisition_year', label: 'Acquisition year' },
+  { sort: 'createdAt', label: 'Created at' },
+  { sort: 'updatedAt', label: 'Updated at' },
+];
+
 export const Platform = () => {
   const [platforms, setPlatforms] = useState<PlatformProps[]>();
+  const [dir, setDir] = useState<'asc' | 'desc'>('asc');
   const { getAll } = usePlatform();
 
-  const headers = [
-    { key: 'title', label: 'Title' },
-    { key: 'company', label: 'Company' },
-    { key: 'acquisitionYear', label: 'Acquisition year' },
-    { key: 'createdAt', label: 'Created at' },
-    { key: 'updatedAt', label: 'Updated at' },
-  ];
+  const handleSortClick = async (sort: string) => {
+    setDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+
+    const platforms = await getAll({ sort, dir });
+
+    setPlatforms(platforms);
+  };
+
+  const fetchPlatforms = async () => {
+    const platforms = await getAll({});
+    setPlatforms(platforms);
+  };
 
   useEffect(() => {
-    const fetchPlatforms = async () => {
-      const platforms = await getAll();
-      setPlatforms(platforms);
-    };
     fetchPlatforms();
   }, []);
-
-  const handleSortClick = (key: string) => {
-    console.log('Sort by:', key);
-  };
 
   return (
     <div className={styles.pageWrapper}>

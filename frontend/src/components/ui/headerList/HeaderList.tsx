@@ -1,36 +1,32 @@
-import React from 'react';
-
-import styles from './HeaderList.module.css';
 import orderListIcon from '../../../assets/orderList.svg';
+import styles from './HeaderList.module.css';
 
-interface Header {
-  key: string;
+type Header = {
+  sort: string;
   label: string;
-}
+};
 
-interface HeaderListProps {
+type HeaderListProps = {
   fields: Header[];
-  onSortClick?: (key: string) => void;
-}
+  onSortClick: (sort: string) => void;
+};
 
-const HeaderList: React.FC<HeaderListProps> = ({ fields, onSortClick }) => {
+const HeaderList = ({ fields, onSortClick }: HeaderListProps) => {
   return (
     <div className={styles.headerRow}>
-    
-      <div className={styles.imageSpace}></div>
+      <div className={styles.imageSpace} />
 
-      {fields.map(({ key, label }) => (
+      {fields.map(({ sort, label }, index) => (
         <div
-          key={key}
+          key={index}
           className={styles.headerItem}
-          onClick={() => onSortClick?.(key)}>
+          onClick={() => onSortClick(sort)}>
           {label}
-            <img src={orderListIcon} alt="Order List" />
+          <img src={orderListIcon} alt='Order List' />
         </div>
       ))}
 
-     
-      <div className={styles.iconsSpace}></div>
+      <div className={styles.iconsSpace} />
     </div>
   );
 };

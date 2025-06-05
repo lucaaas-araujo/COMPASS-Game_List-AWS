@@ -8,14 +8,21 @@ type PlatformProviderProps = {
   children: ReactNode;
 };
 
+export type GetAllProps = {
+  sort?: string;
+  dir?: 'asc' | 'desc';
+};
+
 export function PlatformProvider({ children }: PlatformProviderProps) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const getAll = async () => {
+  const getAll = async ({ sort = 'title', dir }: GetAllProps) => {
     try {
       setLoading(true);
-      const response = await api.get(`/platform`);
+      const response = await api.get(`/platform`, {
+        params: { sort, dir },
+      });
       const platforms = response.data;
 
       setLoading(false);
