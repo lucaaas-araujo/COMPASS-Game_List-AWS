@@ -13,6 +13,8 @@ routes.get(
 
 routes.post('/game', ensureAuthentication, gamesControllers.create);
 
+routes.get('/game/:id', ensureAuthentication, gamesControllers.getById);
+
 routes.put('/game/:id', ensureAuthentication, gamesControllers.updateById);
 
 routes.delete('/game/:id', ensureAuthentication, gamesControllers.deleteById);
