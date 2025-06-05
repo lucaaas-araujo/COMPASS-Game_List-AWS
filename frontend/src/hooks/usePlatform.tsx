@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react';
 
+import type { GetAllProps } from '../context/PlatformContext';
 import type { EditPlatformProps, PlatformProps } from '../types/Platform';
 
 type PlatformContextProps = {
-  getAll: () => Promise<PlatformProps[]>;
+  getAll: ({ sort, dir }: GetAllProps) => Promise<PlatformProps[]>;
   remove: (itemId: string) => Promise<void>;
   create: (platformData: PlatformProps) => Promise<void>;
   update: (platformData: EditPlatformProps) => Promise<void>;
