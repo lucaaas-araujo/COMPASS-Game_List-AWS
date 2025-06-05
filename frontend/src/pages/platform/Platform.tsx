@@ -7,15 +7,13 @@ import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { PlatformProps } from '../../types/Platform';
-import { formatDate } from '../../utils/formatDate';
+import { formatDateYear } from '../../utils/formatDateYear';
 import { per_page } from '../../utils/getPaginationItems';
-import { NewPlatform } from './forms/create/CreatePlatform';
 import DeleteModal from '../components/DeleteModal';
+import { NewPlatform } from './forms/create/CreatePlatform';
 import { EditPlatform } from './forms/update/UpdatePlatform';
 
 import styles from './Platform.module.css';
-import { ToastContainer } from 'react-toastify';
-import { formatDateYear } from '../../utils/formatDateYear';
 
 export type SortHeaders = {
   sort: string;
@@ -52,26 +50,24 @@ export const Platform = () => {
   };
 
   const handleDelete = async (id: string): Promise<boolean> => {
-    console.log('Tentando deletar plataforma com ID:', id);
     try {
-      await remove(id.toString());
-      toast.success('Plataforma excluída com sucesso!');
+      await remove(id);
+      toast.success('Platform deleted!');
       fetchPlatforms();
       return true;
     } catch (error) {
-      console.error('Erro ao excluir plataforma:', error);
-      toast.error('Erro ao excluir plataforma.');
+      console.error('Error deleting platform:', error);
+      toast.error('Error deleting platform.');
       return false;
     }
   };
-  
+
   useEffect(() => {
     fetchPlatforms();
   }, [page]);
 
   return (
     <div className={styles.pageWrapper}>
-      <ToastContainer position='top-right' autoClose={2000} />
       <Header
         title='Platforms'
         buttonText='NEW PLATFORM'
@@ -79,29 +75,30 @@ export const Platform = () => {
       />
       <div className={styles.platformContainer}>
         <HeaderList fields={headers} onSortClick={handleSortClick} />
-        
-        { platforms?.map((platform, index) => (
-            <ListItems
-              key={index}
-              imageUrl={platform.image_url}
-              camp1={platform.title}
-              camp2={platform.company}
-              camp3={formatDateYear(String(platform.acquisition_year))}
-              camp4={formatDateYear(String(platform.createdAt))}
-              camp5={formatDateYear(String(platform.updatedAt))}
-              iconDetails
-              iconEdit
-              iconDelete
-              editForm={<EditPlatform />}
-              deleteForm={
-                  <DeleteModal
-                    type='platform'
-                    onDelete={() => handleDelete(platform._id)}
-                  />
-                }
-              onStarClick={() => console.log('Star', platform)}
-            />
-          ))}
+
+        {platforms?.map((platform, index) => (
+          <ListItems
+            key={index}
+            imageUrl={platform.image_url}
+            camp1={platform.title}
+            camp2={platform.company}
+            camp3={formatDateYear(String(platform.acquisition_year))}
+            camp4={formatDateYear(String(platform.createdAt))}
+            camp5={formatDateYear(String(platform.updatedAt))}
+            iconDetails
+            iconEdit
+            iconDelete
+            editForm={
+              <EditPlatform platform={platform} onCreated={fetchPlatforms} />
+            }
+            deleteForm={
+              <DeleteModal
+                type='platform'
+                onDelete={() => handleDelete(platform._id)}
+              />
+            }
+          />
+        ))}
       </div>
 
       <CustomPagination page={page} totalPages={totalPages} setPage={setPage} />

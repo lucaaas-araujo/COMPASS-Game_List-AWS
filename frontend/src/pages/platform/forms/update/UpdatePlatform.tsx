@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { Button } from '../../../../components/ui/button/Button';
 import {
   DialogClose,
@@ -7,17 +10,14 @@ import {
   DialogTitle,
 } from '../../../../components/ui/dialog/Dialog';
 import { Input } from '../../../../components/ui/input/Input';
-
 import { Label } from '../../../../components/ui/label/Label';
-
-import { useState } from 'react';
-import style from './UpdatePlatform.module.css';
+import { useDialog } from '../../../../hooks/useDialog';
 import { usePlatform } from '../../../../hooks/usePlatform';
 import type { EditPlatformWithOnCreatedProps } from '../../../../types/Platform';
-import { toast } from 'react-toastify';
-import { useDialog } from '../../../../hooks/useDialog';
-import { formatDateYear } from '../../../../utils/formatDateYear';
 import { toInputDateString } from '../../../../utils/toInputDateString';
+import { validateImageUrl } from '../../../../utils/validateImageUrl';
+
+import style from './UpdatePlatform.module.css';
 
 export function EditPlatform({
   platform,
@@ -32,30 +32,31 @@ export function EditPlatform({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Validation
+
     if (title.trim().length < 3) {
       toast.error('Title must be at least 3 characters long.');
       return;
     }
-    if (imageUrl && !imageUrl.startsWith('http')) {
-      toast.error('Image URL must start with http or https.');
-      return;
-    }
+
+    validateImageUrl(platform.image_url);
+
     try {
-      await update({
-        itemId: platform._id,
-        platformData: {
-          title: title,
-          company: company,
-          acquisition_year: year ? new Date(year) : undefined,
-          image_url: imageUrl,
-          _id: platform._id
-        },
-      });
-     
+      if (platform._id) {
+        await update({
+          itemId: platform._id,
+          platformData: {
+            title: title,
+            company: company,
+            acquisition_year: year ? new Date(year) : undefined,
+            image_url: imageUrl,
+            _id: platform._id,
+          },
+        });
+      }
+
       toast.success('Platform updated successfully!');
       onCreated();
-      closeDialog(); 
+      closeDialog();
     } catch (error) {
       console.error('Error updating platform:', error);
       toast.error('Failed to update platform.');
@@ -92,7 +93,9 @@ export function EditPlatform({
               type='date'
               value={toInputDateString(year)}
               placeholder='YYYY-MM-DD'
-              onChange={(e) => setYear(e.target.value ? new Date(e.target.value) : undefined)}
+              onChange={(e) =>
+                setYear(e.target.value ? new Date(e.target.value) : undefined)
+              }
             />
           </div>
 

@@ -45,7 +45,10 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
   };
 
   const create = async (
-    platformData: Omit<PlatformProps, 'is_deleted' | 'createdAt' | 'updatedAt'>,
+    platformData: Omit<
+      PlatformProps,
+      '_id' | 'is_deleted' | 'createdAt' | 'updatedAt'
+    >,
   ) => {
     try {
       setLoading(true);

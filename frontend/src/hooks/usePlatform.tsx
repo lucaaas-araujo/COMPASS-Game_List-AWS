@@ -6,7 +6,7 @@ import type { EditPlatformProps, PlatformProps } from '../types/Platform';
 type PlatformContextProps = {
   getAll: ({ sort, dir }: GetAllProps) => Promise<PlatformProps[]>;
   remove: (itemId: string) => Promise<void>;
-  create: (platformData: PlatformProps) => Promise<void>;
+  create: (platformData: Omit<PlatformProps, '_id'>) => Promise<void>;
   update: (platformData: EditPlatformProps) => Promise<void>;
   count: number;
   error: boolean;

@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { toast } from 'react-toastify';
 
 import { Button } from '../../../../components/ui/button/Button';
@@ -11,9 +11,9 @@ import {
 } from '../../../../components/ui/dialog/Dialog';
 import { Input } from '../../../../components/ui/input/Input';
 import { Label } from '../../../../components/ui/label/Label';
-
 import { useDialog } from '../../../../hooks/useDialog';
 import { usePlatform } from '../../../../hooks/usePlatform';
+import { validateImageUrl } from '../../../../utils/validateImageUrl';
 
 import style from './CreatePlatform.module.css';
 
@@ -22,32 +22,34 @@ export function NewPlatform({ oncreated }: { oncreated?: () => void }) {
   const [company, setCompany] = useState('');
   const [acquisition_year, setAcquisition_year] = useState('');
   const [image_url, setImage_Url] = useState('');
-  const { closeDialog, isOpen } = useDialog();
+  const { closeDialog } = useDialog();
   const { create } = usePlatform();
-
-  useEffect(() => {
-    if (isOpen) {
-      setTitle('');
-      setCompany('');
-      setAcquisition_year('');
-      setImage_Url('');
-    }
-  }, [isOpen]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    validateImageUrl(image_url);
 
     try {
       const year = new Date(acquisition_year);
       const newPlatform = { acquisition_year: year, company, image_url, title };
 
+      if (title.trim().length < 3) {
+        toast.error('Title must be at least 3 characters long.');
+        return;
+      }
+
       await create(newPlatform);
-      toast.success('Platform criada com sucesso!');
-      oncreated?.();
+      toast.success('Platform created successfully!');
+      setTitle('');
+      setCompany('');
+      setAcquisition_year('');
+      setImage_Url('');
       closeDialog();
+      oncreated?.();
     } catch (error) {
       console.log(error);
-      toast.error('Erro ao criar plataforma.');
+      toast.error('Error creating platform.');
     }
   };
 
