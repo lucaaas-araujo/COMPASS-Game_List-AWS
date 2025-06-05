@@ -8,6 +8,7 @@ type PlatformContextProps = {
   remove: (itemId: string) => Promise<void>;
   create: (platformData: PlatformProps) => Promise<void>;
   update: (platformData: EditPlatformProps) => Promise<void>;
+  count: number;
   error: boolean;
   loading: boolean;
 };

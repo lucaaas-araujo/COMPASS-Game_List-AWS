@@ -23,12 +23,18 @@ export const getAll = async ({
   };
 
   try {
-    const platform = await Platform.find(filters)
-      .limit(per_page)
-      .skip(skip)
-      .sort({ [sort]: dir });
+    const [platforms, count] = await Promise.all([
+      Platform.find(filters)
+        .limit(per_page)
+        .skip(skip)
+        .sort({ [sort]: dir }),
+      Platform.countDocuments({
+        user_id,
+        is_deleted: false,
+      }),
+    ]);
 
-    return platform;
+    return { platforms, count };
   } catch (error) {
     console.log(`GET_ALL_PLATFORM: ${error}`);
     return new Error('Error returning platforms');

@@ -1,4 +1,3 @@
-import * as countByUser from './countByUser';
 import * as create from './create';
 import * as deleteById from './delete';
 import * as getAll from './getAll';
@@ -9,5 +8,4 @@ export const platformServices = {
   ...getAll,
   ...updateById,
   ...deleteById,
-  ...countByUser,
 };

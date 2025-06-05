@@ -23,12 +23,18 @@ export const getAll = async ({
   };
 
   try {
-    const categories = await Category.find(filters)
-      .limit(per_page)
-      .skip(skip)
-      .sort({ [sort]: dir });
+    const [categories, count] = await Promise.all([
+      await Category.find(filters)
+        .limit(per_page)
+        .skip(skip)
+        .sort({ [sort]: dir }),
+      Category.countDocuments({
+        user_id,
+        is_deleted: false,
+      }),
+    ]);
 
-    return categories;
+    return { categories, count };
   } catch (error) {
     console.log(`GET_ALL_CATEGORIES: ${error}`);
     return new Error('Error returning categories');

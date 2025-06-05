@@ -1,75 +1,68 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { CustomPagination } from '../../components/customPagination/CustomPagination';
 import { Header } from '../../components/header/Header';
+import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
-import styles from './Category.module.css';
-import { NewCategory } from './forms/create/CreateCategories';
-import { EditCategory } from './forms/update/UpdateCategories';
 import { useCategory } from '../../hooks/useCategory';
 import type { CategoryProps } from '../../types/Category';
+import { formatDate } from '../../utils/formatDate';
+import { per_page } from '../../utils/getPaginationItems';
 import DeleteModal from '../components/DeleteModal';
-import { toast } from 'react-toastify';
-import HeaderList from '../../components/ui/headerList/HeaderList';
+import { NewCategory } from './forms/create/CreateCategories';
+import { EditCategory } from './forms/update/UpdateCategories';
+
+import styles from './Category.module.css';
+
+export type SortHeaders = {
+  sort: string;
+  label: string;
+};
+
+const headers: SortHeaders[] = [
+  { sort: 'title', label: 'Title' },
+  { sort: 'description', label: 'Description' },
+  { sort: 'createdAt', label: 'Created At' },
+  { sort: 'updatedAt', label: 'Updated At' },
+];
 
 export function Category() {
-  const { getAll, remove } = useCategory();
+  const [page, setPage] = useState(1);
   const [category, setCategory] = useState<CategoryProps[]>();
-  const [sortKey, setSortKey] = useState<string | null>(null);
-  const [sortAsc, setSortAsc] = useState(true);
+  const [dir, setDir] = useState<'asc' | 'desc'>('asc');
+  const { getAll, remove, count } = useCategory();
+
+  const totalPages = Math.ceil(count / per_page);
 
   const fetchCategories = async () => {
-    const categories = await getAll();
+    const categories = await getAll({ page, per_page });
+    setCategory(categories);
+  };
+
+  const handleDelete = async (id: string): Promise<boolean> => {
+    try {
+      await remove(id);
+      toast.success('Category deleted!');
+      fetchCategories();
+      return true;
+    } catch (error) {
+      console.log(error);
+      toast.error('Error deleting category.');
+      return false;
+    }
+  };
+
+  const handleSort = async (sort: string) => {
+    setDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+
+    const categories = await getAll({ sort, dir, page, per_page });
     setCategory(categories);
   };
 
   useEffect(() => {
     fetchCategories();
-  }, []);
-
-  const handleDelete = async (id: string): Promise<boolean> => {
-    try {
-      await remove(id);
-      toast.success('Categoria excluída com sucesso!');
-      fetchCategories();
-      return true;
-    } catch (error) {
-      toast.error('Erro ao excluir categoria.');
-      return false;
-    }
-  };
-
-  const handleSort = (key: string) => {
-    let asc = sortAsc;
-    if (sortKey === key) {
-      asc = !asc;
-      setSortAsc(asc);
-    } else {
-      asc = true;
-      setSortAsc(true);
-    }
-    setSortKey(key);
-
-    if (!category) return;
-
-    const sorted = [...category].sort((a, b) => {
-      const aValue = a[key as keyof CategoryProps] ?? '';
-      const bValue = b[key as keyof CategoryProps] ?? '';
-      if (aValue < bValue) return asc ? -1 : 1;
-      if (aValue > bValue) return asc ? 1 : -1;
-      return 0;
-    });
-    setCategory(sorted);
-  };
-
-  function formatDate(dateString?: string) {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    const hour = String(date.getHours()).padStart(2, '0');
-    const min = String(date.getMinutes()).padStart(2, '0');
-    return `${day}/${month}/${year} ${hour}:${min}`;
-  }
+  }, [page]);
 
   return (
     <div className={styles.container}>
@@ -79,23 +72,15 @@ export function Category() {
         createForm={<NewCategory onCreated={fetchCategories} />}
       />
 
-      <HeaderList
-        fields={[
-          { key: 'title', label: 'Name' },
-          { key: 'description', label: 'Description' },
-          { key: 'createdAt', label: 'Created At' },
-          { key: 'updatedAt', label: 'Updated At' },
-        ]}
-        onSortClick={handleSort}
-      />
+      <HeaderList fields={headers} onSortClick={handleSort} />
 
       {category?.map((cat) => (
         <ListItems
           key={cat._id}
           camp1={cat.title}
           camp2={cat.description}
-          camp3={formatDate(cat.createdAt)}
-          camp4={formatDate(cat.updatedAt)}
+          camp3={formatDate(String(cat.createdAt))}
+          camp4={formatDate(String(cat.updatedAt))}
           iconEdit
           iconDelete
           editForm={<EditCategory category={cat} onCreated={fetchCategories} />}
@@ -107,6 +92,8 @@ export function Category() {
           }
         />
       ))}
+
+      <CustomPagination page={page} totalPages={totalPages} setPage={setPage} />
     </div>
   );
 }

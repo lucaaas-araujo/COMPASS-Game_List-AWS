@@ -1,7 +1,7 @@
 import * as create from './create';
 import * as deleteById from './delete';
-import * as favorite from './favorite';
 import * as getAll from './getAll';
+import * as getById from './getById';
 import * as updateById from './update';
 
 export const gamesControllers = {
@@ -9,5 +9,5 @@ export const gamesControllers = {
   ...getAll,
   ...updateById,
   ...deleteById,
-  ...favorite,
+  ...getById,
 };
