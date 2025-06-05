@@ -15,8 +15,8 @@ import { useDialog } from '../../../../hooks/useDialog';
 import { usePlatform } from '../../../../hooks/usePlatform';
 import type { EditPlatformWithOnCreatedProps } from '../../../../types/Platform';
 import { toInputDateString } from '../../../../utils/toInputDateString';
-import { validateImageUrl } from '../../../../utils/validateImageUrl';
 
+import { validateForm } from '../../../../utils/validateForm';
 import style from './UpdatePlatform.module.css';
 
 export function EditPlatform({
@@ -32,14 +32,10 @@ export function EditPlatform({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const isValid = validateForm(title, platform.image_url);
 
-    if (title.trim().length < 3) {
-      toast.error('Title must be at least 3 characters long.');
-      return;
-    }
-
-    validateImageUrl(platform.image_url);
-
+    if (!isValid) return;
+    
     try {
       if (platform._id) {
         await update({

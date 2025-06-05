@@ -13,8 +13,8 @@ import { Input } from '../../../../components/ui/input/Input';
 import { Label } from '../../../../components/ui/label/Label';
 import { useDialog } from '../../../../hooks/useDialog';
 import { usePlatform } from '../../../../hooks/usePlatform';
-import { validateImageUrl } from '../../../../utils/validateImageUrl';
 
+import { validateForm } from '../../../../utils/validateForm';
 import style from './CreatePlatform.module.css';
 
 export function NewPlatform({ oncreated }: { oncreated?: () => void }) {
@@ -28,16 +28,13 @@ export function NewPlatform({ oncreated }: { oncreated?: () => void }) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    validateImageUrl(image_url);
+    const isValid = validateForm(title, image_url);
+
+    if (!isValid) return;
 
     try {
       const year = new Date(acquisition_year);
       const newPlatform = { acquisition_year: year, company, image_url, title };
-
-      if (title.trim().length < 3) {
-        toast.error('Title must be at least 3 characters long.');
-        return;
-      }
 
       await create(newPlatform);
       toast.success('Platform created successfully!');

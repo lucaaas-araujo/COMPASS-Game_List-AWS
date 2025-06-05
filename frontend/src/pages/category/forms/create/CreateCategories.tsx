@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Button } from '../../../../components/ui/button/Button';
 import {
@@ -16,6 +16,7 @@ import { useCategory } from '../../../../hooks/useCategory';
 import { useDialog } from '../../../../hooks/useDialog';
 
 import style from './CreateCategories.module.css';
+import { validateForm } from '../../../../utils/validateForm';
 
 export function NewCategory({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState('');
@@ -25,10 +26,11 @@ export function NewCategory({ onCreated }: { onCreated?: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (title.trim().length < 3) {
-      toast.error('O título deve ter pelo menos 3 caracteres.');
-      return;
-    }
+
+    const isValid = validateForm(title);
+
+    if (!isValid) return;
+
     try {
       await create({
         title: title,
@@ -37,11 +39,11 @@ export function NewCategory({ onCreated }: { onCreated?: () => void }) {
       setTitle('');
       setDescription('');
       closeDialog();
-      toast.success('Categoria criada com sucesso!');
+      toast.success('Category created successfully!');
       onCreated?.();
     } catch (error) {
       console.log(error);
-      toast.error('Erro ao criar categoria.');
+      toast.error('Error creating category.');
     }
   };
 
