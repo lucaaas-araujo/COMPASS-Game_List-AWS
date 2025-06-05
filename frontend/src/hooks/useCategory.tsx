@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
-import type { CategoryProps, EditCategoryProps } from '../types/Category';
 import type { GetAllProps } from '../context/PlatformContext';
+import type { CategoryProps, EditCategoryProps } from '../types/Category';
 
 type CategoryContextProps = {
   getAll: ({ sort, dir }: GetAllProps) => Promise<CategoryProps[]>;
@@ -10,6 +10,7 @@ type CategoryContextProps = {
     categoryData: Pick<CategoryProps, 'title' | 'description'>,
   ) => Promise<void>;
   update: (categoryData: EditCategoryProps) => Promise<void>;
+  count: number;
   error: boolean;
   loading: boolean;
 };

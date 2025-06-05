@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { CustomPagination } from '../../components/customPagination/CustomPagination';
 import { Header } from '../../components/header/Header';
+import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
-import styles from './Category.module.css';
-import { NewCategory } from './forms/create/CreateCategories';
-import { EditCategory } from './forms/update/UpdateCategories';
 import { useCategory } from '../../hooks/useCategory';
 import type { CategoryProps } from '../../types/Category';
-import DeleteModal from '../components/DeleteModal';
-import { toast } from 'react-toastify';
-import HeaderList from '../../components/ui/headerList/HeaderList';
 import { formatDate } from '../../utils/formatDate';
+import { per_page } from '../../utils/getPaginationItems';
+import DeleteModal from '../components/DeleteModal';
+import { NewCategory } from './forms/create/CreateCategories';
+import { EditCategory } from './forms/update/UpdateCategories';
+
+import styles from './Category.module.css';
 
 export type SortHeaders = {
   sort: string;
@@ -24,27 +28,27 @@ const headers: SortHeaders[] = [
 ];
 
 export function Category() {
-  const { getAll, remove } = useCategory();
+  const [page, setPage] = useState(1);
   const [category, setCategory] = useState<CategoryProps[]>();
   const [dir, setDir] = useState<'asc' | 'desc'>('asc');
+  const { getAll, remove, count } = useCategory();
+
+  const totalPages = Math.ceil(count / per_page);
 
   const fetchCategories = async () => {
-    const categories = await getAll({});
+    const categories = await getAll({ page, per_page });
     setCategory(categories);
   };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const handleDelete = async (id: string): Promise<boolean> => {
     try {
       await remove(id);
-      toast.success('Categoria excluída com sucesso!');
+      toast.success('Category deleted!');
       fetchCategories();
       return true;
     } catch (error) {
-      toast.error('Erro ao excluir categoria.');
+      console.log(error);
+      toast.error('Error deleting category.');
       return false;
     }
   };
@@ -52,10 +56,13 @@ export function Category() {
   const handleSort = async (sort: string) => {
     setDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
 
-    const categories = await getAll({ sort, dir });
+    const categories = await getAll({ sort, dir, page, per_page });
     setCategory(categories);
   };
 
+  useEffect(() => {
+    fetchCategories();
+  }, [page]);
 
   return (
     <div className={styles.container}>
@@ -85,6 +92,8 @@ export function Category() {
           }
         />
       ))}
+
+      <CustomPagination page={page} totalPages={totalPages} setPage={setPage} />
     </div>
   );
 }

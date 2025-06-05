@@ -7,27 +7,35 @@ type CategoryProviderProps = {
   children: ReactNode;
 };
 
-
 export type GetAllProps = {
   sort?: string;
   dir?: 'asc' | 'desc';
+  per_page: number;
+  page: number;
 };
 
 export function CategoryProvider({ children }: CategoryProviderProps) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
 
-  const getAll = async ({ sort = 'title', dir }: GetAllProps) => {
+  const getAll = async ({
+    sort = 'title',
+    dir,
+    per_page,
+    page,
+  }: GetAllProps) => {
     try {
       setLoading(true);
       const response = await api.get(`/categories`, {
-        params: { sort, dir },
+        params: { sort, dir, page, per_page },
       });
       const categories = response.data;
 
       setLoading(false);
+      setCount(categories.count);
 
-      return categories;
+      return categories.categories;
     } catch (error) {
       console.error('Error fetching category:', error);
       setError(true);
@@ -83,6 +91,7 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
         create,
         remove,
         update,
+        count,
         error,
         loading,
       }}>
