@@ -1,19 +1,22 @@
 .header {
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   position: relative;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
   align-items: flex-start;
   box-sizing: border-box;
   margin-top: 16px;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .title {
-  font-size: 22px;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-left: 20px;
+  margin-left: 1rem;
+  word-break: break-word;
 }
 
 .line {
@@ -21,8 +24,9 @@
   background-color: var(--graydialogbox);
   position: absolute;
   bottom: 1rem;
-  left: 1.875rem;
-  right: 1.875rem;
+  left: 2.1rem;
+  right: 2.1rem;
+  width: 100%;
 }
 
 .toggleBtn {
@@ -32,7 +36,7 @@
   font-size: 1.5rem;
   z-index: 10;
   transition: left 0.3s ease;
-  margin-left: 30px;
+  margin-left: 1rem;
 }
 
 .arrowIcon {
@@ -45,9 +49,38 @@
 }
 
 .texts {
-  margin-left: 30px;
-  font-size: 12px;
+  margin-left: 1.5rem;
+  margin-right: 1rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0.625rem;
+  margin-bottom: 1.25rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .header {
+    align-items: stretch;
+    margin-top: 8px;
+  }
+
+  .title {
+    font-size: 1.25rem;
+    margin-left: 0.5rem;
+  }
+
+  .toggleBtn {
+    margin-left: 0.5rem;
+  }
+
+  .texts {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .line {
+    left: 0.5rem;
+    right: 0.5rem;
+  }
 }

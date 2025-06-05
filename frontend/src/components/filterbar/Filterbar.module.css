@@ -3,15 +3,16 @@
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
-  width: 100%;
+  width: 95%;
   gap: 12px;
+  margin-top: 32px;
 }
 
 .querys {
   width: 65%;
   display: flex;
   flex-wrap: nowrap;
-  gap: 18px;
+  gap: 8px;
 }
 
 .filtercontainer h3 {

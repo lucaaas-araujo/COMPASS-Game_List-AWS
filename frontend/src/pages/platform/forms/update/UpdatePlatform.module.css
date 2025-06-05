@@ -11,7 +11,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .dialogTitle {
@@ -21,30 +21,29 @@
   margin-bottom: 30px;
 }
 
-
 .form {
   display: flex;
   flex-direction: column;
   gap: 36px;
   margin-top: 16px;
   width: 100%;
-  margin: 0 auto;        
+  margin: 0 auto;
 }
 
-.formGroup input{
+.formGroup input {
   margin-top: 7px;
   border: 1px solid var(--grayform);
   border-radius: 8px;
   font-size: 14px;
   font-weight: 400;
   height: 37px;
-  color: #C4C4C4;
+  color: #c4c4c4;
   background-color: var(--white);
   transition: border-color 0.2s ease;
- }
+}
 
 .required {
- color: var(--alert);
+  color: var(--alert);
   margin-left: 4px;
 }
 
@@ -52,4 +51,10 @@ label {
   font-size: 14px;
   font-weight: 400;
   color: var(--black);
+}
+
+p {
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 500;
 }

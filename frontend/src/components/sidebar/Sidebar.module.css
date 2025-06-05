@@ -124,7 +124,6 @@
   color: #f8fafc;
   text-decoration: none;
   transition: background 0.2s ease;
-  padding: 12px 74px 12px 41px;
   border-radius: 4px;
   background: none;
   border: none;
@@ -196,14 +195,22 @@
   opacity: 0;
 }
 
-@media screen and (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    z-index: 100;
-  }
+.menuButton {
+  display: none;
+}
 
-  .toggleBtn {
+@media screen and (max-width: 768px) {
+  .menuButton {
+    display: block;
+    position: fixed;
     top: 16px;
-    left: 60px !important;
+    left: 16px;
+    z-index: 999;
+    background-color: var(--turquoise);
+    color: var(--black);
+    border: none;
+    padding: 10px 12px;
+    border-radius: 4px;
+    cursor: pointer;
   }
 }
