@@ -1,11 +1,15 @@
+import * as countByUser from './countByUser';
 import * as create from './create';
+import * as deleteById from './delete';
+import * as favorite from './favorite';
 import * as getAll from './getAll';
-import * as update from './update';
-import * as deletegame from './delete';
+import * as updateById from './update';
 
 export const gameServices = {
   ...create,
   ...getAll,
-  ...update,
-  ...deletegame,
+  ...updateById,
+  ...deleteById,
+  ...countByUser,
+  ...favorite,
 };

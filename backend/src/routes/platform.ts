@@ -15,15 +15,15 @@ routes.get(
 routes.post('/platform', ensureAuthentication, platformControllers.create);
 
 routes.put(
-  '/platform/update/:id',
+  '/platform/:id',
   ensureAuthentication,
-  platformControllers.update,
+  platformControllers.updateById,
 );
 
 routes.delete(
-  '/platform/delete/:id',
+  '/platform/:id',
   ensureAuthentication,
-  platformControllers.remove,
+  platformControllers.deleteById,
 );
 
 export { routes };

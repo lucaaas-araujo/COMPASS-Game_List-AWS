@@ -2,18 +2,18 @@ import Category from '@/models/category';
 
 type UpdateByIdProps = {
   id: string;
-  name: string;
+  title: string;
   description?: string;
 };
 
 export const updateById = async ({
   id,
-  name,
+  title,
   description,
 }: UpdateByIdProps) => {
   try {
     const category = await Category.findByIdAndUpdate(id, {
-      name,
+      title,
       description,
     });
 

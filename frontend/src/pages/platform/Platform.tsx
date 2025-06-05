@@ -1,75 +1,82 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import { Header } from '../../components/header/Header';
 import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
-import  DeleteModal  from '../components/DeleteModal'; 
-import { EditPlatform } from './forms/update/UpdatePlatform';
-import styles from './Platform.module.css';
-import epic from '../../images/epic.svg';
-import mario from '../../images/mario.svg';
+import { usePlatform } from '../../hooks/usePlatform';
+import type { PlatformProps } from '../../types/Platform';
+import { formatDate } from '../../utils/formatDate';
 import { NewPlatform } from './forms/create/CreatePlatform';
+import { EditPlatform } from './forms/update/UpdatePlatform';
+
+import styles from './Platform.module.css';
+
+export type SortHeaders = {
+  sort: string;
+  label: string;
+};
+
+const headers: SortHeaders[] = [
+  { sort: 'title', label: 'Title' },
+  { sort: 'company', label: 'Company' },
+  { sort: 'acquisition_year', label: 'Acquisition year' },
+  { sort: 'createdAt', label: 'Created at' },
+  { sort: 'updatedAt', label: 'Updated at' },
+];
 
 export const Platform = () => {
-  const [, setPlatformToDelete] = useState<number | null>(null);
+  const [platforms, setPlatforms] = useState<PlatformProps[]>();
+  const [dir, setDir] = useState<'asc' | 'desc'>('asc');
+  const { getAll } = usePlatform();
 
-  const headers = [
-    { key: 'title', label: 'Title' },
-    { key: 'company', label: 'Company' },
-    { key: 'acquisitionYear', label: 'Acquisition year' },
-    { key: 'createdAt', label: 'Created at' },
-    { key: 'updatedAt', label: 'Updated at' },
-  ];
+  const handleSortClick = async (sort: string) => {
+    setDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
 
-  const handleSortClick = (key: string) => {
-    console.log('Sort by:', key);
+    const platforms = await getAll({ sort, dir });
+
+    setPlatforms(platforms);
   };
 
-  const platformList = [
-    {
-      id: 1,
-      imageUrl: mario,
-      title: 'Nintendo Switch',
-      company: 'Nintendo',
-      acquisitionYear: '08/12/2021',
-      createdAt: '08/12/2021',
-      updatedAt: '',
-    },
-    {
-      id: 2,
-      imageUrl: epic,
-      title: 'Epic Games',
-      company: 'Epic',
-      acquisitionYear: '08/12/2021',
-      createdAt: '08/12/2021',
-      updatedAt: '',
-    },
-  ];
+  const fetchPlatforms = async () => {
+    const platforms = await getAll({});
+    setPlatforms(platforms);
+  };
+
+  useEffect(() => {
+    fetchPlatforms();
+  }, []);
 
   return (
     <div className={styles.pageWrapper}>
-      <Header title="Platforms" buttonText="NEW PLATFORM" createForm={<NewPlatform/>}/>
+      <Header
+        title='Platforms'
+        buttonText='NEW PLATFORM'
+        createForm={<NewPlatform />}
+      />
 
       <div className={styles.platformContainer}>
         <HeaderList fields={headers} onSortClick={handleSortClick} />
 
-       {platformList.map((platform) => (
-  <ListItems
-    key={platform.id}
-    imageUrl={platform.imageUrl}
-    camp1={platform.title}
-    camp2={platform.company}
-    camp3={platform.acquisitionYear}
-    camp4={platform.createdAt}
-    camp5={platform.updatedAt}
-    iconDetails
-    iconEdit
-    iconDelete
-    editForm={<EditPlatform />}
-    deleteForm={<DeleteModal type='platform' onDelete={() => false } /> }
-    onStarClick={() => console.log('Star', platform.id)}
-    onDeleteClick={() => setPlatformToDelete(platform.id)}
-  />
-))}
+        {platforms &&
+          platforms.map((platform, index) => (
+            <ListItems
+              key={index}
+              imageUrl={platform.image_url}
+              camp1={platform.title}
+              camp2={platform.company}
+              camp3={formatDate(String(platform.acquisition_year))}
+              camp4={formatDate(String(platform.createdAt))}
+              camp5={formatDate(String(platform.updatedAt))}
+              iconDetails
+              iconEdit
+              iconDelete
+              editForm={<EditPlatform />}
+              // deleteForm={
+              //   <DeleteModal type='platform' onDelete={() => false} />
+              // }
+              onStarClick={() => console.log('Star', platform)}
+            />
+          ))}
       </div>
     </div>
   );

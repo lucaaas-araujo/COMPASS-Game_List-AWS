@@ -1,12 +1,13 @@
-import Platform from "@/models/platform";
+import Platform from '@/models/platform';
 
 type DeletePlatformProps = {
   id: string;
 };
 
-export const deleted = async ({ id }: DeletePlatformProps) => {
+export const deleteById = async ({ id }: DeletePlatformProps) => {
   try {
-    const deleted = await Platform.findByIdAndUpdate(id, { is_deleted: true }, { new: true });
+    const deleted = await Platform.findByIdAndUpdate(id, { is_deleted: true });
+console.log(deleted);
 
     if (!deleted) {
       return new Error('Platform not found.');

@@ -1,6 +1,13 @@
-import React, { useState, type ReactNode } from 'react';
+import{ useState, type ReactNode } from 'react';
 
-import { eye, pen, star, starFilled, trash } from '../../../utils/icons';
+import {
+  eye,
+  imageController,
+  pen,
+  star,
+  starFilled,
+  trash,
+} from '../../../utils/icons';
 import { Dialog, DialogTrigger } from '../dialog/Dialog';
 
 import styles from './ListItems.module.css';
@@ -20,10 +27,9 @@ interface ListItemsProps {
   editForm?: ReactNode;
   deleteForm?: ReactNode;
   onStarClick?: () => void;
-  onDeleteClick?: () => void;
 }
 
-const ListItems: React.FC<ListItemsProps> = ({
+const ListItems = ({
   imageUrl,
   camp1,
   camp2,
@@ -38,7 +44,7 @@ const ListItems: React.FC<ListItemsProps> = ({
   editForm,
   deleteForm,
   onStarClick,
-}) => {
+}: ListItemsProps) => {
   const [starred, setStarred] = useState(false);
 
   const handleStarClick = () => {
@@ -49,9 +55,11 @@ const ListItems: React.FC<ListItemsProps> = ({
   return (
     <div className={styles.cardContainer}>
       <div className={styles.imageWrapper}>
-        {imageUrl && (
-          <img src={imageUrl} alt='Card Icon' className={styles.cardImage} />
-        )}
+        <img
+          src={imageUrl ? imageUrl : imageController}
+          alt='Card Icon'
+          className={styles.cardImage}
+        />
       </div>
 
       <div className={styles.cardTexts}>
@@ -60,6 +68,7 @@ const ListItems: React.FC<ListItemsProps> = ({
         {camp3 && <span>{camp3}</span>}
         {camp4 && <span>{camp4}</span>}
         {camp5 && <span>{camp5}</span>}
+
         {iconStar && (
           <img
             src={starred ? starFilled : star}
@@ -74,7 +83,9 @@ const ListItems: React.FC<ListItemsProps> = ({
         {iconDetails && (
           <Dialog>
             <DialogTrigger>
-              <img src={eye} alt='View' className={styles.icon} />
+              <button className={styles.icon}>
+                <img src={eye} alt='View' />
+              </button>
             </DialogTrigger>
             {detailsForm}
           </Dialog>
@@ -82,21 +93,23 @@ const ListItems: React.FC<ListItemsProps> = ({
         {iconEdit && (
           <Dialog>
             <DialogTrigger>
-              <img src={pen} alt='Edit' className={styles.icon} />
+              <button className={styles.icon}>
+                <img src={pen} alt='Edit' />
+              </button>
             </DialogTrigger>
             {editForm}
           </Dialog>
         )}
         {iconDelete && (
-            <Dialog>
-              <DialogTrigger>
-                <button className={styles.icon} >
-                  <img src={trash} alt='Delete' />
-                </button>
-              </DialogTrigger>
-              {deleteForm}
-            </Dialog>
-          )}
+          <Dialog>
+            <DialogTrigger>
+              <button className={styles.icon}>
+                <img src={trash} alt='Delete' />
+              </button>
+            </DialogTrigger>
+            {deleteForm}
+          </Dialog>
+        )}
       </div>
     </div>
   );

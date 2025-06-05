@@ -1,11 +1,13 @@
 import * as create from './create';
+import * as deleteById from './delete';
+import * as favorite from './favorite';
 import * as getAll from './getAll';
-import * as update from './update';
-import * as deletegame from './delete';
+import * as updateById from './update';
 
 export const gamesControllers = {
   ...create,
   ...getAll,
-  ...update,
-  ...deletegame,
+  ...updateById,
+  ...deleteById,
+  ...favorite,
 };

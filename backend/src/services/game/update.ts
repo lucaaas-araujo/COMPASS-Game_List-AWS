@@ -13,11 +13,10 @@ type UpdateGameProps = {
     favorite?: boolean;
     acquisition_date?: Date;
     finish_date?: Date;
-    is_deleted?: boolean;
   }>;
 };
 
-export const update = async ({ id, data }: UpdateGameProps) => {
+export const updateById = async ({ id, data }: UpdateGameProps) => {
   try {
     if (!Types.ObjectId.isValid(id)) {
       return new Error('Invalid id format.');
