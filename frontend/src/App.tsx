@@ -14,13 +14,18 @@ import { Category } from './pages/category/Category';
 import { Games } from './pages/games/Games';
 import { Home } from './pages/home/Home';
 import { Platform } from './pages/platform/Platform';
+import { redirectIfLoggedIn } from './services/redirectIfLoggedIn';
 import { requireAuth } from './services/requiredAuth';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Register />} />
+      <Route path='/login' element={<Login />} loader={redirectIfLoggedIn} />
+      <Route
+        path='/register'
+        element={<Register />}
+        loader={redirectIfLoggedIn}
+      />
       <Route path='/' element={<Layout />}>
         <Route index element={<Home />} loader={requireAuth} />
         <Route path='/games' element={<Games />} loader={requireAuth} />
