@@ -7,14 +7,22 @@ type GameProviderProps = {
   children: ReactNode;
 };
 
+export type GetAllProps = {
+  sort?: string;
+  dir?: 'asc' | 'desc';
+};
+
 export function GameProvider({ children }: GameProviderProps) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const getAll = async () => {
+  const getAll = async ({ sort = 'title', dir }: GetAllProps) => {
     try {
       setLoading(true);
-      const response = await api.get('/game');
+      const response = await api.get('/game', {
+        params: { sort, dir },
+      });
+
       const games = response.data;
 
       setLoading(false);

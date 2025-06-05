@@ -6,8 +6,10 @@ export type GameProps = {
   platform: string;
   status: string;
   favorite: boolean;
-  acquisition_date: string;
-  finish_date: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  acquisition_date: Date;
+  finish_date: Date;
   is_deleted?: boolean;
 };
 
