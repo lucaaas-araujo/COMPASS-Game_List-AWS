@@ -2,18 +2,18 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   position: relative;
   padding-bottom: 2rem;
   align-items: flex-start;
   box-sizing: border-box;
+  margin-top: 16px;
 }
 
 .title {
   font-size: 22px;
-  font-weight: bold;
-  line-height: 27px;
-  margin-left: 40px;
+  font-weight: 700;
+  margin-left: 20px;
 }
 
 .line {
@@ -32,6 +32,7 @@
   font-size: 1.5rem;
   z-index: 10;
   transition: left 0.3s ease;
+  margin-left: 30px;
 }
 
 .arrowIcon {
@@ -41,4 +42,12 @@
 
 .rotated {
   transform: rotate(180deg);
+}
+
+.texts {
+  margin-left: 30px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
