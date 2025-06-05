@@ -23,7 +23,7 @@ import { type CategoryProps } from '../../../../types/Category';
 import { type PlatformProps } from '../../../../types/Platform';
 import { toast } from 'react-toastify';
 
-export const CreateGame = () => {
+export function CreateGame({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
@@ -34,8 +34,8 @@ export const CreateGame = () => {
   const [status, setStatus] = useState<'Playing' | 'Done' | 'Abandoned'>(
     'Playing',
   );
-  const [acquisition_date, setAcquisitionDate] = useState('');
-  const [finish_date, setFinishDate] = useState('');
+  const [acquisition_date, setAcquisitionDate] = useState(Date);
+  const [finish_date, setFinishDate] = useState(Date);
   const [favorite, setFavorite] = useState(false);
   const [image_url, setUrlImage] = useState('');
   const { getAll: getAllCategories } = useCategory();
@@ -44,33 +44,39 @@ export const CreateGame = () => {
   useEffect(() => {
     const fetchData = async () => {
       const categoryList = await getAllCategories();
-      const platformList = await getAllPlatforms();
+      const platformList = await getAllPlatforms({});
       setPlatformList(platformList);
       setCategoryList(categoryList);
     };
     fetchData();
-  }, [getAllCategories, getAllPlatforms]);
+  }, []);
 
   const { create, error } = useGame();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (title.trim().length < 3) {
+      toast.error('Game title needs at least 3 characters required');
+      return;
+    }
     try {
       await create({
         title,
         description,
         category,
-        acquisition_date,
+        acquisition_date: new Date(acquisition_date),
         status,
         platform,
-        finish_date,
+        finish_date: new Date(finish_date),
         image_url,
         favorite,
       });
       toast.success('Game registred success!');
       closeDialog();
+      onCreated?.();
     } catch {
       console.log(error);
+      toast.error('Error to create game');
     }
   };
 
@@ -90,6 +96,7 @@ export const CreateGame = () => {
             <div>
               <Input
                 placeholder='Mario Kart 8'
+                id='title'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -102,6 +109,7 @@ export const CreateGame = () => {
             </Label>
             <div>
               <textarea
+                id='description'
                 placeholder='Amazing game'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -117,6 +125,7 @@ export const CreateGame = () => {
                   Category
                 </Label>
                 <Select
+                  id='category'
                   variant='modal'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}>
@@ -135,6 +144,7 @@ export const CreateGame = () => {
                   Platform
                 </Label>
                 <Select
+                  id='platform'
                   variant='modal'
                   value={platform}
                   onChange={(e) => setPlatform(e.target.value)}>
@@ -157,6 +167,7 @@ export const CreateGame = () => {
                 </Label>
                 <div>
                   <Input
+                    id='acquisition_date'
                     type='date'
                     variant='squared'
                     value={acquisition_date}
@@ -170,6 +181,7 @@ export const CreateGame = () => {
                 </Label>
                 <div>
                   <Input
+                    id='finish_date'
                     type='date'
                     variant='squared'
                     value={finish_date}
@@ -185,6 +197,7 @@ export const CreateGame = () => {
                   Status
                 </Label>
                 <Select
+                  id='status'
                   variant='modal'
                   value={status}
                   onChange={(e) =>
@@ -224,6 +237,7 @@ export const CreateGame = () => {
             </Label>
             <div>
               <Input
+                id='image_url'
                 type='text'
                 placeholder='http://cdn...'
                 value={image_url}
@@ -240,4 +254,4 @@ export const CreateGame = () => {
       </DialogContent>
     </div>
   );
-};
+}

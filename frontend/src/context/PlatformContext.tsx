@@ -11,8 +11,8 @@ type PlatformProviderProps = {
 export type GetAllProps = {
   sort?: string;
   dir?: 'asc' | 'desc';
-  per_page: number;
-  page: number;
+  per_page?: number;
+  page?: number;
 };
 
 export function PlatformProvider({ children }: PlatformProviderProps) {

@@ -47,6 +47,18 @@ export function Games() {
     fetchGames();
   }, []);
 
+  /*  const handleDelete = async (id: string): Promise<boolean> =>{
+    try{
+      await remove(id);
+      toast.success('Game excluded with success')
+      fetchGames();
+      return true;
+    } catch (error){
+      toast.error('Error excluding game')
+      return false
+    }
+  } */
+
   return (
     <div>
       <div className={style.gamepage}>
@@ -68,17 +80,18 @@ export function Games() {
             iconStar
             detailsForm={
               <DetailsGame
+                game={game}
                 /* deleteForm={
-                  <DeleteModal
+                  <DeleteModal 
                     type='game'
                     onCancel={() => {}}
                     onDelete={() => false}
                   />
-                } */
-                updateForm={<UpdateGame />}
+                }  */
+                updateForm={<UpdateGame game={game} onCreated={fetchGames} />}
               />
             }
-            editForm={<UpdateGame />}
+            editForm={<UpdateGame game={game} onCreated={fetchGames} />}
             /* deleteForm={
               <DeleteModal
                 type='game'

@@ -1,4 +1,5 @@
 export type GameProps = {
+  _id?: string;
   image_url: string;
   title: string;
   description: string;
@@ -15,5 +16,11 @@ export type GameProps = {
 
 export type EditGameProps = {
   itemId: string;
-  gameData: GameProps;
+  game: GameProps;
+  gameData: Partial<GameProps>;
+};
+
+export type EditGamesWithOnCreatedProps = {
+  onCreated: () => void;
+  game: GameProps;
 };
