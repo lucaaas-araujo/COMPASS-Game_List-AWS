@@ -1,4 +1,4 @@
-import{ useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 
 import {
   eye,
@@ -64,10 +64,10 @@ const ListItems = ({
 
       <div className={styles.cardTexts}>
         {camp1 && <span>{camp1}</span>}
-        {camp2 && <span>{camp2}</span>}
-        {camp3 && <span>{camp3}</span>}
-        {camp4 && <span>{camp4}</span>}
-        {camp5 && <span>{camp5}</span>}
+        <span>{camp2 || ''}</span>
+        <span>{camp3 || ''}</span>
+        <span>{camp4 || ''}</span>
+        <span>{camp5 || ''}</span>
 
         {iconStar && (
           <img
