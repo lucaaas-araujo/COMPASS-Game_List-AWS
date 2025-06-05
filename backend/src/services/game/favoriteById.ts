@@ -5,7 +5,7 @@ type FavoriteGameProps = {
   favorite: boolean;
 };
 
-export const favorite = async ({ id, favorite }: FavoriteGameProps) => {
+export const favoriteById = async ({ id, favorite }: FavoriteGameProps) => {
   try {
     const updatedGame = await Game.findByIdAndUpdate(
       id,
@@ -17,7 +17,7 @@ export const favorite = async ({ id, favorite }: FavoriteGameProps) => {
       return new Error('Game not found.');
     }
 
-    return updatedGame;
+    return updatedGame._id;
   } catch (error) {
     console.error(`FAVORITE_GAME: ${error}`);
     return new Error('Error updating favorite game.');

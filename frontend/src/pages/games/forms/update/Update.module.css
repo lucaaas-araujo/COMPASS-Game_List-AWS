@@ -101,5 +101,8 @@ label {
 }
 
 .button {
-  width: 141px;
+  width: 108px;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 500;
 }

@@ -1,12 +1,15 @@
-import{ useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 
 import {
   eye,
+  eyeClosed,
   imageController,
   pen,
+  penBlack,
   star,
   starFilled,
   trash,
+  trashBlack,
 } from '../../../utils/icons';
 import { Dialog, DialogTrigger } from '../dialog/Dialog';
 
@@ -52,6 +55,10 @@ const ListItems = ({
     onStarClick?.();
   };
 
+  const [hoveredIcon, setHoveredIcon] = useState<
+    'view' | 'edit' | 'delete' | null
+  >(null);
+
   return (
     <div className={styles.cardContainer}>
       <div className={styles.imageWrapper}>
@@ -64,10 +71,10 @@ const ListItems = ({
 
       <div className={styles.cardTexts}>
         {camp1 && <span>{camp1}</span>}
-        {camp2 && <span>{camp2}</span>}
-        {camp3 && <span>{camp3}</span>}
-        {camp4 && <span>{camp4}</span>}
-        {camp5 && <span>{camp5}</span>}
+        <span>{camp2 || ''}</span>
+        <span>{camp3 || ''}</span>
+        <span>{camp4 || ''}</span>
+        <span>{camp5 || ''}</span>
 
         {iconStar && (
           <img
@@ -83,28 +90,45 @@ const ListItems = ({
         {iconDetails && (
           <Dialog>
             <DialogTrigger>
-              <button className={styles.icon}>
-                <img src={eye} alt='View' />
+              <button
+                className={styles.icon}
+                onMouseEnter={() => setHoveredIcon('view')}
+                onMouseLeave={() => setHoveredIcon(null)}>
+                <img
+                  src={hoveredIcon === 'view' ? eye : eyeClosed}
+                  alt='View'
+                />
               </button>
             </DialogTrigger>
             {detailsForm}
           </Dialog>
         )}
+
         {iconEdit && (
           <Dialog>
             <DialogTrigger>
-              <button className={styles.icon}>
-                <img src={pen} alt='Edit' />
+              <button
+                className={styles.icon}
+                onMouseEnter={() => setHoveredIcon('edit')}
+                onMouseLeave={() => setHoveredIcon(null)}>
+                <img src={hoveredIcon === 'edit' ? pen : penBlack} alt='Edit' />
               </button>
             </DialogTrigger>
             {editForm}
           </Dialog>
         )}
+
         {iconDelete && (
           <Dialog>
             <DialogTrigger>
-              <button className={styles.icon}>
-                <img src={trash} alt='Delete' />
+              <button
+                className={styles.icon}
+                onMouseEnter={() => setHoveredIcon('delete')}
+                onMouseLeave={() => setHoveredIcon(null)}>
+                <img
+                  src={hoveredIcon === 'delete' ? trash : trashBlack}
+                  alt='Delete'
+                />
               </button>
             </DialogTrigger>
             {deleteForm}

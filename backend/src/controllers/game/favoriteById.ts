@@ -6,11 +6,11 @@ type Body = { favorite: boolean };
 
 type FavoriteProps = RequestHandler<Params, unknown, Body>;
 
-export const favorite: FavoriteProps = async (req, res) => {
+export const favoriteById: FavoriteProps = async (req, res) => {
   const { id } = req.params;
   const { favorite } = req.body;
 
-  const result = await gameServices.favorite({ id, favorite });
+  const result = await gameServices.favoriteById({ id, favorite });
 
   if (result instanceof Error) {
     res.status(501).json({ error: result.message });

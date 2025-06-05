@@ -39,18 +39,19 @@ export function Header({
           />
         </button>
         <h1 className={style.title}>{title}</h1>
-      </div>
 
-      {!hiddenButton && (
-        <Dialog>
-          <DialogTrigger>
-            <Button>{buttonText}</Button>
-          </DialogTrigger>
-          {createForm}
-        </Dialog>
-      )}
-      {children}
-      {!hiddenLine && <div className={style.line}></div>}
+      <div className={style.texts}>
+        {!hiddenButton && (
+          <Dialog>
+            <DialogTrigger>
+              <Button>{buttonText}</Button>
+            </DialogTrigger>
+            {createForm}
+          </Dialog>
+        )}
+        {children}
+        {!hiddenLine && <div className={style.line}></div>}
+      </div>
     </header>
   );
 }

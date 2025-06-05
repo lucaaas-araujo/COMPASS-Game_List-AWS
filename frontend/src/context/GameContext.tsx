@@ -59,6 +59,20 @@ export function GameProvider({ children }: GameProviderProps) {
     }
   };
 
+  const getById = async (itemId: string) => {
+    try {
+      setLoading(true);
+      const game = await api.get(`/game/${itemId}`);
+      setLoading(false);
+
+      return game.data;
+    } catch (error) {
+      console.error('Error deleting game:', error);
+      setError(true);
+      setLoading(false);
+    }
+  };
+
   const update = async ({ gameData, itemId }: EditGameProps): Promise<void> => {
     try {
       setLoading(true);
@@ -92,6 +106,7 @@ export function GameProvider({ children }: GameProviderProps) {
     <GameContext.Provider
       value={{
         getAll,
+        getById,
         create,
         remove,
         update,

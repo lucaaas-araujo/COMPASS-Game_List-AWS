@@ -4,6 +4,7 @@ import type { EditGameProps, GameProps } from '../types/Game';
 
 type GameContextProps = {
   getAll: ({ sort, dir }: GetAllProps) => Promise<GameProps[]>;
+  getById: (itemId: string) => Promise<GameProps[]>;
   remove: (itemId: string) => Promise<void>;
   toggleIsFavorite: (itemId: string, isFavorite: boolean) => Promise<void>;
   create: (gameData: GameProps) => Promise<void>;

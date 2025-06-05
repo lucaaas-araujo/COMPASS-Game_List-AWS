@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { Button } from '../../../../components/ui/button/Button';
 import {
   DialogClose,
@@ -7,17 +10,12 @@ import {
   DialogTitle,
 } from '../../../../components/ui/dialog/Dialog';
 import { Input } from '../../../../components/ui/input/Input';
-
-import { useState } from 'react';
 import { Label } from '../../../../components/ui/label/Label';
-import style from './UpdateCategories.module.css';
 import { useCategory } from '../../../../hooks/useCategory';
-import type { EditCategoryWithOnCreatedProps } from '../../../../types/Category';
-import { toast, ToastContainer } from 'react-toastify';
 import { useDialog } from '../../../../hooks/useDialog';
-
-
-
+import type { EditCategoryWithOnCreatedProps } from '../../../../types/Category';
+import { validateForm } from '../../../../utils/validateForm';
+import style from './UpdateCategories.module.css';
 
 export function EditCategory({
   category,
@@ -31,11 +29,9 @@ export function EditCategory({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validação
-    if (title.trim().length < 3) {
-      toast.error('O título deve ter pelo menos 3 caracteres.');
-      return;
-    }
+    const isValid = validateForm(title);
+
+    if (!isValid) return;
 
     try {
       await update({
@@ -46,18 +42,17 @@ export function EditCategory({
         },
         itemId: category._id,
       });
-      toast.success('Categoria atualizada com sucesso!');
+      toast.success('Category updated successfully!!');
       closeDialog();
       onCreated();
     } catch (error) {
-      toast.error('Erro ao atualizar categoria.');
+      console.log(error);
+      toast.error('Error updating category.');
     }
   };
 
-
   return (
     <div className={style.editCategory}>
-      {/* <ToastContainer position='top-right' autoClose={2000} /> */}
       <DialogContent className={style.dialogContent}>
         <DialogHeader>
           <DialogTitle className={style.dialogTitle}>Edit category</DialogTitle>
