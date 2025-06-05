@@ -38,20 +38,20 @@ export function Header({
             className={`${style.arrowIcon} ${!isOpen ? style.rotated : ''}`}
           />
         </button>
-      </div>
-      <div className={style.texts}>
         <h1 className={style.title}>{title}</h1>
 
-      {!hiddenButton && (
-        <Dialog>
-          <DialogTrigger>
-            <Button>{buttonText}</Button>
-          </DialogTrigger>
-          {createForm}
-        </Dialog>
-      )}
-      {children}
-      {!hiddenLine && <div className={style.line}></div>}
+      <div className={style.texts}>
+        {!hiddenButton && (
+          <Dialog>
+            <DialogTrigger>
+              <Button>{buttonText}</Button>
+            </DialogTrigger>
+            {createForm}
+          </Dialog>
+        )}
+        {children}
+        {!hiddenLine && <div className={style.line}></div>}
+      </div>
     </header>
   );
 }
