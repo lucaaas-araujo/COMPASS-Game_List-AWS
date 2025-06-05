@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react';
 
 import type { CategoryProps, EditCategoryProps } from '../types/Category';
+import type { GetAllProps } from '../context/PlatformContext';
 
 type CategoryContextProps = {
-  getAll: () => Promise<CategoryProps[]>;
+  getAll: ({ sort, dir }: GetAllProps) => Promise<CategoryProps[]>;
   remove: (itemId: string) => Promise<void>;
   create: (
     categoryData: Pick<CategoryProps, 'title' | 'description'>,
