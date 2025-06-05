@@ -1,4 +1,5 @@
 export type PlatformProps = {
+  _id: string;
   image_url?: string;
   title: string;
   company?: string;

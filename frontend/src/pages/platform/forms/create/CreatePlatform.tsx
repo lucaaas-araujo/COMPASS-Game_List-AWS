@@ -1,3 +1,6 @@
+import { useState, useEffect, type FormEvent } from 'react';
+import { toast } from 'react-toastify';
+
 import { Button } from '../../../../components/ui/button/Button';
 import {
   DialogClose,
@@ -7,48 +10,53 @@ import {
   DialogTitle,
 } from '../../../../components/ui/dialog/Dialog';
 import { Input } from '../../../../components/ui/input/Input';
-
 import { Label } from '../../../../components/ui/label/Label';
 
-import { useState, type FormEvent } from 'react';
-import { toast } from 'react-toastify';
 import { useDialog } from '../../../../hooks/useDialog';
 import { usePlatform } from '../../../../hooks/usePlatform';
+
 import style from './CreatePlatform.module.css';
 
-export function NewPlatform() {
+export function NewPlatform({ oncreated }: { oncreated?: () => void }) {
   const [title, setTitle] = useState('');
   const [company, setCompany] = useState('');
   const [acquisition_year, setAcquisition_year] = useState('');
   const [image_url, setImage_Url] = useState('');
-  const { closeDialog } = useDialog();
+  const { closeDialog, isOpen } = useDialog();
   const { create } = usePlatform();
 
-  const formatDateForInput = (dateString?: string) => {
-    if (!dateString) return '';
-
-    const date = new Date(dateString);
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  };
+  useEffect(() => {
+    if (isOpen) {
+      setTitle('');
+      setCompany('');
+      setAcquisition_year('');
+      setImage_Url('');
+    }
+  }, [isOpen]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const year = new Date(acquisition_year);
-    const newPlatform = { acquisition_year: year, company, image_url, title };
 
     try {
+      const year = new Date(acquisition_year);
+      const newPlatform = { acquisition_year: year, company, image_url, title };
+
       await create(newPlatform);
       toast.success('Platform criada com sucesso!');
+      oncreated?.();
       closeDialog();
     } catch (error) {
       console.log(error);
       toast.error('Erro ao criar plataforma.');
     }
+  };
+
+  const formatDateForInput = (dateString?: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+      date.getDate(),
+    ).padStart(2, '0')}`;
   };
 
   return (
@@ -91,7 +99,7 @@ export function NewPlatform() {
           </div>
 
           <div className={style.formGroup}>
-            <Label>Plataform image (url)</Label>
+            <Label>Platform image (url)</Label>
             <Input
               placeholder='http://cdn....'
               value={image_url}
@@ -101,7 +109,7 @@ export function NewPlatform() {
 
           <DialogFooter>
             <Button type='submit'>
-              <p>Save plataform</p>
+              <p>Save platform</p>
               <p>+</p>
             </Button>
           </DialogFooter>
