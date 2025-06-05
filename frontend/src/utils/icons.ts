@@ -22,7 +22,7 @@ import trash from '../assets/trash.svg';
 import trashBlack from '../assets/trash-black.svg';
 import x from '../assets/x.svg';
 import warning from '../assets/warning.svg';
-import imageController from '../../public/controller-game-list.png';
+import imageController from './../assets/controller-game-list.png';
 
 export {
   arrow,
