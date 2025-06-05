@@ -11,21 +11,30 @@ type PlatformProviderProps = {
 export type GetAllProps = {
   sort?: string;
   dir?: 'asc' | 'desc';
+  per_page: number;
+  page: number;
 };
 
 export function PlatformProvider({ children }: PlatformProviderProps) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
 
-  const getAll = async ({ sort = 'title', dir }: GetAllProps) => {
+  const getAll = async ({
+    sort = 'title',
+    dir,
+    per_page,
+    page,
+  }: GetAllProps) => {
     try {
       setLoading(true);
       const response = await api.get(`/platform`, {
-        params: { sort, dir },
+        params: { sort, dir, page, per_page },
       });
-      const platforms = response.data;
+      const { platforms, count } = response.data;
 
       setLoading(false);
+      setCount(count);
 
       return platforms;
     } catch (error) {
@@ -83,6 +92,7 @@ export function PlatformProvider({ children }: PlatformProviderProps) {
         create,
         remove,
         update,
+        count,
         error,
         loading,
       }}>
