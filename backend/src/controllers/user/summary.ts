@@ -7,12 +7,12 @@ type Locals = {
   };
 };
 
-type MetadataProps = RequestHandler<unknown, unknown, unknown, unknown, Locals>;
+type SummaryProps = RequestHandler<unknown, unknown, unknown, unknown, Locals>;
 
-export const metadata: MetadataProps = async (req, res) => {
+export const summary: SummaryProps = async (req, res) => {
   const { user_id } = res.locals.user;
 
-  const result = await userServices.metadata(user_id);
+  const result = await userServices.summary(user_id);
 
   if (result instanceof Error) {
     res.status(501).json({ error: result.message });

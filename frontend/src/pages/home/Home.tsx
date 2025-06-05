@@ -12,7 +12,7 @@ import { NewPlatform } from '../platform/forms/create/CreatePlatform';
 import styles from './Home.module.css';
 
 export function Home() {
-  const [metadata, setMetata] = useState({
+  const [summary, setSummary] = useState({
     gamesCount: 0,
     favoriteGamesCount: 0,
     categoriesCount: 0,
@@ -22,15 +22,13 @@ export function Home() {
   const { user } = useUser();
 
   useEffect(() => {
-    const getMetadata = async () => {
-      const res = await api.get('/metadata');
-      setMetata(res.data);
+    const getSummary = async () => {
+      const res = await api.get('/summary');
+      setSummary(res.data);
     };
 
-    getMetadata();
+    getSummary();
   }, []);
-  console.log(metadata);
-  
 
   return (
     <main className={styles.container}>
@@ -44,27 +42,27 @@ export function Home() {
           haveButton
           icon={game}
           title='Games'
-          count={metadata.gamesCount}
+          count={summary.gamesCount}
           createForm={<CreateGame />}
         />
         <HomeCard
           haveButton
           icon={category}
           title='Categories'
-          count={metadata.categoriesCount}
+          count={summary.categoriesCount}
           createForm={<NewCategory />}
         />
         <HomeCard
           haveButton
           icon={platform}
           title='Platforms'
-          count={metadata.platformCount}
+          count={summary.platformCount}
           createForm={<NewPlatform />}
         />
         <HomeCard
           icon={starHome}
           title='Favorites Games'
-          count={metadata.favoriteGamesCount}
+          count={summary.favoriteGamesCount}
         />
       </div>
     </main>

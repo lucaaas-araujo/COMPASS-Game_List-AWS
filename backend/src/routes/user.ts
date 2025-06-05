@@ -12,6 +12,6 @@ routes.post(
 
 routes.post('/login', userControllers.login);
 
-routes.get('/metadata', ensureAuthentication, userControllers.metadata);
+routes.get('/summary', ensureAuthentication, userControllers.summary);
 
 export { routes };

@@ -2,8 +2,7 @@ import Category from '../../models/category';
 import Game from '../../models/game';
 import Platform from '../../models/platform';
 
-export const metadata = async (user_id: string) => {
-
+export const summary = async (user_id: string) => {
   try {
     const [gamesCount, favoriteGamesCount, categoriesCount, platformCount] =
       await Promise.all([
@@ -29,6 +28,6 @@ export const metadata = async (user_id: string) => {
     return { gamesCount, favoriteGamesCount, categoriesCount, platformCount };
   } catch (error) {
     console.log(error);
-    return new Error('Error returning metadata');
+    return new Error('Error returning summary');
   }
 };
