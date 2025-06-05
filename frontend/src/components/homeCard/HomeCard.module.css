@@ -1,18 +1,18 @@
 .card {
   background-color: #262626;
-  border: 2px solid #6c6c6c;
-  border-radius: 10px;
+  border: 2px solid var(--gray);
+  border-radius: 8px;
   width: 100%;
   max-width: 360px;
   min-height: 173px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: white;
+  color: var(--white);
 }
 
 .card:hover {
-  border-color: #42d9c8;
+  border-color: var(--turquoise);
 }
 
 .top {
@@ -46,5 +46,5 @@
 .title {
   font-size: 14px;
   font-weight: 500;
-  color: #fff;
+  color: var(--white);
 }
