@@ -9,6 +9,7 @@ type GameContextProps = {
   toggleIsFavorite: (itemId: string, isFavorite: boolean) => Promise<void>;
   create: (gameData: GameProps) => Promise<void>;
   update: (gameData: EditGameProps) => Promise<void>;
+  count: number;
   error: boolean;
   loading: boolean;
 };

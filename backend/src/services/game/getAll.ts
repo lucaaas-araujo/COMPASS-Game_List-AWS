@@ -32,12 +32,18 @@ export const getAll = async ({
   };
 
   try {
-    const games = await Game.find(filters)
-      .limit(per_page)
-      .skip(skip)
-      .sort({ [sort]: dir });
+    const [games, count] = await Promise.all([
+      Game.find(filters)
+        .limit(per_page)
+        .skip(skip)
+        .sort({ [sort]: dir }),
+      Game.countDocuments({
+        user_id,
+        is_deleted: false,
+      }),
+    ]);
 
-    return games;
+    return { games, count };
   } catch (error) {
     console.log(`GET_ALL_GAMES: ${error}`);
     return new Error('Error retrieving games.');

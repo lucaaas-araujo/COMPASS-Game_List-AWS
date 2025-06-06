@@ -10,6 +10,8 @@ type GameProviderProps = {
 export type GetAllProps = {
   sort?: string;
   dir?: 'asc' | 'desc';
+  per_page?: number;
+  page?: number;
   title?: string;
   category?: string;
   favorite?: boolean;
@@ -18,10 +20,13 @@ export type GetAllProps = {
 export function GameProvider({ children }: GameProviderProps) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
 
   const getAll = async ({
     sort = 'title',
     dir,
+    page,
+    per_page,
     title,
     category,
     favorite,
@@ -29,14 +34,15 @@ export function GameProvider({ children }: GameProviderProps) {
     try {
       setLoading(true);
       const response = await api.get('/game', {
-        params: { sort, dir, title, category, favorite },
+        params: { sort, dir, page, per_page, title, category, favorite },
       });
 
       const games = response.data;
 
       setLoading(false);
+      setCount(games.count);
 
-      return games;
+      return games.games;
     } catch (error) {
       console.error('Error fetching game:', error);
       setError(true);
@@ -121,6 +127,7 @@ export function GameProvider({ children }: GameProviderProps) {
         remove,
         update,
         toggleIsFavorite,
+        count,
         error,
         loading,
       }}>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { CustomPagination } from '../../components/customPagination/CustomPagination';
 import {
   GameFilters,
   type FiltersState,
@@ -11,6 +12,7 @@ import ListItems from '../../components/ui/listItems/ListItems';
 import { useGame } from '../../hooks/useGame';
 import type { GameProps } from '../../types/Game';
 import { formatDate } from '../../utils/formatDate';
+import { per_page } from '../../utils/getPaginationItems';
 import DeleteModal from '../components/DeleteModal';
 import { CreateGame } from './forms/create/Create';
 import { DetailsGame } from './forms/details/Details';
@@ -30,12 +32,15 @@ const headers: SortHeaders[] = [
 ];
 
 export function Games() {
+  const [page, setPage] = useState(1);
   const [games, setGames] = useState<GameProps[]>([]);
   const [dir, setDir] = useState<'asc' | 'desc'>('asc');
-  const { getAll, toggleIsFavorite, remove } = useGame();
+  const { getAll, toggleIsFavorite, remove, count } = useGame();
+
+  const totalPages = Math.ceil(count / per_page);
 
   const fetchGames = async () => {
-    const data = await getAll({});
+    const data = await getAll({ page, per_page });
 
     setGames(data);
   };
@@ -63,11 +68,11 @@ export function Games() {
   const handleSortClick = async (sort: string) => {
     setDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
 
-    const games = await getAll({ sort, dir });
+    const games = await getAll({ sort, dir, page, per_page });
 
     setGames(games);
   };
-  
+
   const handleStarClick = async (game: GameProps) => {
     if (!game._id) {
       toast.error('Game ID not found!');
@@ -84,7 +89,7 @@ export function Games() {
       toast.error('Error updating favorite');
     }
   };
-  
+
   const handleDelete = async (id: string): Promise<boolean> => {
     try {
       await remove(id);
@@ -100,8 +105,8 @@ export function Games() {
 
   useEffect(() => {
     fetchGames();
-  }, []);
-  
+  }, [page]);
+
   return (
     <div className='pageContainer'>
       <Header
@@ -155,6 +160,8 @@ export function Games() {
           onStarClick={() => handleStarClick(game)}
         />
       ))}
+
+      <CustomPagination page={page} totalPages={totalPages} setPage={setPage} />
     </div>
   );
 }
