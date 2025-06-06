@@ -77,7 +77,7 @@ export const GameFilters = ({ onSearch, onClear }: Props) => {
             <SelectItem value='' disabled>
               Select Category
             </SelectItem>
-            {categories.map((cat) => (
+            {categories?.map((cat) => (
               <SelectItem key={cat.title} value={cat.title}>
                 {cat.title}
               </SelectItem>

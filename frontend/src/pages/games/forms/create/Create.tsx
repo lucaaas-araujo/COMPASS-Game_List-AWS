@@ -35,8 +35,9 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
   const [status, setStatus] = useState<'Playing' | 'Done' | 'Abandoned'>(
     'Playing',
   );
-  const [acquisition_date, setAcquisitionDate] = useState(Date);
-  const [finish_date, setFinishDate] = useState(Date);
+  const [acquisition_date, setAcquisitionDate] = useState('');
+  const [finish_date, setFinishDate] = useState('');
+  const [favorite, setFavorite] = useState(false);
   const [image_url, setUrlImage] = useState('');
   const { getAll: getAllCategories } = useCategory();
   const { getAll: getAllPlatforms } = usePlatform();
@@ -67,8 +68,13 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
     const isValid = validateForm(title, image_url);
 
     if (!isValid) return;
-    if (!category || !acquisition_date || !finish_date || !status) {
+    if (!category || !acquisition_date || !status) {
       toast.error('Please fill in all required fields.');
+      return;
+    }
+
+    if (status !== 'Playing' && !finish_date) {
+      toast.error('Finish date is required unless status is Playing');
       return;
     }
 
@@ -80,7 +86,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
         acquisition_date: new Date(acquisition_date),
         status,
         platform,
-        finish_date: new Date(finish_date),
+        finish_date: finish_date ? new Date(finish_date) : null,
         image_url,
       });
       toast.success('Game registred success!');
@@ -150,7 +156,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   onChange={(e) => setCategory(e.target.value)}>
                   <SelectGroup>
                     <SelectItem value=''>Select Category</SelectItem>
-                    {categoryList.map((cat) => (
+                    {categoryList?.map((cat) => (
                       <SelectItem key={cat.title} value={cat.title}>
                         {cat.title}
                       </SelectItem>
@@ -168,7 +174,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   onChange={(e) => setPlatform(e.target.value)}>
                   <SelectGroup>
                     <SelectItem value=''>Select Platform</SelectItem>
-                    {platformList.map((plat) => (
+                    {platformList?.map((plat) => (
                       <SelectItem key={plat.title} value={plat.title}>
                         {plat.title}
                       </SelectItem>
@@ -231,6 +237,22 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                     <SelectItem value={'Abandoned'}>Abandoned</SelectItem>
                   </SelectGroup>
                 </Select>
+              </div>
+              <div className={style.formGroup}>
+                <div className={style.checkbox}>
+                  <div>
+                    <input
+                      type='checkbox'
+                      name='favorite'
+                      id='favorite'
+                      checked={favorite}
+                      onChange={(e) => setFavorite(e.target.checked)}
+                    />
+                  </div>
+                  <Label asterisk htmlFor='favorite'>
+                    Favorite
+                  </Label>
+                </div>
               </div>
             </div>
           </div>
