@@ -7,14 +7,31 @@ type GameProviderProps = {
   children: ReactNode;
 };
 
+export type GetAllProps = {
+  sort?: string;
+  dir?: 'asc' | 'desc';
+  title?: string;
+  category?: string;
+  favorite?: boolean;
+};
+
 export function GameProvider({ children }: GameProviderProps) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const getAll = async () => {
+  const getAll = async ({
+    sort = 'title',
+    dir,
+    title,
+    category,
+    favorite,
+  }: GetAllProps) => {
     try {
       setLoading(true);
-      const response = await api.get('/game');
+      const response = await api.get('/game', {
+        params: { sort, dir, title, category, favorite },
+      });
+
       const games = response.data;
 
       setLoading(false);
@@ -68,7 +85,8 @@ export function GameProvider({ children }: GameProviderProps) {
   const update = async ({ gameData, itemId }: EditGameProps): Promise<void> => {
     try {
       setLoading(true);
-      await api.put(`/game/${itemId}`, { gameData });
+      console.log('Updating game with data:', gameData);
+      await api.put(`/game/${itemId}`, { ...gameData });
       setLoading(false);
     } catch (error) {
       console.error('Error updating game:', error);

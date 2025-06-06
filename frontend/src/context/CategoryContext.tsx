@@ -1,4 +1,6 @@
+import { AxiosError } from 'axios';
 import { useState, type ReactNode } from 'react';
+import { toast } from 'react-toastify';
 import { CategoryContext } from '../hooks/useCategory';
 import { api } from '../services/api';
 import type { CategoryProps, EditCategoryProps } from '../types/Category';
@@ -10,8 +12,8 @@ type CategoryProviderProps = {
 export type GetAllProps = {
   sort?: string;
   dir?: 'asc' | 'desc';
-  per_page: number;
-  page: number;
+  per_page?: number;
+  page?: number;
 };
 
 export function CategoryProvider({ children }: CategoryProviderProps) {
@@ -60,10 +62,19 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
   const remove = async (itemId: string): Promise<void> => {
     try {
       setLoading(true);
-      await api.delete(`/categories/${itemId}`);
-      setLoading(false);
+      const res = await api.delete(`/categories/${itemId}`);
+
+      if (res.status) {
+        toast.success('Category deleted!');
+        setLoading(false);
+      }
     } catch (error) {
-      console.error('Error deleting category:', error);
+      if (error instanceof AxiosError) {
+        const message = error.response?.data?.error || 'An error occurred';
+        toast.error(message);
+      } else {
+        toast.error('Unexpected error');
+      }
       setError(true);
       setLoading(false);
     }

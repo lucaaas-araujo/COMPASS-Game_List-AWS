@@ -18,9 +18,7 @@ type UpdateGameProps = {
 
 export const updateById = async ({ id, data }: UpdateGameProps) => {
   try {
-    if (!Types.ObjectId.isValid(id)) {
-      return new Error('Invalid id format.');
-    }
+   
 
     const updated = await Game.findByIdAndUpdate(id, { $set: data });
 

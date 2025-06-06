@@ -26,6 +26,7 @@ interface ListItemsProps {
   iconEdit?: true;
   iconDelete?: true;
   iconStar?: boolean;
+  isStarred?: boolean;
   detailsForm?: ReactNode;
   editForm?: ReactNode;
   deleteForm?: ReactNode;
@@ -43,12 +44,13 @@ const ListItems = ({
   iconEdit,
   iconDelete,
   iconStar,
+  isStarred = false,
   detailsForm,
   editForm,
   deleteForm,
   onStarClick,
 }: ListItemsProps) => {
-  const [starred, setStarred] = useState(false);
+  const [starred, setStarred] = useState(isStarred);
 
   const handleStarClick = () => {
     setStarred((prev) => !prev);

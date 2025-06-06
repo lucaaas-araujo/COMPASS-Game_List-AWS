@@ -11,8 +11,12 @@
   align-items: center;
 }
 
+.register > * {
+  margin: 0;
+  max-height: 90vh;
+}
+
 .logo {
-  width: 149px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,10 +26,27 @@
 .cardheader {
   display: flex;
   flex-direction: column;
-  margin: 12px auto 54px;
+  margin: 12px auto 14px;
   gap: 16px;
   justify-content: space-around;
   align-items: center;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: var(--lightgray);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.inputLabel {
+  color: var(--gray);
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .form {
@@ -46,15 +67,27 @@
   border-style: none;
   padding: 8px 0;
   border: 2px solid var(--turquoise);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  background: none;
+  color: var(--turquoise);
+  height: 44px;
+  margin-top: 10px;
 }
 
 .btnsign:hover {
-  background-color: #42d9c725;
+  background-color: var(--turquoise);
+  color: var(--white);
+  border: none;
 }
 
 .footer {
   margin: 28px 0 40px;
   text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--gray);
 }
 
 .footer a {

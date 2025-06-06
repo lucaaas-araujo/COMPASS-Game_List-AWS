@@ -1,17 +1,25 @@
 export type GameProps = {
+  _id?: string;
   image_url: string;
   title: string;
   description: string;
   category: string;
   platform: string;
-  status: 'Playing' | 'Done' | ' Abandoned';
+  status: string;
   favorite: boolean;
-  acquisition_date: string;
-  finish_date: string;
-  is_deleted: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  acquisition_date: Date;
+  finish_date: Date;
+  is_deleted?: boolean;
 };
 
 export type EditGameProps = {
   itemId: string;
-  gameData: GameProps;
+  gameData: Omit<GameProps, '_id' | 'createdAt' | 'updatedAt' | 'is_deleted' | 'favorite'>;
+};
+
+export type EditGamesWithOnCreatedProps = {
+  onCreated: () => void;
+  game: GameProps;
 };

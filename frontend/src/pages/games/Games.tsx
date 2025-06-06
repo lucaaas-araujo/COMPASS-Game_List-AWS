@@ -1,88 +1,168 @@
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import {
+  GameFilters,
+  type FiltersState,
+} from '../../components/filterbar/Filterbar';
 import { Header } from '../../components/header/Header';
-/* import { useGame } from '../../hooks/useGame'; */
 import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
-/* import DeleteModal from '../components/DeleteModal'; */
-import { DetailsGame } from './forms/details/Details';
-import { GameFilters } from '../../components/filterbar/Filterbar';
-import { UpdateGame } from './forms/update/Update';
-import style from './Games.module.css';
+import { useGame } from '../../hooks/useGame';
 import { CreateGame } from './forms/create/Create';
+import { DetailsGame } from './forms/details/Details';
+import { UpdateGame } from './forms/update/Update';
+import type { GameProps } from '../../types/Game';
+import { formatDate } from '../../utils/formatDate';
 import DeleteModal from '../components/DeleteModal';
 
-export function Games() {
-  /* const { getAll } = useGame(); */
-  const headerFields = [
-    { key: 'title', label: 'Title' },
-    { key: 'category', label: 'Category' },
-    { key: 'createdAt', label: 'Created At' },
-    { key: 'updatedAt', label: 'Updated At' },
-    { key: 'favorite', label: 'Favorite' },
-  ];
+import style from './Games.module.css';
 
-  const handleSortClick = (key: string) => {
-    console.log('Sort by:', key);
+export type SortHeaders = {
+  sort: string;
+  label: string;
+};
+
+const headers: SortHeaders[] = [
+  { sort: 'title', label: 'Title' },
+  { sort: 'category', label: 'Category' },
+  { sort: 'createdAt', label: 'Created At' },
+  { sort: 'updatedAt', label: 'Updated At' },
+  { sort: 'favorite', label: 'Favorite' },
+];
+
+export function Games() {
+  const [games, setGames] = useState<GameProps[]>([]);
+  const [dir, setDir] = useState<'asc' | 'desc'>('asc');
+  const { getAll, toggleIsFavorite, remove} = useGame();
+
+  const fetchGames = async () => {
+    const data = await getAll({});
+
+    setGames(data);
   };
 
-  const gameList = [
-    {
-      id: 1,
-      imageUrl: 'https://via.placeholder.com/40',
-      title: 'Steam',
-      category: 'Games',
-      createdAt: '2022-01-01',
-      status: 'Done',
-    },
-    {
-      id: 2,
-      imageUrl: 'https://via.placeholder.com/40',
-      title: 'Epic Games',
-      category: 'Games',
-      createdAt: '2023-05-10',
-      status: 'Playing',
-    },
-  ];
+  const handleFilters = async ({
+    search,
+    category,
+    favorite,
+  }: FiltersState) => {
+    const _favorite = favorite === 'true' ? true : false;
+
+    const games = await getAll({
+      title: search,
+      category,
+      favorite: _favorite,
+    });
+
+    setGames(games);
+  };
+
+  const handleClearFilters = () => {
+    fetchGames();
+  };
+
+  const handleSortClick = async (sort: string) => {
+    setDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+
+    const games = await getAll({ sort, dir });
+
+    setGames(games);
+  };
+
+  useEffect(() => {
+    fetchGames();
+  }, []);
+
+  /*  const handleDelete = async (id: string): Promise<boolean> =>{
+    try{
+      await remove(id);
+      toast.success('Game excluded with success')
+      fetchGames();
+      return true;
+    } catch (error){
+      toast.error('Error excluding game')
+      return false
+    }
+  } */
+
+  const handleStarClick = async (game: GameProps) => {
+    if (!game._id) {
+      toast.error('Game ID not found!');
+      return;
+    }
+    try {
+      await toggleIsFavorite(game._id, !game.favorite);
+      toast.success(
+        `Game ${game.favorite ? 'removed from favorites' : 'added to favorites'}!`,
+      );
+      await fetchGames();
+    } catch (error) {
+      toast.error('Error updating favorite');
+      }
+  };
+  
+  const handleDelete = async (id: string): Promise<boolean> => {
+    try {
+      await remove(id);
+      toast.success('Game deleted successfully');
+      fetchGames();
+      return true;
+    } catch (error) {
+      console.error(error);
+      toast.error('Error deleting game');
+      return false;
+    }
+  };
 
   return (
     <div>
       <div className={style.gamepage}>
-        <Header title='Games' buttonText='New Game' createForm={<CreateGame />}>
-          <GameFilters onSearch={() => {}} onClear={() => {}} />
+        <Header
+          title='Games'
+          buttonText='NEW GAME'
+          createForm={<CreateGame onCreated={fetchGames} />}>
+          <GameFilters onSearch={handleFilters} onClear={handleClearFilters} />
         </Header>
-        <HeaderList fields={headerFields} onSortClick={handleSortClick} />
+        <HeaderList fields={headers} onSortClick={handleSortClick} />
 
-        {gameList.map((game) => (
+        {games.map((game, index) => (
           <ListItems
-            key={game.id}
-            imageUrl={game.imageUrl}
+            key={index}
+            imageUrl={game.image_url}
             camp1={game.title}
             camp2={game.category}
-            camp3={game.createdAt}
+            camp3={formatDate(String(game.createdAt))}
+            camp4={
+              game.updatedAt !== game.createdAt
+                ? formatDate(String(game.updatedAt))
+                : ''
+            }
             iconDetails
             iconEdit
             iconDelete
             iconStar
+            isStarred={game.favorite}
             detailsForm={
               <DetailsGame
+                game={game}
+                updateForm={<UpdateGame game={game} onCreated={fetchGames} />}
                 deleteForm={
                   <DeleteModal
                     type='game'
-                    onCancel={() => {}}
-                    onDelete={() => {}}
+                    onDelete={() => game._id ? handleDelete(game._id) : Promise.resolve(false)}
                   />
                 }
-                updateForm={<UpdateGame />}
               />
             }
-            editForm={<UpdateGame />}
-            /* deleteForm={
+            editForm={<UpdateGame game={game} onCreated={fetchGames} />}
+            deleteForm={
               <DeleteModal
                 type='game'
-                onCancel={() => {}}
-                onDelete={() => {}}
+                onDelete={() => game._id ? handleDelete(game._id) : Promise.resolve(false)}
               />
-            } */
-            onStarClick={() => console.log('Star', game.id)}
+            }
+            onStarClick={() => handleStarClick(game)}
           />
         ))}
       </div>

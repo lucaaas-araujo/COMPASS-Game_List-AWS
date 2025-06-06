@@ -16,26 +16,28 @@ import {
   SelectItem,
 } from '../../../../components/ui/select/Select';
 import style from './Details.module.css';
+import type { GameProps } from '../../../../types/Game';
 
 type UpdateModalProps = HTMLAttributes<HTMLElement> & {
   updateForm?: ReactNode;
   deleteForm?: ReactNode;
+  game: GameProps;
 };
 
-export function DetailsGame({ updateForm, deleteForm }: UpdateModalProps) {
-  const [new_title] = useState('');
-  const [new_description] = useState('');
-  const [category] = useState('');
-  const [new_status] = useState('');
-  const [plataform] = useState('');
-  const [url_image] = useState('');
+export function DetailsGame({ updateForm, deleteForm, game }: UpdateModalProps) {
+  const [new_title] = useState(game.title);
+  const [new_description] = useState(game.description);
+  const [category] = useState(game.category);
+  const [new_status] = useState(game.status);
+  const [plataform] = useState(game.platform);
+  const [url_image] = useState(game.image_url);
 
   return (
     <div className={style.newGame}>
       <DialogContent className={style.dialogContent}>
         <DialogHeader>
           <DialogTitle className={style.dialogTitle}>
-            Details: NAME GAME
+            Details: {game.title}
           </DialogTitle>
           <DialogClose className={style.dialogClose} />
         </DialogHeader>
@@ -70,7 +72,7 @@ export function DetailsGame({ updateForm, deleteForm }: UpdateModalProps) {
                 </label>
                 <Select variant='disable' value={category} disabled>
                   <SelectGroup>
-                    <SelectItem>Select Category</SelectItem>
+                    <SelectItem>{category}</SelectItem>
                   </SelectGroup>
                 </Select>
               </div>
@@ -80,7 +82,7 @@ export function DetailsGame({ updateForm, deleteForm }: UpdateModalProps) {
                 </label>
                 <Select variant='disable' value={plataform} disabled>
                   <SelectGroup>
-                    <SelectItem>Select Plataform</SelectItem>
+                    <SelectItem>{plataform}</SelectItem>
                   </SelectGroup>
                 </Select>
               </div>
@@ -93,7 +95,7 @@ export function DetailsGame({ updateForm, deleteForm }: UpdateModalProps) {
                 </label>
                 <Select variant='disable' value={new_status} disabled>
                   <SelectGroup>
-                    <SelectItem value={''}>Select Status</SelectItem>
+                    <SelectItem value={''}>{new_status}</SelectItem>
                   </SelectGroup>
                 </Select>
               </div>
@@ -109,6 +111,7 @@ export function DetailsGame({ updateForm, deleteForm }: UpdateModalProps) {
                 value={url_image}
                 readOnly
               />
+              
             </div>
           </div>
         </form>

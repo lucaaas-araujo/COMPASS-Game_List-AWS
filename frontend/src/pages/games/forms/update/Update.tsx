@@ -6,59 +6,130 @@ import {
   DialogFooter,
 } from '../../../../components/ui/dialog/Dialog';
 import { Input } from '../../../../components/ui/input/Input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '../../../../components/ui/button/Button';
 import {
   Select,
   SelectGroup,
   SelectItem,
 } from '../../../../components/ui/select/Select';
+import { useGame } from '../../../../hooks/useGame';
 import style from './Update.module.css';
+import type { EditGamesWithOnCreatedProps } from '../../../../types/Game';
+import { useCategory } from '../../../../hooks/useCategory';
+import { usePlatform } from '../../../../hooks/usePlatform';
+import { type CategoryProps } from '../../../../types/Category';
+import { type PlatformProps } from '../../../../types/Platform';
+import { useDialog } from '../../../../hooks/useDialog';
+import { toast } from 'react-toastify';
+import { Label } from '../../../../components/ui/label/Label';
+import { validateForm } from '../../../../utils/validateForm';
+/* import { CustomPagination } from '../../../../components/customPagination/CustomPagination';
+ */
+export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
+  const [title, setNewTitle] = useState(game.title);
+  const [description, setNewDescription] = useState(game.description);
+  const [category, setCategory] = useState(game.category);
+  const [status, setNewStatus] = useState(game.status);
+  const [platform, setPlatform] = useState(game.platform);
+  const [image_url, setUrlImage] = useState(game.image_url);
+  const [acquisition_date] = useState(game.acquisition_date);
+  const [finish_date] = useState(game.finish_date);
+  const [favorite] = useState(game.favorite);
+  const [categoryList, setCategoryList] = useState<CategoryProps[]>([]);
+  const [platformList, setPlatformList] = useState<PlatformProps[]>([]);
+  const { getAll: getAllCategories } = useCategory();
+  const { getAll: getAllPlatforms } = usePlatform();
+  const { update } = useGame();
+  const { closeDialog } = useDialog();
+  /*const [page, setPage] = useState(1);
+   const [dir, setDir] = useState<'asc' | 'desc'>('asc');
 
-export const UpdateGame = () => {
-  const [new_title, setNewTitle] = useState('');
-  const [new_description, setNewDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [new_status, setNewStatus] = useState('');
-  const [plataform, setPlatform] = useState('');
-  const [url_image, setUrlImage] = useState('');
+  const totalPages = Math.ceil(count / per_page); */
 
-  const status = [
-    { key: 'Playing', value: 'Playing' },
-    { key: 'Done', value: 'Done' },
-    { key: 'Abandoned', value: 'Abandoned' },
-  ];
+  const fetchData = async () => {
+    const categoryList = await getAllCategories({});
+    const platformList = await getAllPlatforms({});
+    setPlatformList(platformList);
+    setCategoryList(categoryList);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const isValid = validateForm(title, image_url);
+    console.log(
+      title,
+      description,
+      category,
+      status,
+      platform,
+      image_url,
+      acquisition_date,
+      finish_date,
+    );
+    try {
+      if (isValid) {
+        await update({
+          itemId: game._id || '',
+          gameData: {
+            title,
+            description,
+            category,
+            status,
+            platform,
+            image_url,
+            acquisition_date,
+            finish_date,
+          },
+        });
+      
+        toast.success('Game updated successfully');
+        closeDialog();
+        onCreated();
+      }
+    } catch (error) {
+      toast.error('Erro ao atualizar o game');
+      console.error(error);
+    }
+  };
 
   return (
     <div className={style.newGame}>
       <DialogContent className={style.dialogContent}>
         <DialogHeader>
           <DialogTitle className={style.dialogTitle}>
-            Editing: NAME GAME
+            Editing: {game.title}
           </DialogTitle>
           <DialogClose className={style.dialogClose} />
         </DialogHeader>
 
-        <form className={style.form}>
+        <form className={style.form} onSubmit={handleSubmit}>
           <div className={style.formGroup}>
-            <label>
-              Title<span className={style.required}>*</span>
-            </label>
+            <Label asterisk htmlFor='title'>
+              Title
+            </Label>
             <div>
               <Input
+                id='title'
                 placeholder={'title'}
-                value={new_title}
+                value={title}
                 onChange={(e) => setNewTitle(e.target.value)}
               />
             </div>
           </div>
 
           <div className={style.formGroup}>
-            <label>Description</label>
+            <Label htmlFor='description'>Description</Label>
             <div>
               <textarea
+                id='description'
                 placeholder={'description'}
-                value={new_description}
+                value={description}
                 onChange={(e) => setNewDescription(e.target.value)}
                 className={style.textarea}
               />
@@ -68,28 +139,40 @@ export const UpdateGame = () => {
           <div className={style.containerData}>
             <div className={style.containerRow}>
               <div className={style.formGroup}>
-                <label htmlFor='category'>
-                  Category <span className={style.required}>*</span>
-                </label>
+                <Label htmlFor='category' asterisk>
+                  Category
+                </Label>
                 <Select
+                  id='category'
                   variant='modal'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}>
                   <SelectGroup>
-                    <SelectItem>Select Category</SelectItem>
+                    <SelectItem value=''>Select Category</SelectItem>
+                    {categoryList.map((cat) => (
+                      <SelectItem key={cat.title} value={cat.title}>
+                        {cat.title}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </Select>
               </div>
               <div className={style.formGroup}>
-                <label htmlFor='plataform'>
-                  Plataform <span className={style.required}>*</span>
-                </label>
+                <Label htmlFor='platform' asterisk>
+                  Platform
+                </Label>
                 <Select
+                  id='platform'
                   variant='modal'
-                  value={plataform}
+                  value={platform}
                   onChange={(e) => setPlatform(e.target.value)}>
                   <SelectGroup>
-                    <SelectItem>Select Plataform</SelectItem>
+                    <SelectItem value=''>Select Platform</SelectItem>
+                    {platformList.map((plat) => (
+                      <SelectItem key={plat.title} value={plat.title}>
+                        {plat.title}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </Select>
               </div>
@@ -97,19 +180,18 @@ export const UpdateGame = () => {
 
             <div className={style.containerRow}>
               <div className={style.formGroup}>
-                <label htmlFor='status'>
-                  Status <span className={style.required}>*</span>
-                </label>
+                <Label htmlFor='status' asterisk>
+                  Status
+                </Label>
                 <Select
+                  id='status'
                   variant='modal'
-                  value={new_status}
+                  value={status}
                   onChange={(e) => setNewStatus(e.target.value)}>
                   <SelectGroup>
-                    {status.map(({ key, value }) => (
-                      <SelectItem key={key} value={value}>
-                        {value}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value={'Playing'}>Playing</SelectItem>
+                    <SelectItem value={'Done'}>Done</SelectItem>
+                    <SelectItem value={'Abandoned'}>Abandoned</SelectItem>
                   </SelectGroup>
                 </Select>
               </div>
@@ -117,24 +199,25 @@ export const UpdateGame = () => {
           </div>
 
           <div className={style.formGroup}>
-            <label htmlFor='image_url'>Imagem (URL)</label>
+            <Label htmlFor='image_url'>Imagem (URL)</Label>
             <div>
               <Input
+                id='image_url'
                 type='text'
                 placeholder='http://cdn...'
-                value={url_image}
+                value={image_url}
                 onChange={(e) => setUrlImage(e.target.value)}
               />
             </div>
           </div>
+          <DialogFooter>
+            <Button>
+              <p className={style.button}>CONFIRM</p>
+            </Button>
+          </DialogFooter>
         </form>
-
-        <DialogFooter>
-          <Button>
-            <p className={style.button}>CONFIRM</p>
-          </Button>
-        </DialogFooter>
       </DialogContent>
+      {/* <CustomPagination page={page} totalPages={totalPages} setPage={setPage} /> */}
     </div>
   );
-};
+}
