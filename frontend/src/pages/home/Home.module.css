@@ -10,6 +10,7 @@
   max-width: 888px;
   justify-items: center;
   margin-inline: auto;
+  margin-left: 3rem;
 }
 
 @media screen and (max-width: 900px) {
