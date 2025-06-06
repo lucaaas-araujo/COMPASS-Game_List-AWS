@@ -184,7 +184,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   />
                 </div>
               </div>
-              {status === 'Playing' && (
+              {status !== 'Playing' && (
                 <div className={style.formGroup}>
                   <Label asterisk htmlFor='finish_date'>
                     Finish Date
