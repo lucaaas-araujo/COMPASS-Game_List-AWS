@@ -62,7 +62,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const response = await api.post('/register', data);
 
       if (response.data) {
-        location.href = '/login';
+        login({ email: data.email, password: data.password });
         setLoading(false);
       }
     } catch (error) {

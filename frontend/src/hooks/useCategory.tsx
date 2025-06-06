@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import type { GetAllProps } from '../context/PlatformContext';
+import type { GetAllProps } from '../context/CategoryContext';
 import type { CategoryProps, EditCategoryProps } from '../types/Category';
 
 type CategoryContextProps = {
