@@ -38,8 +38,8 @@ export function Header({
             className={`${style.arrowIcon} ${!isOpen ? style.rotated : ''}`}
           />
         </button>
+        <h1 className={style.title}>{title}</h1>
       </div>
-      <h1 className={style.title}>{title}</h1>
 
       <div className={style.texts}>
         {!hiddenButton && (

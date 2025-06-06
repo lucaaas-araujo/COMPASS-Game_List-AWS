@@ -73,33 +73,32 @@ export const Platform = () => {
         buttonText='NEW PLATFORM'
         createForm={<NewPlatform oncreated={fetchPlatforms} />}
       />
-      <div className={styles.platformContainer}>
-        <HeaderList fields={headers} onSortClick={handleSortClick} />
 
-        {platforms?.map((platform, index) => (
-          <ListItems
-            key={index}
-            imageUrl={platform.image_url}
-            camp1={platform.title}
-            camp2={platform.company}
-            camp3={formatDateYear(String(platform.acquisition_year))}
-            camp4={formatDateYear(String(platform.createdAt))}
-            camp5={formatDateYear(String(platform.updatedAt))}
-            iconDetails
-            iconEdit
-            iconDelete
-            editForm={
-              <EditPlatform platform={platform} onCreated={fetchPlatforms} />
-            }
-            deleteForm={
-              <DeleteModal
-                type='platform'
-                onDelete={() => handleDelete(platform._id)}
-              />
-            }
-          />
-        ))}
-      </div>
+      <HeaderList fields={headers} onSortClick={handleSortClick} />
+
+      {platforms?.map((platform, index) => (
+        <ListItems
+          key={index}
+          imageUrl={platform.image_url}
+          camp1={platform.title}
+          camp2={platform.company}
+          camp3={formatDateYear(String(platform.acquisition_year))}
+          camp4={formatDateYear(String(platform.createdAt))}
+          camp5={formatDateYear(String(platform.updatedAt))}
+          iconDetails
+          iconEdit
+          iconDelete
+          editForm={
+            <EditPlatform platform={platform} onCreated={fetchPlatforms} />
+          }
+          deleteForm={
+            <DeleteModal
+              type='platform'
+              onDelete={() => handleDelete(platform._id)}
+            />
+          }
+        />
+      ))}
 
       <CustomPagination page={page} totalPages={totalPages} setPage={setPage} />
     </div>

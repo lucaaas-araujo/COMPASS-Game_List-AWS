@@ -6,6 +6,7 @@ import type {
 } from 'react';
 
 import style from './Pagination.module.css';
+import { arrowLeft, arrowRight } from '../../../utils/icons';
 
 type PaginationProps = HTMLAttributes<HTMLElement>;
 type PaginationContentProps = HTMLAttributes<HTMLUListElement>;
@@ -52,7 +53,7 @@ export function PaginationPrevious({ ...props }: PaginationButtonProps) {
       aria-label='Go to previous page'
       className={`${style.link} ${style.previous}`}
       {...props}>
-      {/* <ChevronLeftIcon /> */}
+      <img src={arrowLeft} alt='Arrow Left' className={style.arrowLeft} />
       <span>Previous</span>
     </PaginationLink>
   );
@@ -65,7 +66,7 @@ export function PaginationNext({ ...props }: PaginationButtonProps) {
       className={`${style.link} ${style.next}`}
       {...props}>
       <span>Next</span>
-      {/* <ChevronRightIcon />  */}
+      <img src={arrowRight} alt='Arrow Left' className={style.arrowRight} />
     </PaginationLink>
   );
 }

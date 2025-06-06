@@ -32,9 +32,11 @@ export function HomeCard({
         {haveButton && (
           <Dialog>
             <DialogTrigger>
-              <Button variant='white' style={{ color: '#6C6C6C' }}>
-                + Add new
-              </Button>
+              <div className={styles.buttonWrapper}>
+                <Button variant='white' style={{ color: '#6C6C6C' }}>
+                  + Add new
+                </Button>
+              </div>
             </DialogTrigger>
             {createForm}
           </Dialog>
