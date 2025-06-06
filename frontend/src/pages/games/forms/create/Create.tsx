@@ -43,10 +43,11 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const categoryList = await getAllCategories();
+      const categoryList = await getAllCategories({}); 
       const platformList = await getAllPlatforms({});
       setPlatformList(platformList);
       setCategoryList(categoryList);
+      
     };
     fetchData();
   }, []);
@@ -73,7 +74,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
       });
       toast.success('Game registred success!');
       closeDialog();
-      onCreated?.();
+      if (onCreated) onCreated(); // <-- Chama a função para atualizar a lista!
     } catch {
       console.log(error);
       toast.error('Error to create game');

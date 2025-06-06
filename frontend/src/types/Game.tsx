@@ -16,8 +16,7 @@ export type GameProps = {
 
 export type EditGameProps = {
   itemId: string;
-  game: GameProps;
-  gameData: Partial<GameProps>;
+  gameData: Omit<GameProps, '_id' | 'createdAt' | 'updatedAt' | 'is_deleted' | 'favorite'>;
 };
 
 export type EditGamesWithOnCreatedProps = {

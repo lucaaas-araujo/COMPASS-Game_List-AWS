@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
 import {
   GameFilters,
   type FiltersState,
@@ -9,12 +12,11 @@ import { useGame } from '../../hooks/useGame';
 import { CreateGame } from './forms/create/Create';
 import { DetailsGame } from './forms/details/Details';
 import { UpdateGame } from './forms/update/Update';
-import style from './Games.module.css';
-/* import DeleteModal from '../components/DeleteModal'; */
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import type { GameProps } from '../../types/Game';
 import { formatDate } from '../../utils/formatDate';
+import DeleteModal from '../components/DeleteModal';
+
+import style from './Games.module.css';
 
 export type SortHeaders = {
   sort: string;
@@ -32,7 +34,7 @@ const headers: SortHeaders[] = [
 export function Games() {
   const [games, setGames] = useState<GameProps[]>([]);
   const [dir, setDir] = useState<'asc' | 'desc'>('asc');
-  const { getAll, toggleIsFavorite } = useGame();
+  const { getAll, toggleIsFavorite, remove} = useGame();
 
   const fetchGames = async () => {
     const data = await getAll({});
@@ -97,6 +99,19 @@ export function Games() {
       await fetchGames();
     } catch (error) {
       toast.error('Error updating favorite');
+      }
+  };
+  
+  const handleDelete = async (id: string): Promise<boolean> => {
+    try {
+      await remove(id);
+      toast.success('Game deleted successfully');
+      fetchGames();
+      return true;
+    } catch (error) {
+      console.error(error);
+      toast.error('Error deleting game');
+      return false;
     }
   };
 
@@ -118,6 +133,11 @@ export function Games() {
             camp1={game.title}
             camp2={game.category}
             camp3={formatDate(String(game.createdAt))}
+            camp4={
+              game.updatedAt !== game.createdAt
+                ? formatDate(String(game.updatedAt))
+                : ''
+            }
             iconDetails
             iconEdit
             iconDelete
@@ -126,24 +146,22 @@ export function Games() {
             detailsForm={
               <DetailsGame
                 game={game}
-                /* deleteForm={
-                  <DeleteModal 
-                    type='game'
-                    onCancel={() => {}}
-                    onDelete={() => false}
-                  />
-                }  */
                 updateForm={<UpdateGame game={game} onCreated={fetchGames} />}
+                deleteForm={
+                  <DeleteModal
+                    type='game'
+                    onDelete={() => game._id ? handleDelete(game._id) : Promise.resolve(false)}
+                  />
+                }
               />
             }
             editForm={<UpdateGame game={game} onCreated={fetchGames} />}
-            /* deleteForm={
+            deleteForm={
               <DeleteModal
                 type='game'
-                onCancel={() => {}}
-                onDelete={() => {}}
+                onDelete={() => game._id ? handleDelete(game._id) : Promise.resolve(false)}
               />
-            } */
+            }
             onStarClick={() => handleStarClick(game)}
           />
         ))}
