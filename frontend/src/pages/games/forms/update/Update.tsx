@@ -140,7 +140,7 @@ export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
                   onChange={(e) => setCategory(e.target.value)}>
                   <SelectGroup>
                     <SelectItem value=''>Select Category</SelectItem>
-                    {categoryList.map((cat) => (
+                    {categoryList?.map((cat) => (
                       <SelectItem key={cat.title} value={cat.title}>
                         {cat.title}
                       </SelectItem>
@@ -159,7 +159,7 @@ export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
                   onChange={(e) => setPlatform(e.target.value)}>
                   <SelectGroup>
                     <SelectItem value=''>Select Platform</SelectItem>
-                    {platformList.map((plat) => (
+                    {platformList?.map((plat) => (
                       <SelectItem key={plat.title} value={plat.title}>
                         {plat.title}
                       </SelectItem>

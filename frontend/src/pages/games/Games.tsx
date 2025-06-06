@@ -119,7 +119,7 @@ export function Games() {
 
       <div className='itemsContainer'>
         <div>
-          {games.map((game, index) => (
+          {games?.map((game, index) => (
             <ListItems
               key={index}
               imageUrl={game.image_url}
