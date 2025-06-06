@@ -25,12 +25,12 @@ type UpdateModalProps = HTMLAttributes<HTMLElement> & {
 };
 
 export function DetailsGame({ updateForm, deleteForm, game }: UpdateModalProps) {
-  const [new_title] = useState(game.title);
-  const [new_description] = useState(game.description);
-  const [category] = useState(game.category);
-  const [new_status] = useState(game.status);
-  const [plataform] = useState(game.platform);
-  const [url_image] = useState(game.image_url);
+  // const [new_title] = useState(game.title);
+  // const [new_description] = useState(game.description);
+  // const [category] = useState(game.category);
+  // const [new_status] = useState(game.status);
+  // const [plataform] = useState(game.platform);
+  // const [url_image] = useState(game.image_url);
 
   return (
     <div className={style.newGame}>
@@ -48,7 +48,7 @@ export function DetailsGame({ updateForm, deleteForm, game }: UpdateModalProps) 
               Title<span className={style.required}>*</span>
             </label>
             <div>
-              <Input placeholder={'title'} value={new_title} readOnly />
+              <Input placeholder={'title'} value={game.title} readOnly />
             </div>
           </div>
 
@@ -57,7 +57,7 @@ export function DetailsGame({ updateForm, deleteForm, game }: UpdateModalProps) 
             <div>
               <textarea
                 placeholder={'description'}
-                value={new_description}
+                value={game.description}
                 readOnly
                 className={style.textarea}
               />
@@ -70,9 +70,9 @@ export function DetailsGame({ updateForm, deleteForm, game }: UpdateModalProps) 
                 <label htmlFor='category'>
                   Category <span className={style.required}>*</span>
                 </label>
-                <Select variant='disable' value={category} disabled>
+                <Select variant='disable' value={game.category} disabled>
                   <SelectGroup>
-                    <SelectItem>{category}</SelectItem>
+                    <SelectItem>{game.category}</SelectItem>
                   </SelectGroup>
                 </Select>
               </div>
@@ -80,9 +80,9 @@ export function DetailsGame({ updateForm, deleteForm, game }: UpdateModalProps) 
                 <label htmlFor='plataform'>
                   Plataform <span className={style.required}>*</span>
                 </label>
-                <Select variant='disable' value={plataform} disabled>
+                <Select variant='disable' value={game.platform} disabled>
                   <SelectGroup>
-                    <SelectItem>{plataform}</SelectItem>
+                    <SelectItem>{game.platform}</SelectItem>
                   </SelectGroup>
                 </Select>
               </div>
@@ -93,9 +93,9 @@ export function DetailsGame({ updateForm, deleteForm, game }: UpdateModalProps) 
                 <label htmlFor='status'>
                   Status <span className={style.required}>*</span>
                 </label>
-                <Select variant='disable' value={new_status} disabled>
+                <Select variant='disable' value={game.status} disabled>
                   <SelectGroup>
-                    <SelectItem value={''}>{new_status}</SelectItem>
+                    <SelectItem value={''}>{game.status}</SelectItem>
                   </SelectGroup>
                 </Select>
               </div>
@@ -108,7 +108,7 @@ export function DetailsGame({ updateForm, deleteForm, game }: UpdateModalProps) 
               <Input
                 type='text'
                 placeholder='http://cdn...'
-                value={url_image}
+                value={game.image_url}
                 readOnly
               />
               
