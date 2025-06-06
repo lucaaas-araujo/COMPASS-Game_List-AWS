@@ -34,8 +34,8 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
   const [status, setStatus] = useState<'Playing' | 'Done' | 'Abandoned'>(
     'Playing',
   );
-  const [acquisition_date, setAcquisitionDate] = useState(Date);
-  const [finish_date, setFinishDate] = useState(Date);
+  const [acquisition_date, setAcquisitionDate] = useState('');
+  const [finish_date, setFinishDate] = useState('');
   const [favorite, setFavorite] = useState(false);
   const [image_url, setUrlImage] = useState('');
   const { getAll: getAllCategories } = useCategory();
@@ -43,11 +43,10 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const categoryList = await getAllCategories({}); 
+      const categoryList = await getAllCategories({});
       const platformList = await getAllPlatforms({});
       setPlatformList(platformList);
       setCategoryList(categoryList);
-      
     };
     fetchData();
   }, []);
@@ -132,7 +131,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   onChange={(e) => setCategory(e.target.value)}>
                   <SelectGroup>
                     <SelectItem value=''>Select Category</SelectItem>
-                    {categoryList.map((cat) => (
+                    {categoryList?.map((cat) => (
                       <SelectItem key={cat.title} value={cat.title}>
                         {cat.title}
                       </SelectItem>
@@ -151,7 +150,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   onChange={(e) => setPlatform(e.target.value)}>
                   <SelectGroup>
                     <SelectItem value=''>Select Platform</SelectItem>
-                    {platformList.map((plat) => (
+                    {platformList?.map((plat) => (
                       <SelectItem key={plat.title} value={plat.title}>
                         {plat.title}
                       </SelectItem>
@@ -220,7 +219,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                       type='checkbox'
                       name='favorite'
                       id='favorite'
-                      value={status}
+                      checked={favorite}
                       onChange={(e) => setFavorite(e.target.checked)}
                     />
                   </div>
