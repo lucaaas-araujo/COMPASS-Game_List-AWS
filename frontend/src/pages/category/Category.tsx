@@ -13,8 +13,6 @@ import DeleteModal from '../components/DeleteModal';
 import { NewCategory } from './forms/create/CreateCategories';
 import { EditCategory } from './forms/update/UpdateCategories';
 
-import styles from './Category.module.css';
-
 export type SortHeaders = {
   sort: string;
   label: string;
@@ -64,7 +62,7 @@ export function Category() {
   }, [page]);
 
   return (
-    <div className={styles.container}>
+    <div className='pageContainer'>
       <Header
         title='Categories'
         buttonText='NEW CATEGORY'

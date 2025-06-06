@@ -13,8 +13,6 @@ import DeleteModal from '../components/DeleteModal';
 import { NewPlatform } from './forms/create/CreatePlatform';
 import { EditPlatform } from './forms/update/UpdatePlatform';
 
-import styles from './Platform.module.css';
-
 export type SortHeaders = {
   sort: string;
   label: string;
@@ -67,7 +65,7 @@ export const Platform = () => {
   }, [page]);
 
   return (
-    <div className={styles.pageWrapper}>
+    <div className='pageContainer'>
       <Header
         title='Platforms'
         buttonText='NEW PLATFORM'

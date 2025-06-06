@@ -1,19 +1,21 @@
 .cardContainer {
-  width: 95%;
+  width: 100%;
+  max-width: 1150px;
+  min-height: 75px;
+  margin-inline: auto;
+  margin-block: 1rem;
+  padding: 0 30px;
   display: grid;
   grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr auto;
   align-items: center;
-  background-color: var(--white);
-  padding: 0 30px;
-  min-height: 75px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin: 10px 35px;
   gap: 10px;
+  background-color: var(--white);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   box-sizing: border-box;
+
   font-size: 14px;
   font-weight: 400;
-  max-width: 1150px;
 }
 
 .imageWrapper {

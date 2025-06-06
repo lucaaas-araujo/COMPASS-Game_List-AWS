@@ -9,6 +9,7 @@
   max-width: 1150px;
   margin: auto;
   justify-content: space-around;
+  user-select: none;
 }
 
 .headerItem {

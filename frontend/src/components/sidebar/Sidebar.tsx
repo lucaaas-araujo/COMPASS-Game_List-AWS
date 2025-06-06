@@ -1,24 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { useSidebar } from '../../hooks/useSidebar';
+import { useUser } from '../../hooks/useUser';
 import {
-  categoryHover,
   category,
+  categoryHover,
   compactLogo,
   fullLogo,
-  gameHover,
   game,
-  homeHover,
+  gameHover,
   home,
+  homeHover,
   logoutHover,
   logout as logoutIcon,
-  platformHover,
   platform,
+  platformHover,
 } from '../../utils/icons';
-import styles from './Sidebar.module.css';
-import { useSidebar } from '../../hooks/useSidebar';
 import { Button } from '../ui/button/Button';
-import { useUser } from '../../hooks/useUser';
+import styles from './Sidebar.module.css';
 
 const Sidebar: React.FC = () => {
   const { isOpen, toggleSidebar } = useSidebar();

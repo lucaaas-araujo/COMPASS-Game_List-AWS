@@ -9,14 +9,12 @@ import { Header } from '../../components/header/Header';
 import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
 import { useGame } from '../../hooks/useGame';
-import { CreateGame } from './forms/create/Create';
-import { DetailsGame } from './forms/details/Details';
-import { UpdateGame } from './forms/update/Update';
 import type { GameProps } from '../../types/Game';
 import { formatDate } from '../../utils/formatDate';
 import DeleteModal from '../components/DeleteModal';
-
-import style from './Games.module.css';
+import { CreateGame } from './forms/create/Create';
+import { DetailsGame } from './forms/details/Details';
+import { UpdateGame } from './forms/update/Update';
 
 export type SortHeaders = {
   sort: string;
@@ -34,7 +32,7 @@ const headers: SortHeaders[] = [
 export function Games() {
   const [games, setGames] = useState<GameProps[]>([]);
   const [dir, setDir] = useState<'asc' | 'desc'>('asc');
-  const { getAll, toggleIsFavorite, remove} = useGame();
+  const { getAll, toggleIsFavorite, remove } = useGame();
 
   const fetchGames = async () => {
     const data = await getAll({});
@@ -69,23 +67,7 @@ export function Games() {
 
     setGames(games);
   };
-
-  useEffect(() => {
-    fetchGames();
-  }, []);
-
-  /*  const handleDelete = async (id: string): Promise<boolean> =>{
-    try{
-      await remove(id);
-      toast.success('Game excluded with success')
-      fetchGames();
-      return true;
-    } catch (error){
-      toast.error('Error excluding game')
-      return false
-    }
-  } */
-
+  
   const handleStarClick = async (game: GameProps) => {
     if (!game._id) {
       toast.error('Game ID not found!');
@@ -98,8 +80,9 @@ export function Games() {
       );
       await fetchGames();
     } catch (error) {
+      console.log(error);
       toast.error('Error updating favorite');
-      }
+    }
   };
   
   const handleDelete = async (id: string): Promise<boolean> => {
@@ -115,57 +98,63 @@ export function Games() {
     }
   };
 
+  useEffect(() => {
+    fetchGames();
+  }, []);
+  
   return (
-    <div>
-      <div className={style.gamepage}>
-        <Header
-          title='Games'
-          buttonText='NEW GAME'
-          createForm={<CreateGame onCreated={fetchGames} />}>
-          <GameFilters onSearch={handleFilters} onClear={handleClearFilters} />
-        </Header>
-        <HeaderList fields={headers} onSortClick={handleSortClick} />
+    <div className='pageContainer'>
+      <Header
+        title='Games'
+        buttonText='NEW GAME'
+        createForm={<CreateGame onCreated={fetchGames} />}>
+        <GameFilters onSearch={handleFilters} onClear={handleClearFilters} />
+      </Header>
+      <HeaderList fields={headers} onSortClick={handleSortClick} />
 
-        {games.map((game, index) => (
-          <ListItems
-            key={index}
-            imageUrl={game.image_url}
-            camp1={game.title}
-            camp2={game.category}
-            camp3={formatDate(String(game.createdAt))}
-            camp4={
-              game.updatedAt !== game.createdAt
-                ? formatDate(String(game.updatedAt))
-                : ''
-            }
-            iconDetails
-            iconEdit
-            iconDelete
-            iconStar
-            isStarred={game.favorite}
-            detailsForm={
-              <DetailsGame
-                game={game}
-                updateForm={<UpdateGame game={game} onCreated={fetchGames} />}
-                deleteForm={
-                  <DeleteModal
-                    type='game'
-                    onDelete={() => game._id ? handleDelete(game._id) : Promise.resolve(false)}
-                  />
-                }
-              />
-            }
-            editForm={<UpdateGame game={game} onCreated={fetchGames} />}
-            deleteForm={
-              <DeleteModal
-                type='game'
-                onDelete={() => game._id ? handleDelete(game._id) : Promise.resolve(false)}
-              />
-            }
-            onStarClick={() => handleStarClick(game)}
-          />
-        ))}
-      </div>
+      {games.map((game, index) => (
+        <ListItems
+          key={index}
+          imageUrl={game.image_url}
+          camp1={game.title}
+          camp2={game.category}
+          camp3={formatDate(String(game.createdAt))}
+          camp4={
+            game.updatedAt !== game.createdAt
+              ? formatDate(String(game.updatedAt))
+              : ''
+          }
+          iconDetails
+          iconEdit
+          iconDelete
+          iconStar
+          isStarred={game.favorite}
+          detailsForm={
+            <DetailsGame
+              game={game}
+              updateForm={<UpdateGame game={game} onCreated={fetchGames} />}
+              deleteForm={
+                <DeleteModal
+                  type='game'
+                  onDelete={() =>
+                    game._id ? handleDelete(game._id) : Promise.resolve(false)
+                  }
+                />
+              }
+            />
+          }
+          editForm={<UpdateGame game={game} onCreated={fetchGames} />}
+          deleteForm={
+            <DeleteModal
+              type='game'
+              onDelete={() =>
+                game._id ? handleDelete(game._id) : Promise.resolve(false)
+              }
+            />
+          }
+          onStarClick={() => handleStarClick(game)}
+        />
+      ))}
     </div>
   );
 }

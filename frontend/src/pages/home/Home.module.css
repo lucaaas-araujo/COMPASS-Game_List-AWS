@@ -3,6 +3,8 @@
   align-items: center;
   min-height: 100dvh;
   overflow: hidden;
+  padding-inline: 2rem;
+  padding-bottom: 4rem;
 }
 
 .textHome {
@@ -15,8 +17,15 @@
   gap: 2.5rem;
   width: 100%;
   max-width: 888px;
-  margin: auto 5rem;
   justify-items: center;
+  margin-inline: auto;
+}
+
+@media screen and (max-width: 900px) {
+  .cardGrid {
+    background-color: red;
+  grid-template-columns: 1fr;
+}
 }
 
 .container h1 {

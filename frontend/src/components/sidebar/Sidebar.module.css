@@ -1,16 +1,14 @@
 .sidebar {
-  background-color: var(--darkgray);
   height: 100vh;
-  transition: width 0.3s ease;
-  overflow: hidden;
+  background-color: var(--darkgray);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 2px solid #f8fafc;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  align-items: center;
+  transition:
+    width 0.3s ease,
+    left 0.3s ease;
+  overflow: hidden;
+  z-index: 998;
 }
 
 .open {
@@ -199,7 +197,7 @@
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
   .menuButton {
     display: block;
     position: fixed;
@@ -212,5 +210,16 @@
     padding: 10px 12px;
     border-radius: 4px;
     cursor: pointer;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: 4rem;
+    padding-top: 3rem;
+    align-items: center;
+  }
+
+  .open {
+    position: absolute;
   }
 }
