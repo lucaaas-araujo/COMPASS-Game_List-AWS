@@ -10,17 +10,26 @@ type GameProviderProps = {
 export type GetAllProps = {
   sort?: string;
   dir?: 'asc' | 'desc';
+  title?: string;
+  category?: string;
+  favorite?: boolean;
 };
 
 export function GameProvider({ children }: GameProviderProps) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const getAll = async ({ sort = 'title', dir }: GetAllProps) => {
+  const getAll = async ({
+    sort = 'title',
+    dir,
+    title,
+    category,
+    favorite,
+  }: GetAllProps) => {
     try {
       setLoading(true);
       const response = await api.get('/game', {
-        params: { sort, dir },
+        params: { sort, dir, title, category, favorite },
       });
 
       const games = response.data;
