@@ -117,7 +117,7 @@ export function Games() {
       </Header>
       <HeaderList fields={headers} onSortClick={handleSortClick} />
 
-      {games.map((game, index) => (
+      {games?.map((game, index) => (
         <ListItems
           key={index}
           imageUrl={game.image_url}
