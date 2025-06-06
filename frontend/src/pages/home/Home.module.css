@@ -23,9 +23,8 @@
 
 @media screen and (max-width: 900px) {
   .cardGrid {
-    background-color: red;
-  grid-template-columns: 1fr;
-}
+    grid-template-columns: 1fr;
+  }
 }
 
 .container h1 {

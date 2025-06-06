@@ -213,7 +213,6 @@
   }
 
   .sidebar {
-    width: 100%;
     min-width: 4rem;
     padding-top: 3rem;
     align-items: center;
@@ -221,5 +220,11 @@
 
   .open {
     position: absolute;
+  }
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar.open {
+    width: 100%;
   }
 }
