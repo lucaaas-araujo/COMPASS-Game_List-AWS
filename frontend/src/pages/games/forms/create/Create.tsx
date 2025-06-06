@@ -37,6 +37,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
   );
   const [acquisition_date, setAcquisitionDate] = useState('');
   const [finish_date, setFinishDate] = useState('');
+  const [favorite, setFavorite] = useState(false);
   const [image_url, setUrlImage] = useState('');
   const { getAll: getAllCategories } = useCategory();
   const { getAll: getAllPlatforms } = usePlatform();
@@ -67,8 +68,13 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
     const isValid = validateForm(title, image_url);
 
     if (!isValid) return;
-    if (!category || !acquisition_date || !finish_date || !status) {
+    if (!category || !acquisition_date || !status) {
       toast.error('Please fill in all required fields.');
+      return;
+    }
+
+    if (status !== 'Playing' && !finish_date) {
+      toast.error('Finish date is required unless status is Playing');
       return;
     }
 
@@ -80,7 +86,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
         acquisition_date: new Date(acquisition_date),
         status,
         platform,
-        finish_date: new Date(finish_date),
+        finish_date: finish_date ? new Date(finish_date) : null,
         image_url,
       });
       toast.success('Game registred success!');
@@ -230,7 +236,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                       type='checkbox'
                       name='favorite'
                       id='favorite'
-                      value={status}
+                      checked={favorite}
                       onChange={(e) => setFavorite(e.target.checked)}
                     />
                   </div>
