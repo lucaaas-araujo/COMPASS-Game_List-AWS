@@ -2,17 +2,15 @@ import mongoose from 'mongoose';
 
 const gamesSchema = new mongoose.Schema(
   {
-    image_url: {
-      type: String,
-      require: true,
-    },
     title: {
       type: String,
       require: true,
     },
+    image_url: {
+      type: String,
+    },
     description: {
       type: String,
-      require: true,
     },
     category: {
       type: String,
@@ -20,7 +18,6 @@ const gamesSchema = new mongoose.Schema(
     },
     platform: {
       type: String,
-      require: true,
     },
     status: {
       type: String,
@@ -29,7 +26,7 @@ const gamesSchema = new mongoose.Schema(
     },
     favorite: {
       type: Boolean,
-      require: true,
+      default: false,
     },
     acquisition_date: {
       type: Date,
@@ -41,12 +38,12 @@ const gamesSchema = new mongoose.Schema(
     },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'users',
       require: true,
     },
     is_deleted: {
       type: Boolean,
-      require: true,
+      default: false,
     },
   },
   {

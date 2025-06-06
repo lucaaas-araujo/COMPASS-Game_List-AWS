@@ -1,16 +1,14 @@
 .sidebar {
-  background-color: var(--darkgray);
   height: 100vh;
-  transition: width 0.3s ease;
-  overflow: hidden;
+  background-color: var(--darkgray);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 2px solid #f8fafc;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  align-items: center;
+  transition:
+    width 0.3s ease,
+    left 0.3s ease;
+  overflow: hidden;
+  z-index: 998;
 }
 
 .open {
@@ -25,12 +23,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: 120px;
   width: 100%;
 }
 
 .logo {
-  width: 140px;
+  width: 130px;
   height: auto;
   display: flex;
   justify-content: center;
@@ -117,9 +115,32 @@
   padding-bottom: 34px;
 }
 
-.logout a:hover {
+.logout .navItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #f8fafc;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  width: 100%;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.logout .navItem:hover {
   background-color: var(--alert);
   color: var(--black);
+}
+
+.logout .navItem:hover .logoutIconHover {
+  opacity: 1;
+}
+
+.logout .navItem:hover .logoutIconDefault {
+  opacity: 0;
 }
 
 .iconWrapper {
@@ -172,14 +193,38 @@
   opacity: 0;
 }
 
-@media screen and (max-width: 768px) {
-  .sidebar {
+.menuButton {
+  display: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .menuButton {
+    display: block;
     position: fixed;
-    z-index: 100;
+    top: 16px;
+    left: 16px;
+    z-index: 999;
+    background-color: var(--turquoise);
+    color: var(--black);
+    border: none;
+    padding: 10px 12px;
+    border-radius: 4px;
+    cursor: pointer;
   }
 
-  .toggleBtn {
-    top: 16px;
-    left: 60px !important;
+  .sidebar {
+    min-width: 4rem;
+    padding-top: 3rem;
+    align-items: center;
+  }
+
+  .open {
+    position: absolute;
+  }
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar.open {
+    width: 100%;
   }
 }

@@ -1,39 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSidebar } from '../../context/SidebarContext';
 
+import { useSidebar } from '../../hooks/useSidebar';
+import { useUser } from '../../hooks/useUser';
 import {
-  arrow,
-  categoryHover,
   category,
+  categoryHover,
   compactLogo,
   fullLogo,
-  gameHover,
   game,
-  homeHover,
+  gameHover,
   home,
+  homeHover,
   logoutHover,
-  logout,
-  platformHover,
+  logout as logoutIcon,
   platform,
+  platformHover,
 } from '../../utils/icons';
+import { Button } from '../ui/button/Button';
 import styles from './Sidebar.module.css';
 
 const Sidebar: React.FC = () => {
   const { isOpen, toggleSidebar } = useSidebar();
+  const { logout } = useUser();
 
   return (
     <>
-      <button
-        className={styles.toggleBtn}
-        onClick={toggleSidebar}
-        style={{ left: isOpen ? '285px' : '75px' }}
-        aria-label='Toggle sidebar'>
-        <img
-          src={arrow}
-          alt='Toggle'
-          className={`${styles.arrowIcon} ${!isOpen ? styles.rotated : ''}`}
-        />
+      <button className={styles.menuButton} onClick={toggleSidebar}>
+        ☰
       </button>
 
       <aside
@@ -119,13 +113,13 @@ const Sidebar: React.FC = () => {
         </nav>
 
         <div className={styles.logout}>
-          <Link
-            to='/logout'
+          <Button
+            onClick={logout}
             className={`${styles.navItem} ${!isOpen ? styles.logoutClosed : ''}`}>
             {isOpen && <span>Logout</span>}
             <div className={styles.iconWrapper}>
               <img
-                src={logout}
+                src={logoutIcon}
                 alt='Logout'
                 className={styles.logoutIconDefault}
               />
@@ -135,7 +129,7 @@ const Sidebar: React.FC = () => {
                 className={styles.logoutIconHover}
               />
             </div>
-          </Link>
+          </Button>
         </div>
       </aside>
     </>

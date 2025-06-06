@@ -1,9 +1,9 @@
-select {
+.select {
   width: 100%;
   padding: 0.5rem;
   border-radius: 8px;
   border: 1px solid var(--graydialogbox);
-  
+
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -22,4 +22,10 @@ select {
 
 .modal {
   border: 1px solid var(--grayform);
+}
+
+.disable {
+  background-color: var(--graybgform);
+  border: 1px solid var(--grayform);
+  color: var(--grayform);
 }

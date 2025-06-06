@@ -1,26 +1,27 @@
-//service create category
 import Category from '@/models/category';
 
 type CreateCategoryProps = {
   user_id: string;
-  name: string;
+  title: string;
   description?: string;
 };
 
 export const create = async ({
   user_id,
-  name,
+  title,
   description,
 }: CreateCategoryProps) => {
   try {
     const category = new Category({
       user_id,
-      name,
+      title,
       description,
     });
+
     const { _id } = await category.save();
-    return { _id };
+    return _id;
   } catch (error) {
+    console.log(error);
     return new Error('Error creating category');
   }
 };

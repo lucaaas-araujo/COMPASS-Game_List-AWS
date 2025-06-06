@@ -6,6 +6,7 @@
   --lightgray: #bcbcbc;
   --graybutton: #acacac;
   --grayform: #747474;
+  --graybgform: #74747433;
   --gray: #6c6c6c;
   --darkgray: #18181b;
   --obsidian: #0c0a09;
@@ -33,4 +34,9 @@ body {
   background-color: var(--obsidian);
   color: var(--white);
   scroll-behavior: smooth;
+}
+
+.pageContainer {
+  padding-inline: 2rem;
+  /* background-color: red; */
 }

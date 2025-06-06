@@ -1,10 +1,24 @@
-import { Request, Response } from 'express';
-import { compare } from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { userServices } from '@/services';
+import { compare } from 'bcrypt';
+import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { authorization } = req.headers;
+
+  if (!authorization || !authorization.startsWith('Basic ')) {
+    res.status(401).json({ message: 'Token not provided.' });
+    return;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_type, base64Credentials] = authorization.split(' ');
+
+  const credentials = Buffer.from(base64Credentials, 'base64').toString(
+    'utf-8',
+  );
+
+  const [email, password] = credentials.split(':');
 
   const user = await userServices.login(email);
 
@@ -15,7 +29,7 @@ export const login = async (req: Request, res: Response) => {
 
   if (!user) {
     res.status(400).json({ error: 'Invalid email' });
-    return
+    return;
   }
 
   if (!user.password) return;
@@ -24,11 +38,13 @@ export const login = async (req: Request, res: Response) => {
 
   if (!passwordMatched) {
     res.status(400).json({ error: 'Invalid password' });
-    return
-    
+    return;
   }
 
-  const accessToken = jwt.sign(user.id, process.env.JWT_SECRET);
+  const accessToken = jwt.sign(
+    { id: user.id, full_name: user.full_name },
+    process.env.JWT_SECRET,
+  );
 
-  res.status(200).json({ accessToken });
+  res.status(200).json(accessToken);
 };

@@ -1,5 +1,4 @@
 import Game from '@/models/game';
-import { Types } from 'mongoose';
 
 type CreateProps = {
   image_url: string;
@@ -11,8 +10,7 @@ type CreateProps = {
   favorite: boolean;
   acquisition_date: Date;
   finish_date: Date;
-  user_id: Types.ObjectId;
-  is_deleted: boolean;
+  user_id: string;
 };
 
 export const create = async ({
@@ -26,7 +24,6 @@ export const create = async ({
   acquisition_date,
   finish_date,
   user_id,
-  is_deleted,
 }: CreateProps) => {
   try {
     const game = new Game({
@@ -40,7 +37,6 @@ export const create = async ({
       acquisition_date,
       finish_date,
       user_id,
-      is_deleted,
     });
 
     const { _id } = await game.save();

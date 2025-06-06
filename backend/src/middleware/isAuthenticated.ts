@@ -5,14 +5,14 @@ export const isAuthenticated: RequestHandler = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    res.status(401).json({ message: 'Token não fornecido.' });
+    res.status(401).json({ message: 'Token not provided.' });
     return;
   }
 
   const [type, token] = authorization.split(' ');
 
   if (type === 'Bearer') {
-    res.status(401).json({ message: 'Token não é Bearer.' });
+    res.status(401).json({ message: 'Token is not a Bearer token.' });
     return;
   }
 
@@ -20,7 +20,7 @@ export const isAuthenticated: RequestHandler = (req, res, next) => {
   const decoded = jwt.verify(token, secret);
 
   if (typeof decoded === 'string') {
-    res.status(401).json({ message: 'Token não é valido.' });
+    res.status(401).json({ message: 'Token not provided.' });
     return;
   }
 

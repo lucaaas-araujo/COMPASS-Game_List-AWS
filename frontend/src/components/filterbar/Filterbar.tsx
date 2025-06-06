@@ -1,62 +1,59 @@
-import { useEffect, useState } from 'react';
-import { Input } from '../ui/input/input';
-import { Button } from '../ui/button/button';
-import style from './Filterbar.module.css';
-import { Select, SelectItem } from '../ui/select/Select';
+import { useEffect, useState, type ChangeEvent } from 'react';
+
 import search from '../../assets/search.svg';
-import { categoryServices } from '../../services'; // ajuste o caminho
+import { useCategory } from '../../hooks/useCategory';
+import type { CategoryProps } from '../../types/Category';
+import { Button } from '../ui/button/Button';
+import { Input } from '../ui/input/Input';
+import { Select, SelectGroup, SelectItem } from '../ui/select/Select';
+import style from './Filterbar.module.css';
 
 type Props = {
-  onSearch: (filters: FiltersState) => void;
+  onSearch: (filters: FiltersState) => Promise<void>;
   onClear: () => void;
 };
 
 export type FiltersState = {
   search: string;
   category: string;
-  favorite: boolean;
+  favorite: string;
 };
 
 export const GameFilters = ({ onSearch, onClear }: Props) => {
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [filters, setFilters] = useState<FiltersState>({
     search: '',
     category: '',
-    favorite: false,
+    favorite: '',
   });
-
-  const [categories, setCategories] = useState<string[]>([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const result = await categoryServices.getAll();
-      const names = result.map((cat: { name: string }) => cat.name); // adaptável
-      setCategories(names);
-    };
-
-    fetchCategories();
-  }, []);
+  const { getAll } = useCategory();
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    const { name, value, type } = e.target;
-    const newValue =
-      type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    const { name, value } = e.target;
 
-    setFilters((prev) => ({
-      ...prev,
-      [name]: newValue,
-    }));
+    setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSearch = () => {
     onSearch(filters);
+    setFilters({ search: '', category: '', favorite: '' });
   };
 
   const handleClear = () => {
-    setFilters({ search: '', category: '', favorite: false });
+    setFilters({ search: '', category: '', favorite: '' });
     onClear();
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const data = await getAll({});
+      setCategories(data);
+    };
+
+    fetchCategories();
+  }, [getAll]);
 
   return (
     <div className={style.filtercontainer}>
@@ -76,23 +73,31 @@ export const GameFilters = ({ onSearch, onClear }: Props) => {
           value={filters.category}
           variant='default'
           onChange={handleChange}>
-          <SelectItem value=''>Select Category</SelectItem>
-          {categories.map((cat) => (
-            <SelectItem key={cat} value={cat}>
-              {cat}
+          <SelectGroup>
+            <SelectItem value='' disabled>
+              Select Category
             </SelectItem>
-          ))}
+            {categories.map((cat) => (
+              <SelectItem key={cat.title} value={cat.title}>
+                {cat.title}
+              </SelectItem>
+            ))}
+          </SelectGroup>
         </Select>
 
-        <label style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-          <input
-            type='checkbox'
-            name='favorite'
-            checked={filters.favorite}
-            onChange={handleChange}
-          />
-          Favorite
-        </label>
+        <Select
+          name='favorite'
+          variant='default'
+          value={filters.favorite}
+          onChange={handleChange}>
+          <SelectGroup>
+            <SelectItem value='' disabled>
+              Favorite status
+            </SelectItem>
+            <SelectItem value='true'>Yes</SelectItem>
+            <SelectItem value='false'>No</SelectItem>
+          </SelectGroup>
+        </Select>
       </div>
 
       <div className={style.buttons}>

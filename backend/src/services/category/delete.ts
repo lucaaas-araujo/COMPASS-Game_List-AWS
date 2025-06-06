@@ -1,23 +1,24 @@
-// delete category service
 import Category from '@/models/category';
+import Game from '@/models/game';
 
-type DeleteCategoryProps = {
-  id: string;
-  is_deleted?: boolean;
-};
-
-export const deleteCategory = async ({
-  id,
-  is_deleted,
-}: DeleteCategoryProps) => {
+export const deleteById = async (id: string) => {
   try {
     const category = await Category.findById(id);
-    if (!category) throw new Error('Category not found');
 
-    category.is_deleted = is_deleted ?? true;
+    if (!category) return new Error('Category not found');
+
+    const gamesCount = await Game.countDocuments({ category: category.title });
+
+    if (gamesCount > 0) {
+      return new Error('Cannot delete category with associated games');
+    }
+
+    category.is_deleted = true;
     await category.save();
-    return { id: category._id, is_deleted: category.is_deleted };
+
+    return category._id;
   } catch (error) {
+    console.error(error);
     return new Error('Error deleting category');
   }
 };

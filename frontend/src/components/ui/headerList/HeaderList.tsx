@@ -1,35 +1,62 @@
-import React from 'react';
-import styles from './HeaderList.module.css';
 import orderListIcon from '../../../assets/orderList.svg';
 
-interface Header {
-  key: string;
+import { useState } from 'react';
+import styles from './HeaderList.module.css';
+import { orderListDown, orderListUp } from '../../../utils/icons';
+
+type Header = {
+  sort: string;
   label: string;
-}
+};
 
-interface HeaderListProps {
+type HeaderListProps = {
   fields: Header[];
-  onSortClick?: (key: string) => void;
-}
+  onSortClick: (sort: string, direction: 'asc' | 'desc') => void; // agora com direção!
+};
 
-const HeaderList: React.FC<HeaderListProps> = ({ fields, onSortClick }) => {
+const HeaderList = ({ fields, onSortClick }: HeaderListProps) => {
+  const [sortState, setSortState] = useState<{
+    field: string;
+    direction: 'asc' | 'desc';
+  }>({
+    field: '',
+    direction: 'asc',
+  });
+
+  const handleSortClick = (field: string) => {
+    let direction: 'asc' | 'desc' = 'asc';
+    if (sortState.field === field) {
+      direction = sortState.direction === 'asc' ? 'desc' : 'asc';
+    }
+    setSortState({ field, direction });
+    onSortClick(field, direction); // <== aqui voltamos a enviar o campo como antes
+  };
+
   return (
     <div className={styles.headerRow}>
-    
-      <div className={styles.imageSpace}></div>
+      <div className={styles.imageSpace} />
 
-      {fields.map(({ key, label }) => (
+      {fields.map(({ sort, label }, index) => (
         <div
-          key={key}
+          key={index}
           className={styles.headerItem}
-          onClick={() => onSortClick?.(key)}>
+          onClick={() => handleSortClick(sort)}>
           {label}
-            <img src={orderListIcon} alt="Order List" />
+          <img
+            src={
+              sortState.field === sort
+                ? sortState.direction === 'asc'
+                  ? orderListUp
+                  : orderListDown
+                : orderListIcon
+            }
+            alt='Sort Icon'
+            className={styles.sortIcon}
+          />
         </div>
       ))}
 
-     
-      <div className={styles.iconsSpace}></div>
+      <div className={styles.iconsSpace} />
     </div>
   );
 };

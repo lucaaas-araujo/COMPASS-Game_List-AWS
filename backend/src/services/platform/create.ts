@@ -1,10 +1,10 @@
-import Platform from "@/models/platform";
+import Platform from '@/models/platform';
 
 type CreatePlatformProps = {
-  image_url: string;
+  image_url?: string;
   title: string;
-  company: string;
-  acquisition_year: Date;
+  company?: string;
+  acquisition_year?: Date;
   user_id: string;
 };
 
@@ -24,7 +24,7 @@ export const create = async ({
       user_id,
     });
 
-    const { _id } = await platform.save();
+    const {_id } = await platform.save();
     return _id;
   } catch (error) {
     console.log(`CREATE_PLATFORM: ${error}`);

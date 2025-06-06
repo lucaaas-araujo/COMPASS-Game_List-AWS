@@ -1,6 +1,18 @@
-import React, { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 
-import { eye, pen, star, starFilled, trash } from '../../../utils/icons';
+import {
+  eye,
+  eyeClosed,
+  imageController,
+  pen,
+  penBlack,
+  star,
+  starFilled,
+  trash,
+  trashBlack,
+} from '../../../utils/icons';
+import { Dialog, DialogTrigger } from '../dialog/Dialog';
+
 import styles from './ListItems.module.css';
 
 interface ListItemsProps {
@@ -10,53 +22,62 @@ interface ListItemsProps {
   camp3?: string;
   camp4?: string;
   camp5?: string;
-  iconView?: true;
+  iconDetails?: true;
   iconEdit?: true;
   iconDelete?: true;
   iconStar?: boolean;
-  onViewClick?: () => void;
-  onEditClick?: () => void;
-  onDeleteClick?: () => void;
+  isStarred?: boolean;
+  detailsForm?: ReactNode;
+  editForm?: ReactNode;
+  deleteForm?: ReactNode;
   onStarClick?: () => void;
 }
 
-const ListItems: React.FC<ListItemsProps> = ({
+const ListItems = ({
   imageUrl,
   camp1,
   camp2,
   camp3,
   camp4,
   camp5,
-  iconView,
+  iconDetails,
   iconEdit,
   iconDelete,
   iconStar,
-  onViewClick,
-  onEditClick,
-  onDeleteClick,
+  isStarred = false,
+  detailsForm,
+  editForm,
+  deleteForm,
   onStarClick,
-}) => {
-  const [starred, setStarred] = useState(false);
+}: ListItemsProps) => {
+  const [starred, setStarred] = useState(isStarred);
 
   const handleStarClick = () => {
     setStarred((prev) => !prev);
     onStarClick?.();
   };
 
+  const [hoveredIcon, setHoveredIcon] = useState<
+    'view' | 'edit' | 'delete' | null
+  >(null);
+
   return (
     <div className={styles.cardContainer}>
       <div className={styles.imageWrapper}>
-        {imageUrl && (
-          <img src={imageUrl} alt='Card Icon' className={styles.cardImage} />
-        )}
+        <img
+          src={imageUrl ? imageUrl : imageController}
+          alt='Card Icon'
+          className={styles.cardImage}
+        />
       </div>
 
       <div className={styles.cardTexts}>
         {camp1 && <span>{camp1}</span>}
-        {camp2 && <span>{camp2}</span>}
-        {camp3 && <span>{camp3}</span>}
-        {camp4 && <span>{camp4}</span>}
-        {camp5 && <span>{camp5}</span>}
+        <span>{camp2 || ''}</span>
+        <span>{camp3 || ''}</span>
+        <span>{camp4 || ''}</span>
+        <span>{camp5 || ''}</span>
+
         {iconStar && (
           <img
             src={starred ? starFilled : star}
@@ -68,30 +89,52 @@ const ListItems: React.FC<ListItemsProps> = ({
       </div>
 
       <div className={styles.cardIcons}>
-        
-        {iconView && (
-          <img
-            src={eye}
-            alt='View'
-            className={styles.icon}
-            onClick={() => onViewClick?.()}
-          />
+        {iconDetails && (
+          <Dialog>
+            <DialogTrigger>
+              <button
+                className={styles.icon}
+                onMouseEnter={() => setHoveredIcon('view')}
+                onMouseLeave={() => setHoveredIcon(null)}>
+                <img
+                  src={hoveredIcon === 'view' ? eye : eyeClosed}
+                  alt='View'
+                />
+              </button>
+            </DialogTrigger>
+            {detailsForm}
+          </Dialog>
         )}
+
         {iconEdit && (
-          <img
-            src={pen}
-            alt='Edit'
-            className={styles.icon}
-            onClick={() => onEditClick?.()}
-          />
+          <Dialog>
+            <DialogTrigger>
+              <button
+                className={styles.icon}
+                onMouseEnter={() => setHoveredIcon('edit')}
+                onMouseLeave={() => setHoveredIcon(null)}>
+                <img src={hoveredIcon === 'edit' ? pen : penBlack} alt='Edit' />
+              </button>
+            </DialogTrigger>
+            {editForm}
+          </Dialog>
         )}
+
         {iconDelete && (
-          <img
-            src={trash}
-            alt='Delete'
-            className={styles.icon}
-            onClick={() => onDeleteClick?.()}
-          />
+          <Dialog>
+            <DialogTrigger>
+              <button
+                className={styles.icon}
+                onMouseEnter={() => setHoveredIcon('delete')}
+                onMouseLeave={() => setHoveredIcon(null)}>
+                <img
+                  src={hoveredIcon === 'delete' ? trash : trashBlack}
+                  alt='Delete'
+                />
+              </button>
+            </DialogTrigger>
+            {deleteForm}
+          </Dialog>
         )}
       </div>
     </div>

@@ -11,9 +11,9 @@ type UpdatePlatformProps = {
   }>;
 };
 
-export const update = async ({ id, data }: UpdatePlatformProps) => {
+export const updateById = async ({ id, data }: UpdatePlatformProps) => {
   try {
-    const updated = await Platform.findByIdAndUpdate(id, data, { new: true });
+    const updated = await Platform.findByIdAndUpdate(id, { $set: data });
 
     if (!updated) {
       return new Error('Platform not found.');

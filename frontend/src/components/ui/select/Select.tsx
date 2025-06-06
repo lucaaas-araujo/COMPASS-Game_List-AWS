@@ -8,14 +8,14 @@ import type {
 import style from './Select.module.css';
 
 type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
-  variant?: 'modal' | 'default';
+  variant?: 'modal' | 'default' | 'disable';
 };
 type SelectItemProps = OptionHTMLAttributes<HTMLOptionElement>;
 type SelectGroupProps = OptgroupHTMLAttributes<HTMLOptGroupElement>;
 type SelectLabelProps = LabelHTMLAttributes<HTMLLabelElement>;
 
 export function Select({ variant = 'default', ...props }: SelectProps) {
-  return <select className={style[variant]} {...props} />;
+  return <select className={`${style[variant]} ${style.select}`} {...props} />;
 }
 
 export function SelectItem({ children, ...props }: SelectItemProps) {

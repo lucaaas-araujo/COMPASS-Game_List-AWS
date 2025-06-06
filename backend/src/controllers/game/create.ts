@@ -1,7 +1,27 @@
 import { gameServices } from '@/services';
 import { RequestHandler } from 'express';
+import { LocalsUser } from '../types/locals';
 
-export const create: RequestHandler = async (req, res) => {
+type Locals = {
+  user: LocalsUser;
+};
+
+type Body = {
+  title: string;
+  image_url: string;
+  description: string;
+  category: string;
+  platform: string;
+  status: string;
+  favorite: boolean;
+  acquisition_date: Date;
+  finish_date: Date;
+};
+
+type CreateProps = RequestHandler<unknown, unknown, Body, unknown, Locals>;
+
+export const create: CreateProps = async (req, res) => {
+  const { user_id } = res.locals.user;
   const {
     image_url,
     title,
@@ -12,8 +32,6 @@ export const create: RequestHandler = async (req, res) => {
     favorite,
     acquisition_date,
     finish_date,
-    user_id,
-    is_deleted,
   } = req.body;
 
   const game = await gameServices.create({
@@ -27,8 +45,9 @@ export const create: RequestHandler = async (req, res) => {
     acquisition_date,
     finish_date,
     user_id,
-    is_deleted,
   });
+
+  console.log(game);
 
   if (game instanceof Error) {
     res.status(501).json({ Error: game.message });

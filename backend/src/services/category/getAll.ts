@@ -2,21 +2,41 @@ import Category from '@/models/category';
 
 type GetAllCategoryProps = {
   user_id: string;
-  is_deleted?: boolean;
+  per_page: number;
+  page: number;
+  sort: string;
+  dir: 'asc' | 'desc';
 };
 
-export const getAll = async ({ user_id, is_deleted }: GetAllCategoryProps) => {
+export const getAll = async ({
+  user_id,
+  per_page,
+  page,
+  sort,
+  dir,
+}: GetAllCategoryProps) => {
+  const skip = (page - 1) * per_page;
+
+  const filters = {
+    user_id,
+    is_deleted: false,
+  };
+
   try {
-    const filter: any = { user_id };
-    if (typeof is_deleted === 'boolean') {
-      filter.is_deleted = is_deleted;
-    }
-    const categories = await Category.find(filter);
-    if (!categories || categories.length === 0) {
-      return new Error();
-    }
-    return categories;
+    const [categories, count] = await Promise.all([
+      await Category.find(filters)
+        .limit(per_page)
+        .skip(skip)
+        .sort({ [sort]: dir }),
+      Category.countDocuments({
+        user_id,
+        is_deleted: false,
+      }),
+    ]);
+
+    return { categories, count };
   } catch (error) {
+    console.log(`GET_ALL_CATEGORIES: ${error}`);
     return new Error('Error returning categories');
   }
 };
