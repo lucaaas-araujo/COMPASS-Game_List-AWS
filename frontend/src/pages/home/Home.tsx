@@ -10,7 +10,6 @@ import { CreateGame } from '../games/forms/create/Create';
 import { NewPlatform } from '../platform/forms/create/CreatePlatform';
 
 import styles from './Home.module.css';
-import { Link } from 'react-router-dom';
 
 export function Home() {
   const [summary, setSummary] = useState({
@@ -25,6 +24,7 @@ export function Home() {
   useEffect(() => {
     const getSummary = async () => {
       const res = await api.get('/summary');
+
       setSummary(res.data);
     };
 
@@ -32,7 +32,7 @@ export function Home() {
   }, []);
 
   return (
-    <main className={styles.container}>
+    <main className='container'>
       <Header hiddenButton hiddenLine>
         <div className={styles.textHome}>
           <h1>Hello, {user?.full_name}!</h1>
@@ -41,43 +41,39 @@ export function Home() {
       </Header>
 
       <div className={styles.cardGrid}>
-        <Link to='/games' className={styles.cardLink}>
-          <HomeCard
-            haveButton
-            icon={game}
-            title='Games'
-            count={summary.gamesCount}
-            createForm={<CreateGame />}
-          />
-        </Link>
+        <HomeCard
+          to='/games'
+          haveButton
+          icon={game}
+          title='Games'
+          count={summary.gamesCount}
+          createForm={<CreateGame />}
+        />
 
-        <Link to='/categories' className={styles.cardLink}>
-          <HomeCard
-            haveButton
-            icon={category}
-            title='Categories'
-            count={summary.categoriesCount}
-            createForm={<NewCategory />}
-          />
-        </Link>
+        <HomeCard
+          to='/categories'
+          haveButton
+          icon={category}
+          title='Categories'
+          count={summary.categoriesCount}
+          createForm={<NewCategory />}
+        />
 
-        <Link to='/platforms' className={styles.cardLink}>
-          <HomeCard
-            haveButton
-            icon={platform}
-            title='Platforms'
-            count={summary.platformCount}
-            createForm={<NewPlatform />}
-          />
-        </Link>
+        <HomeCard
+          to='/platforms'
+          haveButton
+          icon={platform}
+          title='Platforms'
+          count={summary.platformCount}
+          createForm={<NewPlatform />}
+        />
 
-        <Link to='/games' className={styles.cardLink}>
-          <HomeCard
-            icon={starHome}
-            title='Favorite Games'
-            count={summary.favoriteGamesCount}
-          />
-        </Link>
+        <HomeCard
+          to='/games'
+          icon={starHome}
+          title='Favorite Games'
+          count={summary.favoriteGamesCount}
+        />
       </div>
     </main>
   );

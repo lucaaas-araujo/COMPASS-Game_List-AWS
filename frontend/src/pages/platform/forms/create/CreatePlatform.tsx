@@ -92,7 +92,7 @@ export function NewPlatform({ oncreated }: { oncreated?: () => void }) {
             <Input
               type='date'
               placeholder='17/05/2019'
-              value={formatDateForInput(acquisition_year)}
+              value={acquisition_year}
               onChange={(e) => setAcquisition_year(e.target.value)}
             />
           </div>
