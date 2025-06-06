@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { useSidebar } from '../../hooks/useSidebar';
 import { useUser } from '../../hooks/useUser';
@@ -24,6 +24,9 @@ const Sidebar: React.FC = () => {
   const { isOpen, toggleSidebar } = useSidebar();
   const { logout } = useUser();
 
+  const navLinkStyle = ({ isActive }: { isActive: boolean }) =>
+    isActive ? { backgroundColor: '#42D9C8', color: '#fff' } : undefined;
+
   return (
     <>
       <button className={styles.menuButton} onClick={toggleSidebar}>
@@ -47,8 +50,9 @@ const Sidebar: React.FC = () => {
         </div>
 
         <nav className={styles.nav}>
-          <Link
+          <NavLink
             to='/'
+            style={navLinkStyle}
             className={`${styles.navItem} ${!isOpen ? styles.navItemClosed : ''}`}>
             <div className={styles.iconWrapper}>
               <img src={home} alt='Home' className={styles.iconDefault} />
@@ -59,9 +63,10 @@ const Sidebar: React.FC = () => {
               />
             </div>
             {isOpen && <span>Home</span>}
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
+            style={navLinkStyle}
             to='/games'
             className={`${styles.navItem} ${!isOpen ? styles.navItemClosed : ''}`}>
             <div className={styles.iconWrapper}>
@@ -73,9 +78,10 @@ const Sidebar: React.FC = () => {
               />
             </div>
             {isOpen && <span>Games</span>}
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
+            style={navLinkStyle}
             to='/categories'
             className={`${styles.navItem} ${!isOpen ? styles.navItemClosed : ''}`}>
             <div className={styles.iconWrapper}>
@@ -91,9 +97,10 @@ const Sidebar: React.FC = () => {
               />
             </div>
             {isOpen && <span>Categories</span>}
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
+            style={navLinkStyle}
             to='/platforms'
             className={`${styles.navItem} ${!isOpen ? styles.navItemClosed : ''}`}>
             <div className={styles.iconWrapper}>
@@ -109,7 +116,7 @@ const Sidebar: React.FC = () => {
               />
             </div>
             {isOpen && <span>Platforms</span>}
-          </Link>
+          </NavLink>
         </nav>
 
         <div className={styles.logout}>

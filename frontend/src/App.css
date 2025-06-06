@@ -45,6 +45,12 @@ body {
   overflow: hidden;
   padding-inline: 2rem;
   padding-bottom: 4rem;
+}
 
-  /* background-color: green; */
+.itemsContainer {
+  min-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 1rem;
 }

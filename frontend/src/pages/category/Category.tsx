@@ -71,26 +71,36 @@ export function Category() {
 
       <HeaderList fields={headers} onSortClick={handleSort} />
 
-      {category?.map((cat) => (
-        <ListItems
-          key={cat._id}
-          camp1={cat.title}
-          camp2={cat.description}
-          camp3={formatDate(String(cat.createdAt))}
-          camp4={formatDate(String(cat.updatedAt))}
-          iconEdit
-          iconDelete
-          editForm={<EditCategory category={cat} onCreated={fetchCategories} />}
-          deleteForm={
-            <DeleteModal
-              type={'category'}
-              onDelete={() => handleDelete(cat._id)}
+      <div className='itemsContainer'>
+        <div>
+          {category?.map((cat) => (
+            <ListItems
+              key={cat._id}
+              camp1={cat.title}
+              camp2={cat.description}
+              camp3={formatDate(String(cat.createdAt))}
+              camp4={formatDate(String(cat.updatedAt))}
+              iconEdit
+              iconDelete
+              editForm={
+                <EditCategory category={cat} onCreated={fetchCategories} />
+              }
+              deleteForm={
+                <DeleteModal
+                  type={'category'}
+                  onDelete={() => handleDelete(cat._id)}
+                />
+              }
             />
-          }
-        />
-      ))}
+          ))}
+        </div>
 
-      <CustomPagination page={page} totalPages={totalPages} setPage={setPage} />
+        <CustomPagination
+          page={page}
+          totalPages={totalPages}
+          setPage={setPage}
+        />
+      </div>
     </div>
   );
 }

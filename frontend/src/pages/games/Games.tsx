@@ -108,7 +108,7 @@ export function Games() {
   }, [page]);
 
   return (
-    <div className='container' >
+    <div className='container'>
       <Header
         title='Games'
         buttonText='NEW GAME'
@@ -117,27 +117,42 @@ export function Games() {
       </Header>
       <HeaderList fields={headers} onSortClick={handleSortClick} />
 
-      {games?.map((game, index) => (
-        <ListItems
-          key={index}
-          imageUrl={game.image_url}
-          camp1={game.title}
-          camp2={game.category}
-          camp3={formatDate(String(game.createdAt))}
-          camp4={
-            game.updatedAt !== game.createdAt
-              ? formatDate(String(game.updatedAt))
-              : ''
-          }
-          iconDetails
-          iconEdit
-          iconDelete
-          iconStar
-          isStarred={game.favorite}
-          detailsForm={
-            <DetailsGame
-              game={game}
-              updateForm={<UpdateGame game={game} onCreated={fetchGames} />}
+      <div className='itemsContainer'>
+        <div>
+          {games.map((game, index) => (
+            <ListItems
+              key={index}
+              imageUrl={game.image_url}
+              camp1={game.title}
+              camp2={game.category}
+              camp3={formatDate(String(game.createdAt))}
+              camp4={
+                game.updatedAt !== game.createdAt
+                  ? formatDate(String(game.updatedAt))
+                  : ''
+              }
+              iconDetails
+              iconEdit
+              iconDelete
+              iconStar
+              isStarred={game.favorite}
+              detailsForm={
+                <DetailsGame
+                  game={game}
+                  updateForm={<UpdateGame game={game} onCreated={fetchGames} />}
+                  deleteForm={
+                    <DeleteModal
+                      type='game'
+                      onDelete={() =>
+                        game._id
+                          ? handleDelete(game._id)
+                          : Promise.resolve(false)
+                      }
+                    />
+                  }
+                />
+              }
+              editForm={<UpdateGame game={game} onCreated={fetchGames} />}
               deleteForm={
                 <DeleteModal
                   type='game'
@@ -146,22 +161,17 @@ export function Games() {
                   }
                 />
               }
+              onStarClick={() => handleStarClick(game)}
             />
-          }
-          editForm={<UpdateGame game={game} onCreated={fetchGames} />}
-          deleteForm={
-            <DeleteModal
-              type='game'
-              onDelete={() =>
-                game._id ? handleDelete(game._id) : Promise.resolve(false)
-              }
-            />
-          }
-          onStarClick={() => handleStarClick(game)}
-        />
-      ))}
+          ))}
+        </div>
 
-      <CustomPagination page={page} totalPages={totalPages} setPage={setPage} />
+        <CustomPagination
+          page={page}
+          totalPages={totalPages}
+          setPage={setPage}
+        />
+      </div>
     </div>
   );
 }

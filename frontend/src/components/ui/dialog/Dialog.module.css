@@ -8,6 +8,7 @@
 
 .close {
   background: none;
+  cursor: pointer;
 }
 
 .content {
