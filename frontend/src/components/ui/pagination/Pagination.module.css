@@ -1,17 +1,20 @@
 .pagination {
   display: flex;
   justify-content: center;
-
   margin-inline: auto;
-
   width: 100%;
+  margin-top: 25px;
+
+  position: fixed;
+  bottom: 0;
+  left: 5rem;
+  padding: 2rem 0;
 }
 
 .content {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-
   list-style: none;
 }
 
@@ -19,19 +22,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding-block: 0.5rem;
   padding-inline: 1rem;
-  border-radius: 0.2rem;
+  border-radius: 8px;
   border: 0.1px solid transparent;
-
   cursor: pointer;
-
-  color: white;
+  color: var(--white);
 
   &:hover {
     background-color: rgb(59, 59, 59);
-    color: white;
+    color: var(--white);
   }
 }
 
@@ -43,14 +43,21 @@
 
 .outline {
   background-color: rgb(59, 59, 59);
-  color: white;
-  border: 0.1px solid rgb(149, 149, 149);
+  color: var(--white);
 }
 
 .previous {
   gap: 0.25rem;
   padding-left: 0.625rem;
   padding-right: 0.625rem;
+}
+
+.arrowLeft {
+  margin-right: 12px;
+}
+
+.arrowRight {
+  margin-left: 12px;
 }
 
 @media (min-width: 640px) {

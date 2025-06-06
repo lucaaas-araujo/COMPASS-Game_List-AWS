@@ -1,12 +1,12 @@
 .headerRow {
   display: grid;
-  grid-template-columns: 110px 150px 200px 120px 140px 100px 140px;
-  background-color: #0c0a09;
-  color: #fff;
+  grid-template-columns: 20px 80px 100px 120px 90px 90px 120px;
+  background-color: var(--obsidian);
+  color: var(--white);
   font-weight: bold;
   text-align: center;
-  padding: 12px 14px;
-  max-width: 1110px;
+  padding: 12px 10px;
+  max-width: 1150px;
   margin: auto;
   justify-content: space-around;
 }
@@ -16,14 +16,14 @@
   align-items: center;
   font-size: 12px;
   cursor: pointer;
-  gap: 4px;
-  color: #acacac;
+  gap: 5px;
+  color: var(--graybutton);
   font-weight: 600;
 }
 
 .sortIcon {
   font-size: 10px;
-  color: #2de4c2;
+  color: var(--turquoise);
 }
 
 .imageSpace {

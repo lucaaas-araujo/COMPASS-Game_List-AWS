@@ -1,25 +1,36 @@
 .container {
-  display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
   min-height: 100dvh;
   overflow: hidden;
+}
+
+.textHome {
+  margin-left: 3rem;
 }
 
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding-top: 2rem;
+  max-width: 888px;
+  margin: auto 5rem;
   justify-items: center;
 }
 
-p {
+.container h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.container p {
   color: #9d9d9d;
   font-size: 22px;
   font-weight: 400;
+}
+
+.cardLink {
+  text-decoration: none;
+  width: 100%;
 }
