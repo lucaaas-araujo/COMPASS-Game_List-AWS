@@ -25,6 +25,9 @@ export function Home() {
   useEffect(() => {
     const getSummary = async () => {
       const res = await api.get('/summary');
+
+      console.log(res.data);
+      
       setSummary(res.data);
     };
 
