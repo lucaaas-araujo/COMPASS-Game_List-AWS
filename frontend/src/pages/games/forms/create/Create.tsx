@@ -37,7 +37,6 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
   );
   const [acquisition_date, setAcquisitionDate] = useState('');
   const [finish_date, setFinishDate] = useState('');
-  const [favorite, setFavorite] = useState(false);
   const [image_url, setUrlImage] = useState('');
   const { getAll: getAllCategories } = useCategory();
   const { getAll: getAllPlatforms } = usePlatform();
@@ -99,7 +98,6 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
       setAcquisitionDate(new Date().toISOString().split('T')[0]);
       setFinishDate(new Date().toISOString().split('T')[0]);
       setUrlImage('');
-      setFavorite(false);
       onCreated?.();
     } catch {
       console.log(error);
@@ -237,22 +235,6 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                     <SelectItem value={'Abandoned'}>Abandoned</SelectItem>
                   </SelectGroup>
                 </Select>
-              </div>
-              <div className={style.formGroup}>
-                <div className={style.checkbox}>
-                  <div>
-                    <input
-                      type='checkbox'
-                      name='favorite'
-                      id='favorite'
-                      checked={favorite}
-                      onChange={(e) => setFavorite(e.target.checked)}
-                    />
-                  </div>
-                  <Label asterisk htmlFor='favorite'>
-                    Favorite
-                  </Label>
-                </div>
               </div>
             </div>
           </div>
