@@ -1,31 +1,32 @@
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { Button } from '../../../../components/ui/button/Button';
 import {
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogClose,
-  DialogFooter,
 } from '../../../../components/ui/dialog/Dialog';
 import { Input } from '../../../../components/ui/input/Input';
-import { useState, useEffect } from 'react';
-import { Button } from '../../../../components/ui/button/Button';
+import { Label } from '../../../../components/ui/label/Label';
 import {
   Select,
   SelectGroup,
   SelectItem,
 } from '../../../../components/ui/select/Select';
-import { useGame } from '../../../../hooks/useGame';
-import style from './Update.module.css';
-import type { EditGamesWithOnCreatedProps } from '../../../../types/Game';
 import { useCategory } from '../../../../hooks/useCategory';
+import { useDialog } from '../../../../hooks/useDialog';
+import { useGame } from '../../../../hooks/useGame';
 import { usePlatform } from '../../../../hooks/usePlatform';
 import { type CategoryProps } from '../../../../types/Category';
+import type { EditGamesWithOnCreatedProps } from '../../../../types/Game';
 import { type PlatformProps } from '../../../../types/Platform';
-import { useDialog } from '../../../../hooks/useDialog';
-import { toast } from 'react-toastify';
-import { Label } from '../../../../components/ui/label/Label';
 import { validateForm } from '../../../../utils/validateForm';
-/* import { CustomPagination } from '../../../../components/customPagination/CustomPagination';
- */
+
+import style from './Update.module.css';
+
 export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
   const [title, setNewTitle] = useState(game.title);
   const [description, setNewDescription] = useState(game.description);
@@ -35,17 +36,12 @@ export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
   const [image_url, setUrlImage] = useState(game.image_url);
   const [acquisition_date] = useState(game.acquisition_date);
   const [finish_date] = useState(game.finish_date);
-  const [favorite] = useState(game.favorite);
   const [categoryList, setCategoryList] = useState<CategoryProps[]>([]);
   const [platformList, setPlatformList] = useState<PlatformProps[]>([]);
   const { getAll: getAllCategories } = useCategory();
   const { getAll: getAllPlatforms } = usePlatform();
   const { update } = useGame();
   const { closeDialog } = useDialog();
-  /*const [page, setPage] = useState(1);
-   const [dir, setDir] = useState<'asc' | 'desc'>('asc');
-
-  const totalPages = Math.ceil(count / per_page); */
 
   const fetchData = async () => {
     const categoryList = await getAllCategories({});
@@ -62,36 +58,31 @@ export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
     e.preventDefault();
 
     const isValid = validateForm(title, image_url);
-    console.log(
-      title,
-      description,
-      category,
-      status,
-      platform,
-      image_url,
-      acquisition_date,
-      finish_date,
-    );
+
+    if (!isValid) return
+    if (!category || !acquisition_date || !finish_date || !status) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+
     try {
-      if (isValid) {
-        await update({
-          itemId: game._id || '',
-          gameData: {
-            title,
-            description,
-            category,
-            status,
-            platform,
-            image_url,
-            acquisition_date,
-            finish_date,
-          },
-        });
-      
-        toast.success('Game updated successfully');
-        closeDialog();
-        onCreated();
-      }
+      await update({
+        itemId: game._id || '',
+        gameData: {
+          title,
+          description,
+          category,
+          status,
+          platform,
+          image_url,
+          acquisition_date,
+          finish_date,
+        },
+      });
+
+      toast.success('Game updated successfully');
+      closeDialog();
+      onCreated();
     } catch (error) {
       toast.error('Erro ao atualizar o game');
       console.error(error);

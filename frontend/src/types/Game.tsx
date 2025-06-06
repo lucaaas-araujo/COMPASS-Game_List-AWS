@@ -6,7 +6,7 @@ export type GameProps = {
   category: string;
   platform: string;
   status: string;
-  favorite: boolean;
+  favorite?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
   acquisition_date: Date;
