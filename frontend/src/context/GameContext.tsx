@@ -76,7 +76,8 @@ export function GameProvider({ children }: GameProviderProps) {
   const update = async ({ gameData, itemId }: EditGameProps): Promise<void> => {
     try {
       setLoading(true);
-      await api.put(`/game/${itemId}`, { gameData });
+      console.log('Updating game with data:', gameData);
+      await api.put(`/game/${itemId}`, { ...gameData });
       setLoading(false);
     } catch (error) {
       console.error('Error updating game:', error);

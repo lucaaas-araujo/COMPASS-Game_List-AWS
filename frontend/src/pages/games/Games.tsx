@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import type { GameProps } from '../../types/Game';
 import { formatDate } from '../../utils/formatDate';
 import { toast } from 'react-toastify';
+import DeleteModal from '../components/DeleteModal';
 
 export type SortHeaders = {
   sort: string;
@@ -29,7 +30,7 @@ const headers: SortHeaders[] = [
 export function Games() {
   const [games, setGames] = useState<GameProps[]>([]);
   const [dir, setDir] = useState<'asc' | 'desc'>('asc');
-  const { getAll, toggleIsFavorite } = useGame();
+  const { getAll, toggleIsFavorite, remove} = useGame();
 
   const handleSortClick = async (sort: string) => {
     setDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
@@ -73,7 +74,20 @@ export function Games() {
       } catch (error) {
       toast.error('Error updating favorite');
       }
-    };
+  };
+  
+  const handleDelete = async (id: string): Promise<boolean> => {
+    try {
+      await remove(id);
+      toast.success('Game deleted successfully');
+      fetchGames();
+      return true;
+    } catch (error) {
+      console.error(error);
+      toast.error('Error deleting game');
+      return false;
+    }
+  };
 
   return (
     <div>
@@ -93,6 +107,11 @@ export function Games() {
             camp1={game.title}
             camp2={game.category}
             camp3={formatDate(String(game.createdAt))}
+            camp4={
+              game.updatedAt !== game.createdAt
+                ? formatDate(String(game.updatedAt))
+                : ''
+            }
             iconDetails
             iconEdit
             iconDelete
@@ -101,24 +120,22 @@ export function Games() {
             detailsForm={
               <DetailsGame
                 game={game}
-                /* deleteForm={
-                  <DeleteModal 
-                    type='game'
-                    onCancel={() => {}}
-                    onDelete={() => false}
-                  />
-                }  */
                 updateForm={<UpdateGame game={game} onCreated={fetchGames} />}
+                deleteForm={
+                  <DeleteModal
+                    type='game'
+                    onDelete={() => game._id ? handleDelete(game._id) : Promise.resolve(false)}
+                  />
+                }
               />
             }
             editForm={<UpdateGame game={game} onCreated={fetchGames} />}
-            /* deleteForm={
+            deleteForm={
               <DeleteModal
                 type='game'
-                onCancel={() => {}}
-                onDelete={() => {}}
+                onDelete={() => game._id ? handleDelete(game._id) : Promise.resolve(false)}
               />
-            } */
+            }
             onStarClick={() => handleStarClick(game)}
           />
         ))}

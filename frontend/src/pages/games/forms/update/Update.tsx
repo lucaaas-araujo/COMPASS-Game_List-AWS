@@ -23,6 +23,7 @@ import { type PlatformProps } from '../../../../types/Platform';
 import { useDialog } from '../../../../hooks/useDialog';
 import { toast } from 'react-toastify';
 import { Label } from '../../../../components/ui/label/Label';
+import { validateForm } from '../../../../utils/validateForm';
 /* import { CustomPagination } from '../../../../components/customPagination/CustomPagination';
  */
 export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
@@ -39,7 +40,7 @@ export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
   const [platformList, setPlatformList] = useState<PlatformProps[]>([]);
   const { getAll: getAllCategories } = useCategory();
   const { getAll: getAllPlatforms } = usePlatform();
-  const { update, error } = useGame();
+  const { update } = useGame();
   const { closeDialog } = useDialog();
   /*const [page, setPage] = useState(1);
    const [dir, setDir] = useState<'asc' | 'desc'>('asc');
@@ -60,30 +61,39 @@ export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (title.trim().length < 3) {
-      toast.error('Game title need at least 3 characters required');
-    }
-
+    const isValid = validateForm(title, image_url);
+    console.log(
+      title,
+      description,
+      category,
+      status,
+      platform,
+      image_url,
+      acquisition_date,
+      finish_date,
+    );
     try {
-      await update({
-        game: game,
-        itemId: game._id ?? '',
-        gameData: {
-          title,
-          description,
-          category,
-          status,
-          platform,
-          image_url,
-          acquisition_date,
-          finish_date,
-          favorite,
-        },
-      });
-      toast.success('Game updated successfully');
-      closeDialog();
-      onCreated();
-    } catch {
+      if (isValid) {
+        await update({
+          itemId: game._id || '',
+          gameData: {
+            title,
+            description,
+            category,
+            status,
+            platform,
+            image_url,
+            acquisition_date,
+            finish_date,
+          },
+        });
+      
+        toast.success('Game updated successfully');
+        closeDialog();
+        onCreated();
+      }
+    } catch (error) {
+      toast.error('Erro ao atualizar o game');
       console.error(error);
     }
   };
@@ -93,7 +103,7 @@ export function UpdateGame({ game, onCreated }: EditGamesWithOnCreatedProps) {
       <DialogContent className={style.dialogContent}>
         <DialogHeader>
           <DialogTitle className={style.dialogTitle}>
-            Editing: NAME GAME
+            Editing: {game.title}
           </DialogTitle>
           <DialogClose className={style.dialogClose} />
         </DialogHeader>
