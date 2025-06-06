@@ -74,6 +74,17 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
       });
       toast.success('Game registred success!');
       closeDialog();
+      setTitle('');
+      setDescription('');
+      setCategory('');
+      setPlatform('');
+      setStatus('Playing');
+      setAcquisitionDate(new Date().toISOString().split('T')[0]);
+      setFinishDate(new Date().toISOString().split('T')[0]);
+      setUrlImage('');
+      setFavorite(false);
+
+        
       if (onCreated) onCreated(); // <-- Chama a função para atualizar a lista!
     } catch {
       console.log(error);
