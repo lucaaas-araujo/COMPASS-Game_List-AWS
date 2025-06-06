@@ -108,7 +108,7 @@ export function Games() {
   }, [page]);
 
   return (
-    <div className='pageContainer'>
+    <div className='container' >
       <Header
         title='Games'
         buttonText='NEW GAME'

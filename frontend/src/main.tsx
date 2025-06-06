@@ -14,18 +14,18 @@ import { UserProvider } from './context/UserContext.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <UserProvider>
-      <GameProvider>
-        <CategoryProvider>
-          <PlatformProvider>
-            <DialogProvider>
-              <SidebarProvider>
+      <DialogProvider>
+        <SidebarProvider>
+          <GameProvider>
+            <CategoryProvider>
+              <PlatformProvider>
                 <ToastContainer position='top-right' autoClose={3000} />
                 <App />
-              </SidebarProvider>
-            </DialogProvider>
-          </PlatformProvider>
-        </CategoryProvider>
-      </GameProvider>
+              </PlatformProvider>
+            </CategoryProvider>
+          </GameProvider>
+        </SidebarProvider>
+      </DialogProvider>
     </UserProvider>
   </StrictMode>,
 );

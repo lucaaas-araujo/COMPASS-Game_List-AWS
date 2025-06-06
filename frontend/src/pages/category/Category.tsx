@@ -62,7 +62,7 @@ export function Category() {
   }, [page]);
 
   return (
-    <div className='pageContainer'>
+    <div className='container'>
       <Header
         title='Categories'
         buttonText='NEW CATEGORY'

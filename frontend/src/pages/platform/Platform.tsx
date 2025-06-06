@@ -65,7 +65,7 @@ export const Platform = () => {
   }, [page]);
 
   return (
-    <div className='pageContainer'>
+    <div className='container' >
       <Header
         title='Platforms'
         buttonText='NEW PLATFORM'
