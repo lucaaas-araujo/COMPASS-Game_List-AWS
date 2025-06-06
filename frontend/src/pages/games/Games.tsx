@@ -11,6 +11,7 @@ import { CreateGame } from './forms/create/Create';
 import { useEffect, useState } from 'react';
 import type { GameProps } from '../../types/Game';
 import { formatDate } from '../../utils/formatDate';
+import { toast } from 'react-toastify';
 
 export type SortHeaders = {
   sort: string;
@@ -28,7 +29,7 @@ const headers: SortHeaders[] = [
 export function Games() {
   const [games, setGames] = useState<GameProps[]>([]);
   const [dir, setDir] = useState<'asc' | 'desc'>('asc');
-  const { getAll } = useGame();
+  const { getAll, toggleIsFavorite } = useGame();
 
   const handleSortClick = async (sort: string) => {
     setDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
@@ -41,6 +42,7 @@ export function Games() {
   const fetchGames = async () => {
     const data = await getAll({});
     setGames(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -58,11 +60,28 @@ export function Games() {
       return false
     }
   } */
+  
+    const handleStarClick = async (game: GameProps) => {
+      if (!game._id) {
+      toast.error('Game ID not found!');
+      return;
+      }
+      try {
+      await toggleIsFavorite(game._id, !game.favorite);
+      toast.success(`Game ${game.favorite ? 'removed from favorites' : 'added to favorites'}!`);
+      await fetchGames();
+      } catch (error) {
+      toast.error('Error updating favorite');
+      }
+    };
 
   return (
     <div>
       <div className={style.gamepage}>
-        <Header title='Games' buttonText='NEW GAME' createForm={<CreateGame />}>
+        <Header
+          title='Games'
+          buttonText='NEW GAME'
+          createForm={<CreateGame onCreated={fetchGames} />}>
           <GameFilters onSearch={() => {}} onClear={() => {}} />
         </Header>
         <HeaderList fields={headers} onSortClick={handleSortClick} />
@@ -78,6 +97,7 @@ export function Games() {
             iconEdit
             iconDelete
             iconStar
+            isStarred={game.favorite}
             detailsForm={
               <DetailsGame
                 game={game}
@@ -99,7 +119,7 @@ export function Games() {
                 onDelete={() => {}}
               />
             } */
-            onStarClick={() => console.log('Star', index)}
+            onStarClick={() => handleStarClick(game)}
           />
         ))}
       </div>
