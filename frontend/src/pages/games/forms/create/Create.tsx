@@ -1,27 +1,28 @@
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { Button } from '../../../../components/ui/button/Button';
 import {
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogClose,
-  DialogFooter,
 } from '../../../../components/ui/dialog/Dialog';
-import { Label } from '../../../../components/ui/label/Label';
 import { Input } from '../../../../components/ui/input/Input';
-import { useEffect, useState } from 'react';
-import { Button } from '../../../../components/ui/button/Button';
+import { Label } from '../../../../components/ui/label/Label';
 import {
   Select,
   SelectGroup,
   SelectItem,
 } from '../../../../components/ui/select/Select';
-import { useGame } from '../../../../hooks/useGame';
-import style from './Create.module.css';
 import { useCategory } from '../../../../hooks/useCategory';
-import { usePlatform } from '../../../../hooks/usePlatform';
 import { useDialog } from '../../../../hooks/useDialog';
+import { useGame } from '../../../../hooks/useGame';
+import { usePlatform } from '../../../../hooks/usePlatform';
 import { type CategoryProps } from '../../../../types/Category';
 import { type PlatformProps } from '../../../../types/Platform';
-import { toast } from 'react-toastify';
+import { validateForm } from '../../../../utils/validateForm';
+import style from './Create.module.css';
 
 export function CreateGame({ onCreated }: { onCreated?: () => void }) {
   const [title, setTitle] = useState('');
@@ -36,19 +37,18 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
   );
   const [acquisition_date, setAcquisitionDate] = useState(Date);
   const [finish_date, setFinishDate] = useState(Date);
-  const [favorite, setFavorite] = useState(false);
   const [image_url, setUrlImage] = useState('');
   const { getAll: getAllCategories } = useCategory();
   const { getAll: getAllPlatforms } = usePlatform();
 
   useEffect(() => {
     const fetchData = async () => {
-      const categoryList = await getAllCategories({}); 
+      const categoryList = await getAllCategories({});
       const platformList = await getAllPlatforms({});
       setPlatformList(platformList);
       setCategoryList(categoryList);
-      
     };
+
     fetchData();
   }, []);
 
@@ -56,10 +56,22 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (title.trim().length < 3) {
-      toast.error('Game title needs at least 3 characters required');
+
+    if (!categoryList.length || !platform.length) {
+      toast.error(
+        'Please create the required items first (category and/or platform).',
+      );
       return;
     }
+
+    const isValid = validateForm(title, image_url);
+
+    if (!isValid) return;
+    if (!category || !acquisition_date || !finish_date || !status) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+
     try {
       await create({
         title,
@@ -70,7 +82,6 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
         platform,
         finish_date: new Date(finish_date),
         image_url,
-        favorite,
       });
       toast.success('Game registred success!');
       closeDialog();
@@ -83,9 +94,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
       setFinishDate(new Date().toISOString().split('T')[0]);
       setUrlImage('');
       setFavorite(false);
-
-        
-      if (onCreated) onCreated(); // <-- Chama a função para atualizar a lista!
+      onCreated?.();
     } catch {
       console.log(error);
       toast.error('Error to create game');
@@ -116,9 +125,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
           </div>
 
           <div className={style.formGroup}>
-            <Label asterisk htmlFor='description'>
-              Description
-            </Label>
+            <Label htmlFor='description'>Description</Label>
             <div>
               <textarea
                 id='description'
@@ -151,10 +158,9 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   </SelectGroup>
                 </Select>
               </div>
+
               <div className={style.formGroup}>
-                <Label asterisk htmlFor='platform'>
-                  Platform
-                </Label>
+                <Label htmlFor='platform'>Platform</Label>
                 <Select
                   id='platform'
                   variant='modal'
@@ -187,20 +193,22 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   />
                 </div>
               </div>
-              <div className={style.formGroup}>
-                <Label asterisk htmlFor='finish_date'>
-                  Finish Date
-                </Label>
-                <div>
-                  <Input
-                    id='finish_date'
-                    type='date'
-                    variant='squared'
-                    value={finish_date}
-                    onChange={(e) => setFinishDate(e.target.value)}
-                  />
+              {status !== 'Playing' && (
+                <div className={style.formGroup}>
+                  <Label asterisk htmlFor='finish_date'>
+                    Finish Date
+                  </Label>
+                  <div>
+                    <Input
+                      id='finish_date'
+                      type='date'
+                      variant='squared'
+                      value={finish_date}
+                      onChange={(e) => setFinishDate(e.target.value)}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className={style.containerRow}>
@@ -224,29 +232,11 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   </SelectGroup>
                 </Select>
               </div>
-              <div className={style.formGroup}>
-                <div className={style.checkbox}>
-                  <div>
-                    <input
-                      type='checkbox'
-                      name='favorite'
-                      id='favorite'
-                      value={status}
-                      onChange={(e) => setFavorite(e.target.checked)}
-                    />
-                  </div>
-                  <Label asterisk htmlFor='favorite'>
-                    Favorite
-                  </Label>
-                </div>
-              </div>
             </div>
           </div>
 
           <div className={style.formGroup}>
-            <Label htmlFor='image_url' asterisk>
-              Imagem (URL)
-            </Label>
+            <Label htmlFor='image_url'>Imagem (URL)</Label>
             <div>
               <Input
                 id='image_url'
