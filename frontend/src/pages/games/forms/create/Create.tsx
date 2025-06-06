@@ -35,8 +35,9 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
   const [status, setStatus] = useState<'Playing' | 'Done' | 'Abandoned'>(
     'Playing',
   );
-  const [acquisition_date, setAcquisitionDate] = useState('');
-  const [finish_date, setFinishDate] = useState('');
+  const [acquisition_date, setAcquisitionDate] = useState(Date);
+  const [finish_date, setFinishDate] = useState(Date);
+  const [favorite, setFavorite] = useState(false);
   const [image_url, setUrlImage] = useState('');
   const { getAll: getAllCategories } = useCategory();
   const { getAll: getAllPlatforms } = usePlatform();
@@ -48,7 +49,6 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
       setPlatformList(platformList);
       setCategoryList(categoryList);
     };
-
     fetchData();
   }, []);
 
@@ -85,20 +85,13 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
         acquisition_date: new Date(acquisition_date),
         status,
         platform,
-        finish_date: finish_date ? new Date(finish_date) : null,
+        finish_date: new Date(finish_date),
         image_url,
+        favorite,
       });
       toast.success('Game registred success!');
       closeDialog();
-      setTitle('');
-      setDescription('');
-      setCategory('');
-      setPlatform('');
-      setStatus('Playing');
-      setAcquisitionDate(new Date().toISOString().split('T')[0]);
-      setFinishDate(new Date().toISOString().split('T')[0]);
-      setUrlImage('');
-      onCreated?.();
+      if (onCreated) onCreated(); // <-- Chama a função para atualizar a lista!
     } catch {
       console.log(error);
       toast.error('Error to create game');
@@ -129,7 +122,9 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
           </div>
 
           <div className={style.formGroup}>
-            <Label htmlFor='description'>Description</Label>
+            <Label htmlFor='description'>
+              Description
+            </Label>
             <div>
               <textarea
                 id='description'
@@ -154,7 +149,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   onChange={(e) => setCategory(e.target.value)}>
                   <SelectGroup>
                     <SelectItem value=''>Select Category</SelectItem>
-                    {categoryList?.map((cat) => (
+                    {categoryList.map((cat) => (
                       <SelectItem key={cat.title} value={cat.title}>
                         {cat.title}
                       </SelectItem>
@@ -162,9 +157,10 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   </SelectGroup>
                 </Select>
               </div>
-
               <div className={style.formGroup}>
-                <Label htmlFor='platform'>Platform</Label>
+                <Label htmlFor='platform'>
+                  Platform
+                </Label>
                 <Select
                   id='platform'
                   variant='modal'
@@ -172,7 +168,7 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   onChange={(e) => setPlatform(e.target.value)}>
                   <SelectGroup>
                     <SelectItem value=''>Select Platform</SelectItem>
-                    {platformList?.map((plat) => (
+                    {platformList.map((plat) => (
                       <SelectItem key={plat.title} value={plat.title}>
                         {plat.title}
                       </SelectItem>
@@ -197,22 +193,20 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   />
                 </div>
               </div>
-              {status !== 'Playing' && (
-                <div className={style.formGroup}>
-                  <Label asterisk htmlFor='finish_date'>
-                    Finish Date
-                  </Label>
-                  <div>
-                    <Input
-                      id='finish_date'
-                      type='date'
-                      variant='squared'
-                      value={finish_date}
-                      onChange={(e) => setFinishDate(e.target.value)}
-                    />
-                  </div>
+              <div className={style.formGroup}>
+                <Label asterisk htmlFor='finish_date'>
+                  Finish Date
+                </Label>
+                <div>
+                  <Input
+                    id='finish_date'
+                    type='date'
+                    variant='squared'
+                    value={finish_date}
+                    onChange={(e) => setFinishDate(e.target.value)}
+                  />
                 </div>
-              )}
+              </div>
             </div>
 
             <div className={style.containerRow}>
@@ -236,11 +230,29 @@ export function CreateGame({ onCreated }: { onCreated?: () => void }) {
                   </SelectGroup>
                 </Select>
               </div>
+              <div className={style.formGroup}>
+                <div className={style.checkbox}>
+                  <div>
+                    <input
+                      type='checkbox'
+                      name='favorite'
+                      id='favorite'
+                      value={status}
+                      onChange={(e) => setFavorite(e.target.checked)}
+                    />
+                  </div>
+                  <Label asterisk htmlFor='favorite'>
+                    Favorite
+                  </Label>
+                </div>
+              </div>
             </div>
           </div>
 
           <div className={style.formGroup}>
-            <Label htmlFor='image_url'>Imagem (URL)</Label>
+            <Label htmlFor='image_url'>
+              Imagem (URL)
+            </Label>
             <div>
               <Input
                 id='image_url'
