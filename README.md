@@ -5,99 +5,121 @@
   <img src="https://img.icons8.com/color/48/react-native.png" width="50"/>
 </p>
 
-<h1 align="center">Game List - Backend API</h1>
+<h1 align="center">Game List - Fullstack Project</h1>
 
+# 📍 Overview
 
-# 📍 Visão Geral
+## 🎯 Goal
 
-## 🎯 Objetivo
+Development of a complete game registration, listing and management system that allows users to add games with their respective categories (e.g. Action, Adventure, RPG) and platforms (e.g. PC, PS5, Xbox).
 
-Desenvolver um sistema completo para cadastro, listagem e gerenciamento de jogos, permitindo que os usuários registrem games com suas respectivas categorias (ex: ação, aventura, RPG) e plataformas (ex: PC, PS5, Xbox). 
-
-O sistema fornece uma API backend robusta e segura, com autenticação, validação de dados, filtros, ordenação e paginação, servindo como base para um site de registro de jogos.
-
----
-
-## 🧬 Funcionalidades
-
-- Cadastro de usuário com validação dos campos (nome completo, email, senha e confirmação de senha)
-
-- Login de usuário com autenticação via JWT
-
-- Cadastro de jogos, com título, descrição, plataforma, data de aquisição, etc.
-
-- Listagem de jogos cadastrados, com possibilidade de filtro por plataforma
-
-- Atualização dos dados dos jogos (CRUD completo)
-
-- Exclusão de jogos da lista
-
-- Cadastro, listagem, atualização e exclusão de plataformas
-
-- Relacionamento entre jogos e plataformas (um jogo pertence a uma plataforma)
-
-- Controle de erros e validações nas requisições (retorno de mensagens claras para o usuário)
-
-- Uso de rotas protegidas para as operações que exigem autenticação
+The system provides a robust and secure backend API with authentication, data validation, filtering, sorting and pagination, which serves as the basis for a game registration page. On the front end, it delivers a complete, responsive and well-structured application with validations, context management and component-based architecture.
 
 ---
 
-## ⚙️ Instalação
+## 🧬 Features
 
-## Pré-requisitos
+- User registration with field validation (full name, email, password and password confirmation)
+
+- User login with JWT authentication
+
+- Game registration with title, description, platform, date of purchase, etc.
+
+- Game list with filtering by platform
+
+- Complete CRUD for game data
+
+- Deletion of games from the list
+
+- Create, list, update and delete platforms
+
+- One-to-many relationship between platforms and games (a game belongs to a platform)
+
+- Error handling and validation of requests with clear messages
+
+- Protected routes for operations that require authentication
+
+---
+
+## ⚙️ Installation
+
+## Prerequisites
 
 - [Node.js](https://nodejs.org/)
-- [NPM](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/)
-- Banco de dados (ex: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
+- [NPM](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
+- A database (ex: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
 
-## Passos
+## Steps
 
 ```bash
-# Clone o repositório
+# Clone the repository
 git clone https://github.com/Giron-jpg/AWS_FS_ABR25_D02_COMPASS_Game_List.git
 
-# Acesse a pasta do projeto
+# Navigate to the backend folder
 cd backend
+# or navigate to the frontend folder
+cd frontend
 
-# Instale as dependências
+# Install dependencies
 npm install
-# ou
+# or
 yarn
 
-# Crie um arquivo .env com as variáveis de ambiente necessárias (veja abaixo)
+# Create a .env file with the required environment variables (see below)
 
-# Rode o projeto
+# Run the backend project
+npm run dev:watch
+# or
+yarn dev:watch
+
+# Run the frontend project
 npm run dev
-# ou
+# or
 yarn dev
 
 ```
+
 ---
 
-## 🤖 Variáveis de Ambiente
+## 🤖 Environment Variables
+
 ```bash
-Crie um arquivo .env na raiz do projeto com o seguinte conteúdo:
+Create a .env file in the root of the backend folder with the following content:
 
-PORT={port} // Insira aqui sua porta de conexão
-JWT_SECRET=sua_chave_secreta
-DATABASE_URL=postgresql://usuario:senha@localhost:5432/database
+PORT={your_port}
+JWT_SECRET=your_secret_key
+DATABASE_URL=postgresql://user:password@localhost:5432/database
+
 ```
+
+```bash
+Create a .env file in the root of the frontend folder with the following content:
+
+VITE_API_URL=http://localhost:8888
+
+```
+
 ---
 
-## 💻 Tecnologias Utilizadas
+## 💻 Technologies Used
 
 - **Node.js**
 - **TypeScript**
 - **React**
 - **Express**
+- **Cors**
 - **MongoDB + Mongoose**
 - **JWT**
 - **Bcrypt**
-- **TSX**
+- **Vite**
+- **JWT-decode**
+- **Axios**
+- **tsx**
 - **ESLint + Prettier**
+
 ---
 
-# 🤝 Contribuições
+# 🤝 Contributors
 
 - [Jessica](https://github.com/jessicasantosb)
 - [João Manuel](https://github.com/Joao-Manuel-S-M)

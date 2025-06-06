@@ -1,54 +1,64 @@
-# React + TypeScript + Vite
+<p align="center">
+  <img src="https://img.icons8.com/color/48/typescript.png" width="50"/>
+  <img src="https://img.icons8.com/color/48/react-native.png" width="50"/>
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h1 align="center">Game List - Frontend</h1>
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ⚙️ Installation
 
-## Expanding the ESLint configuration
+## Steps
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Clone the repository
+git clone https://github.com/Giron-jpg/AWS_FS_ABR25_D02_COMPASS_Game_List.git
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+# Navigate to the frontend folder
+cd frontend
+
+# Install dependencies
+npm install
+# or
+yarn
+
+# Create a .env file with the required environment variables (see below)
+
+# Run the frontend project
+npm run dev
+# or
+yarn dev
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+## 🤖 Environment Variables
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
+```bash
+Create a .env file in the root of the frontend folder with the following content:
+
+VITE_API_URL=http://localhost:8888
+
 ```
+
+---
+
+## 💻 Technologies Used
+
+- **TypeScript**
+- **React**
+- **Vite**
+- **JWT-decode**
+- **Axios**
+- **ESLint + Prettier**
+
+---
+
+# 🤝 Contributors
+
+- [Jessica](https://github.com/jessicasantosb)
+- [João Manuel](https://github.com/Joao-Manuel-S-M)
+- [João Giron](https://github.com/Giron-jpg)
+- [Leticia Schiavon](https://github.com/LeticiaAmeliaSchiavon)
+- [Lucas Araujo](https://github.com/lucaaas-araujo)
