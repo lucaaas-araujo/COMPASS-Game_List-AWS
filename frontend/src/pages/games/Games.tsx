@@ -1,17 +1,20 @@
+import {
+  GameFilters,
+  type FiltersState,
+} from '../../components/filterbar/Filterbar';
 import { Header } from '../../components/header/Header';
-import { useGame } from '../../hooks/useGame';
 import HeaderList from '../../components/ui/headerList/HeaderList';
 import ListItems from '../../components/ui/listItems/ListItems';
+import { useGame } from '../../hooks/useGame';
+import { CreateGame } from './forms/create/Create';
 import { DetailsGame } from './forms/details/Details';
-import { GameFilters } from '../../components/filterbar/Filterbar';
 import { UpdateGame } from './forms/update/Update';
 import style from './Games.module.css';
-import { CreateGame } from './forms/create/Create';
 /* import DeleteModal from '../components/DeleteModal'; */
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import type { GameProps } from '../../types/Game';
 import { formatDate } from '../../utils/formatDate';
-import { toast } from 'react-toastify';
 
 export type SortHeaders = {
   sort: string;
@@ -31,18 +34,38 @@ export function Games() {
   const [dir, setDir] = useState<'asc' | 'desc'>('asc');
   const { getAll, toggleIsFavorite } = useGame();
 
+  const fetchGames = async () => {
+    const data = await getAll({});
+
+    setGames(data);
+  };
+
+  const handleFilters = async ({
+    search,
+    category,
+    favorite,
+  }: FiltersState) => {
+    const _favorite = favorite === 'true' ? true : false;
+
+    const games = await getAll({
+      title: search,
+      category,
+      favorite: _favorite,
+    });
+
+    setGames(games);
+  };
+
+  const handleClearFilters = () => {
+    fetchGames();
+  };
+
   const handleSortClick = async (sort: string) => {
     setDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
 
     const games = await getAll({ sort, dir });
 
     setGames(games);
-  };
-
-  const fetchGames = async () => {
-    const data = await getAll({});
-    setGames(data);
-    console.log(data);
   };
 
   useEffect(() => {
@@ -60,20 +83,22 @@ export function Games() {
       return false
     }
   } */
-  
-    const handleStarClick = async (game: GameProps) => {
-      if (!game._id) {
+
+  const handleStarClick = async (game: GameProps) => {
+    if (!game._id) {
       toast.error('Game ID not found!');
       return;
-      }
-      try {
+    }
+    try {
       await toggleIsFavorite(game._id, !game.favorite);
-      toast.success(`Game ${game.favorite ? 'removed from favorites' : 'added to favorites'}!`);
+      toast.success(
+        `Game ${game.favorite ? 'removed from favorites' : 'added to favorites'}!`,
+      );
       await fetchGames();
-      } catch (error) {
+    } catch (error) {
       toast.error('Error updating favorite');
-      }
-    };
+    }
+  };
 
   return (
     <div>
@@ -82,7 +107,7 @@ export function Games() {
           title='Games'
           buttonText='NEW GAME'
           createForm={<CreateGame onCreated={fetchGames} />}>
-          <GameFilters onSearch={() => {}} onClear={() => {}} />
+          <GameFilters onSearch={handleFilters} onClear={handleClearFilters} />
         </Header>
         <HeaderList fields={headers} onSortClick={handleSortClick} />
 
