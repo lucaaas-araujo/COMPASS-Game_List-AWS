@@ -4,8 +4,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx --env-file .env ./src/server.ts",
-    "dev:watch": "tsx watch --env-file .env ./src/server.ts"
+    
+    "dev": "tsx watch --env-file .env ./src/server.ts"
   },
   "keywords": [],
   "author": "",
