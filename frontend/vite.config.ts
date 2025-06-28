@@ -9,7 +9,7 @@ export default defineConfig({
     },
     host: true,
     allowedHosts: [
-      'ec2-3-144-27-179.us-east-2.compute.amazonaws.com',
+      'ec2-18-118-16-84.us-east-2.compute.amazonaws.com',
       'localhost',
     ],
     strictPort: true,
