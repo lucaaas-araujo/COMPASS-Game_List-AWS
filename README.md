@@ -3,126 +3,116 @@
   <img src="https://img.icons8.com/color/48/typescript.png" width="50"/>
   <img src="https://img.icons8.com/?size=100&id=tBBf3P8HL0vR&format=png&color=000000" width="50"/>
   <img src="https://img.icons8.com/color/48/react-native.png" width="50"/>
+  <img src="https://img.icons8.com/color/48/docker.png" width="50"/>
+  <img src="https://img.icons8.com/color/48/amazon-web-services.png" width="50"/>
 </p>
 
-<h1 align="center">Game List - Fullstack Project</h1>
+<h1 align="center">Game List - Fullstack Project (Deploy with Docker + AWS EC2)</h1>
 
-# 📍 Overview
+## 🌍 Live Demo (AWS)
 
-## 🎯 Goal
+🟢 Access the live application at:
 
-Development of a complete game registration, listing and management system that allows users to add games with their respective categories (e.g. Action, Adventure, RPG) and platforms (e.g. PC, PS5, Xbox).
-
-The system provides a robust and secure backend API with authentication, data validation, filtering, sorting and pagination, which serves as the basis for a game registration page. On the front end, it delivers a complete, responsive and well-structured application with validations, context management and component-based architecture.
+**http://ec2-3-144-27-179.us-east-2.compute.amazonaws.com/login?message=You%20must%20log%20in%20first**
 
 ---
 
-## 🧬 Features
+## 📍 Overview
 
-- User registration with field validation (full name, email, password and password confirmation)
-
-- User login with JWT authentication
-
-- Game registration with title, description, platform, date of purchase, etc.
-
-- Game list with filtering by platform
-
-- Complete CRUD for game data
-
-- Deletion of games from the list
-
-- Create, list, update and delete platforms
-
-- One-to-many relationship between platforms and games (a game belongs to a platform)
-
-- Error handling and validation of requests with clear messages
-
-- Protected routes for operations that require authentication
+Fullstack game management project with a backend (Node + Express + TypeScript), frontend (React + Vite), and MongoDB database.
 
 ---
 
-## ⚙️ Installation
+## 🚀 Features
 
-## Prerequisites
+- User registration and login (JWT authentication)
+- Create, list, edit, and delete games
+- Create and manage platforms
+- Filter games by platform
+- Validations, clear error messages, and protected routes
 
-- [Node.js](https://nodejs.org/)
-- [NPM](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
-- A database (ex: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
+---
 
-## Steps
+## 🐳 Deploy with Docker
+
+### ✔️ Running locally with Docker
+
+#### Prerequisites:
+- Docker installed on your machine
+
+#### Steps:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Giron-jpg/AWS_FS_ABR25_D02_COMPASS_Game_List.git
+git clone https://github.com/lucaaas-araujo/AWS_FS_ABR25_D03_COMPASS_-Game_List-.git
 
-# Navigate to the backend folder
-cd backend
-# or navigate to the frontend folder
-cd frontend
+# Enter the project folder
+cd AWS_FS_ABR25_D03_COMPASS_-Game_List-
 
-# Install dependencies
-npm install
-# or
-yarn
-
-# Create a .env file with the required environment variables (see below)
-
-# Run the backend project
-npm run dev:watch
-# or
-yarn dev:watch
-
-# Run the frontend project
-npm run dev
-# or
-yarn dev
-
+# Create the .env files as shown below
 ```
 
----
+#### 🔐 Environment Variables:
 
-## 🤖 Environment Variables
-
-```bash
-Create a .env file in the root of the backend folder with the following content:
-
-PORT={your_port}
+**Backend (`/backend/.env`):**
+```
+PORT=8888
 JWT_SECRET=your_secret_key
-DATABASE_URL=postgresql://user:password@localhost:5432/database
-
+DATABASE_URL=mongodb://mongo:27017/gamelist
 ```
+
+**Frontend (`/frontend/.env`):**
+```
+VITE_API_URL=http://localhost:8888
+```
+
+#### 📦 Start the containers:
 
 ```bash
-Create a .env file in the root of the frontend folder with the following content:
-
-VITE_API_URL=http://localhost:8888
-
+docker compose up -d --build
 ```
 
----
+The application will be available at:
 
-## 💻 Technologies Used
+ [http://localhost](http://localhost)
 
-- **Node.js**
-- **TypeScript**
-- **React**
-- **Express**
-- **Cors**
-- **MongoDB + Mongoose**
-- **JWT**
-- **Bcrypt**
-- **Vite**
-- **JWT-decode**
-- **Axios**
-- **tsx**
-- **ESLint + Prettier**
+✅ MongoDB also runs inside a Docker container, so there's no need to install it locally!
 
 ---
 
-# 🤝 Contributors
+## ☁️ Deploy on AWS EC2 (Docker)
 
-- [Jessica](https://github.com/jessicasantosb)
-- [João Manuel](https://github.com/Joao-Manuel-S-M)
-- [João Giron](https://github.com/Giron-jpg)
-- [Leticia Schiavon](https://github.com/LeticiaAmeliaSchiavon)
-- [Lucas Araujo](https://github.com/lucaaas-araujo)
+This project was deployed on an AWS EC2 instance using Docker. That means the application keeps running in the cloud, even when your PC is turned off.
+
+### Deployment steps:
+
+1. Create an Ubuntu instance via AWS Console
+2. Connect to the instance using SSH
+3. Install Docker
+
+4. Clone the repository:
+   ```bash
+   git clone https://github.com/lucaaas-araujo/AWS_FS_ABR25_D03_COMPASS_-Game_List-.git
+   cd AWS_FS_ABR25_D03_COMPASS_-Game_List-
+   ```
+
+5. Create the `.env` files as shown above (backend and frontend)
+
+6. Start the containers:
+   ```bash
+   docker compose up -d --build
+   ```
+
+---
+
+## 🧪 Technologies Used
+
+- Docker
+- Nginx
+- Node.js
+- TypeScript
+- React
+- Express
+- MongoDB (via Docker container)
+- Docker & Docker Compose
+- JWT, Bcrypt, Axios, ESLint, Prettier, Vite
